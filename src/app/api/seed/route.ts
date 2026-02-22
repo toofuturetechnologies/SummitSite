@@ -1,0 +1,124 @@
+import { createClient } from '@supabase/supabase-js';
+
+export async function POST(request: Request) {
+  try {
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
+    const sampleGuides = [
+      {
+        id: '550e8400-e29b-41d4-a716-446655440001',
+        name: 'John Martinez',
+        bio: 'Certified mountain guide with 15+ years of experience. Specializing in alpine expeditions and technical climbing.',
+        specialties: ['Mountaineering', 'Rock Climbing', 'Ski Touring'],
+        rating: 4.9,
+        review_count: 127,
+        is_verified: true,
+        avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
+      },
+      {
+        id: '550e8400-e29b-41d4-a716-446655440002',
+        name: 'Sarah Thompson',
+        bio: 'Adventure travel specialist. Love sharing the beauty of remote mountain regions with adventurers.',
+        specialties: ['Hiking', 'Trekking', 'Cultural Tours'],
+        rating: 4.8,
+        review_count: 89,
+        is_verified: true,
+        avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah',
+      },
+      {
+        id: '550e8400-e29b-41d4-a716-446655440003',
+        name: 'Carlos Rodriguez',
+        bio: 'Professional backcountry skier and mountain guide. Based in the Andes.',
+        specialties: ['Ski Touring', 'Backcountry Skiing', 'Mountaineering'],
+        rating: 4.7,
+        review_count: 156,
+        is_verified: true,
+        avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carlos',
+      },
+    ];
+
+    const sampleTrips = [
+      {
+        id: '660e8400-e29b-41d4-a716-446655440001',
+        guide_id: '550e8400-e29b-41d4-a716-446655440001',
+        title: 'Kilimanjaro Summit Expedition',
+        description: '6-day guided expedition to Africa\'s highest peak. Technical climbing on glaciers with stunning sunrise views.',
+        price_per_person: 2500,
+        currency: 'USD',
+        duration_days: 6,
+        difficulty: 'advanced',
+        max_participants: 8,
+        country: 'Tanzania',
+        region: 'Mount Kilimanjaro',
+        image_url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop',
+      },
+      {
+        id: '660e8400-e29b-41d4-a716-446655440002',
+        guide_id: '550e8400-e29b-41d4-a716-446655440002',
+        title: 'Machu Picchu Trek',
+        description: '4-day hike along the Inca Trail to Machu Picchu. Explore ancient ruins and learn about Incan history.',
+        price_per_person: 1800,
+        currency: 'USD',
+        duration_days: 4,
+        difficulty: 'intermediate',
+        max_participants: 12,
+        country: 'Peru',
+        region: 'Cusco Region',
+        image_url: 'https://images.unsplash.com/photo-1587595431973-160e0d94ff67?w=500&h=300&fit=crop',
+      },
+      {
+        id: '660e8400-e29b-41d4-a716-446655440003',
+        guide_id: '550e8400-e29b-41d4-a716-446655440003',
+        title: 'Patagonia Ice Trekking',
+        description: '5-day adventure on Perito Moreno Glacier. Guided ice climbing and glacier exploration in Patagonia.',
+        price_per_person: 3200,
+        currency: 'USD',
+        duration_days: 5,
+        difficulty: 'advanced',
+        max_participants: 6,
+        country: 'Argentina',
+        region: 'Los Glaciares National Park',
+        image_url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=300&fit=crop',
+      },
+    ];
+
+    // Insert guides
+    const { error: guidesError } = await supabase
+      .from('guides')
+      .upsert(sampleGuides, { onConflict: 'id' });
+
+    if (guidesError && guidesError.code !== '23505') {
+      return Response.json(
+        { error: `Guides error: ${guidesError.message}` },
+        { status: 400 }
+      );
+    }
+
+    // Insert trips
+    const { error: tripsError } = await supabase
+      .from('trips')
+      .upsert(sampleTrips, { onConflict: 'id' });
+
+    if (tripsError && tripsError.code !== '23505') {
+      return Response.json(
+        { error: `Trips error: ${tripsError.message}` },
+        { status: 400 }
+      );
+    }
+
+    return Response.json({
+      success: true,
+      message: 'Database seeded with sample data',
+      guides: sampleGuides.length,
+      trips: sampleTrips.length,
+    });
+  } catch (error) {
+    return Response.json(
+      { error: error instanceof Error ? error.message : 'Unknown error' },
+      { status: 500 }
+    );
+  }
+}
