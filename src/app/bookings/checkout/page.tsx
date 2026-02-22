@@ -155,10 +155,17 @@ function CheckoutContent() {
               <span className="text-summit-300">Price per person:</span>
               <span className="text-white font-semibold">${bookingData?.trip?.price_per_person}</span>
             </div>
+            <div className="flex justify-between mb-2 text-sm">
+              <span className="text-summit-400">Subtotal ({bookingData?.participantCount} {bookingData?.participantCount === 1 ? 'person' : 'people'}):</span>
+              <span className="text-summit-300">${bookingData?.totalPrice.toFixed(2)}</span>
+            </div>
             <div className="flex justify-between text-lg font-bold border-t border-summit-700 pt-2">
-              <span className="text-white">Total:</span>
+              <span className="text-white">You Pay:</span>
               <span className="text-green-400">${bookingData?.totalPrice.toFixed(2)}</span>
             </div>
+            <p className="text-summit-400 text-xs mt-3">
+              💡 Platform fee: 12% + $1 hosting. Your guide keeps 88% minus fees.
+            </p>
           </div>
 
           {/* Stripe Checkout */}
@@ -168,29 +175,12 @@ function CheckoutContent() {
               clientSecret,
               onComplete: async () => {
                 try {
-                  // Create booking after payment succeeds
-                  const { error: bookingError } = await supabase
-                    .from('bookings')
-                    .insert({
-                      trip_id: tripId,
-                      trip_date_id: dateId,
-                      user_id: bookingData.userId,
-                      guide_id: bookingData.trip.guide_id,
-                      participant_count: bookingData.participantCount,
-                      total_price: bookingData.totalPrice,
-                      commission_amount: bookingData.totalPrice * 0.12,
-                      guide_payout: bookingData.totalPrice * 0.88,
-                      status: 'confirmed',
-                      payment_status: 'paid',
-                    });
-
-                  if (bookingError) throw bookingError;
-
-                  // Redirect to confirmation
+                  // Payment succeeded - webhook will create booking
+                  // Just redirect to confirmation
                   window.location.href = `/bookings/confirmed?trip=${tripId}`;
                 } catch (err) {
-                  console.error('Booking creation failed:', err);
-                  window.location.href = `/bookings/error?error=Booking+creation+failed`;
+                  console.error('Checkout completion error:', err);
+                  window.location.href = `/bookings/error?error=Checkout+error`;
                 }
               },
             }}
