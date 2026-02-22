@@ -92,7 +92,7 @@ export default function CreateTripPage() {
     const { name, value, type } = e.target as any;
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? e.target.checked : type === 'number' ? parseFloat(value) : value,
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : type === 'number' ? parseFloat(value) : value,
     });
   };
 
