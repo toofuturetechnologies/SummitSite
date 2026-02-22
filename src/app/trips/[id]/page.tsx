@@ -27,6 +27,8 @@ interface Trip {
   inclusions?: string[];
   exclusions?: string[];
   guide_id: string;
+  is_instant_book?: boolean;
+  is_active?: boolean;
 }
 
 interface Guide {
