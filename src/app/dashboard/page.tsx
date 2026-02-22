@@ -211,15 +211,36 @@ export default function DashboardPage() {
           )}
         </div>
 
-        {/* Profile Section */}
-        {guide && (
+        {/* Quick Stats */}
+        {guide && guide.bio && (
           <div className="mt-8 bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-            <h2 className="text-2xl font-bold text-white mb-6">Profile</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">About You</h2>
+            <p className="text-summit-300 mb-4">{guide.bio}</p>
+            <div className="text-sm text-summit-400 space-y-1 mb-6">
+              <p>📍 {guide.base_location || 'Location not set'}</p>
+              <p>⏱️ {guide.years_experience || 0} years of experience</p>
+            </div>
             <Link
               href="/dashboard/profile"
               className="bg-summit-600 hover:bg-summit-500 text-white px-6 py-2 rounded-lg transition"
             >
               Edit Profile
+            </Link>
+          </div>
+        )}
+
+        {/* No Bio CTA */}
+        {guide && !guide.bio && (
+          <div className="mt-8 bg-summit-800/50 border border-summit-700 rounded-lg p-6">
+            <h2 className="text-2xl font-bold text-white mb-4">Complete Your Profile</h2>
+            <p className="text-summit-300 mb-6">
+              Add a biography, location, and experience to help customers learn about you.
+            </p>
+            <Link
+              href="/dashboard/profile"
+              className="bg-summit-600 hover:bg-summit-500 text-white px-6 py-2 rounded-lg transition"
+            >
+              Complete Profile
             </Link>
           </div>
         )}
