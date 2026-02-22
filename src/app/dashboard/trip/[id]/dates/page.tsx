@@ -272,7 +272,7 @@ export default function TripDatesPage({ params }: { params: { id: string } }) {
                   />
                 </div>
                 <p className="text-summit-400 text-xs mt-1">
-                  Override the trip's base price for this date
+                  Override the trip&apos;s base price for this date
                 </p>
               </div>
             </div>

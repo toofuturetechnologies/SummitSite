@@ -284,7 +284,7 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {trip.inclusions && trip.inclusions.length > 0 && (
                 <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-                  <h3 className="font-semibold text-white mb-3">What's Included</h3>
+                  <h3 className="font-semibold text-white mb-3">What&apos;s Included</h3>
                   <ul className="space-y-2">
                     {trip.inclusions.map((inc, idx) => (
                       <li key={idx} className="text-summit-300 text-sm flex items-start gap-2">
@@ -298,7 +298,7 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
 
               {trip.exclusions && trip.exclusions.length > 0 && (
                 <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-                  <h3 className="font-semibold text-white mb-3">What's Not Included</h3>
+                  <h3 className="font-semibold text-white mb-3">What&apos;s Not Included</h3>
                   <ul className="space-y-2">
                     {trip.exclusions.map((exc, idx) => (
                       <li key={idx} className="text-summit-300 text-sm flex items-start gap-2">

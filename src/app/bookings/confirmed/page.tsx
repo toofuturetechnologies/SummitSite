@@ -18,7 +18,7 @@ export default function BookingConfirmedPage() {
         <h1 className="text-3xl font-bold text-white mb-4">Booking Confirmed!</h1>
 
         <p className="text-summit-300 mb-6">
-          Your adventure is booked. The guide will confirm your booking shortly, and you'll receive an email with next steps.
+          Your adventure is booked. The guide will confirm your booking shortly, and you&apos;ll receive an email with next steps.
         </p>
 
         <div className="bg-summit-900/50 rounded-lg p-4 mb-6">
