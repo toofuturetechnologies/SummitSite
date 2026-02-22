@@ -19,6 +19,7 @@ interface Guide {
   years_experience?: number;
   rating: number;
   review_count: number;
+  profile_video_url?: string | null;
 }
 
 interface Trip {

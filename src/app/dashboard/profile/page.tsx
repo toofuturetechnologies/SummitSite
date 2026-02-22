@@ -21,7 +21,7 @@ interface Guide {
   specialties?: string[];
   languages?: string[];
   certifications?: any[];
-  profile_video_url?: string;
+  profile_video_url?: string | null;
 }
 
 export default function ProfilePage() {
