@@ -5,6 +5,7 @@ import {
   sendBookingConfirmationEmail,
   sendPayoutNotificationEmail,
   sendRefundEmail,
+  sendPaymentFailedEmail,
 } from '@/lib/emails';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -120,7 +121,7 @@ async function handlePaymentSucceeded(paymentIntent: Stripe.PaymentIntent) {
         trip_id: tripId,
         trip_date_id: tripDateId,
         user_id: userId,
-        guide_id: trip.id,
+        guide_id: trip.guide_id,
         participant_count: parseInt(participantCount || '1'),
         total_price: amount,
         commission_amount: platformCommission,
@@ -172,8 +173,57 @@ async function handlePaymentSucceeded(paymentIntent: Stripe.PaymentIntent) {
 
 async function handlePaymentFailed(paymentIntent: Stripe.PaymentIntent) {
   console.log('Payment failed:', paymentIntent.id);
-  // TODO: Send failure email to customer
-  // TODO: Log failed payment for analysis
+
+  const { tripId, userId } = paymentIntent.metadata || {};
+
+  if (!tripId || !userId) {
+    console.warn('Missing metadata for failed payment intent:', paymentIntent.id);
+    return;
+  }
+
+  try {
+    // Fetch trip and guide info
+    const { data: trip, error: tripError } = await supabase
+      .from('trips')
+      .select('*, guides(display_name, user_id)')
+      .eq('id', tripId)
+      .single();
+
+    if (tripError || !trip) {
+      console.error('Trip not found for failed payment:', tripId);
+      return;
+    }
+
+    // Get customer email
+    const { data: user, error: userError } = await supabase
+      .from('profiles')
+      .select('email')
+      .eq('id', userId)
+      .single();
+
+    if (userError || !user?.email) {
+      console.error('User not found for failed payment:', userId);
+      return;
+    }
+
+    // Get guide email (optional)
+    const { data: guide, error: guideError } = await supabase
+      .from('profiles')
+      .select('email')
+      .eq('id', trip.guides.user_id)
+      .single();
+
+    // Send failure notifications
+    await sendPaymentFailedEmail(
+      user.email,
+      trip.title,
+      guide?.email
+    );
+
+    console.log('Payment failed notifications sent:', { tripId, userId });
+  } catch (error) {
+    console.error('Error handling payment failed:', error);
+  }
 }
 
 async function handleChargeRefunded(charge: Stripe.Charge) {

@@ -111,3 +111,57 @@ export async function sendRefundEmail(
     console.error('Failed to send refund email:', error);
   }
 }
+
+export async function sendPaymentFailedEmail(
+  customerEmail: string,
+  tripTitle: string,
+  guideEmail?: string
+) {
+  try {
+    // Customer notification
+    await resend.emails.send({
+      from: process.env.RESEND_FROM_EMAIL || 'Summit <noreply@summit.local>',
+      to: customerEmail,
+      subject: '❌ Payment Failed - Please Try Again',
+      html: `
+        <h2>Payment Failed</h2>
+        <p>Unfortunately, your payment for <strong>${tripTitle}</strong> could not be processed.</p>
+        
+        <h3>What to Do Next</h3>
+        <ul>
+          <li>Check your card details and try again</li>
+          <li>Use a different payment method</li>
+          <li>Contact your bank if issues persist</li>
+        </ul>
+        
+        <p><a href="https://summit.local/bookings" style="display: inline-block; padding: 10px 20px; background-color: #17a69a; color: white; text-decoration: none; border-radius: 5px;">Retry Payment</a></p>
+        
+        <p>Questions? Contact support@summit.local</p>
+        
+        <p>The Summit Team</p>
+      `,
+    });
+
+    console.log('Payment failed email sent to customer:', customerEmail);
+
+    // Guide notification (optional)
+    if (guideEmail) {
+      await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL || 'Summit <noreply@summit.local>',
+        to: guideEmail,
+        subject: '⚠️ Booking Payment Failed - Action Needed',
+        html: `
+          <h2>Booking Payment Failed</h2>
+          <p>A customer's payment failed for your trip <strong>${tripTitle}</strong>.</p>
+          
+          <p>The customer will receive a notification and can retry their payment. You don't need to take any action at this time.</p>
+          
+          <p>The Summit Team</p>
+        `,
+      });
+      console.log('Payment failed notification sent to guide:', guideEmail);
+    }
+  } catch (error) {
+    console.error('Failed to send payment failed email:', error);
+  }
+}
