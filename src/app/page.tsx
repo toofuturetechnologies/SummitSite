@@ -62,7 +62,7 @@ export default function HomePage() {
             </h1>
             <p className="mt-6 text-lg text-summit-100">
               Book guided outdoor adventures with certified mountain guides.
-              From Colorado's 14ers to backcountry skiing, find your next
+              From Colorado&apos;s 14ers to backcountry skiing, find your next
               adventure.
             </p>
 
