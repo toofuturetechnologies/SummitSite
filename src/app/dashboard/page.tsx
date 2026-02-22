@@ -15,6 +15,8 @@ interface Guide {
   display_name: string;
   tagline?: string;
   bio?: string;
+  base_location?: string;
+  years_experience?: number;
   rating: number;
   review_count: number;
 }
