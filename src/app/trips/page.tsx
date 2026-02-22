@@ -9,7 +9,7 @@ const supabase = createClient(
 export default async function TripsPage() {
   const { data: trips, error } = await supabase
     .from('trips')
-    .select('*, guides(name, rating)')
+    .select('*, guides(display_name, rating)')
     .limit(20);
 
   if (error) {
@@ -63,7 +63,7 @@ export default async function TripsPage() {
                   <p className="text-summit-300 text-sm mb-3">
                     {trip.description?.substring(0, 100)}...
                   </p>
-                  <div className="flex justify-between items-center mb-4">
+                  <div className="flex justify-between items-center mb-2">
                     <span className="text-summit-100 font-bold">
                       ${trip.price_per_person}
                     </span>
@@ -71,6 +71,11 @@ export default async function TripsPage() {
                       {trip.duration_days} days
                     </span>
                   </div>
+                  {trip.guides && (
+                    <p className="text-summit-300 text-xs mb-4">
+                      Guide: {trip.guides.display_name} • ⭐ {trip.guides.rating || 'No ratings'}
+                    </p>
+                  )}
                   <Link
                     href={`/trips/${trip.id}`}
                     className="block w-full text-center bg-summit-600 hover:bg-summit-500 text-white py-2 rounded transition"

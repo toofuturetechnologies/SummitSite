@@ -10,7 +10,7 @@ export default async function GuidesPage() {
   const { data: guides, error } = await supabase
     .from('guides')
     .select('*')
-    .eq('is_verified', true)
+    .eq('is_active', true)
     .limit(20)
     .order('rating', { ascending: false });
 
@@ -38,7 +38,7 @@ export default async function GuidesPage() {
         {!guides || guides.length === 0 ? (
           <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-12 text-center">
             <p className="text-summit-200 text-lg mb-4">
-              No verified guides yet. Be the first!
+              No guides available yet. Be the first to join!
             </p>
             <Link
               href="/become-a-guide"
@@ -57,13 +57,18 @@ export default async function GuidesPage() {
                 {guide.avatar_url && (
                   <img
                     src={guide.avatar_url}
-                    alt={guide.name}
+                    alt={guide.display_name}
                     className="w-24 h-24 rounded-full mb-4 object-cover"
                   />
                 )}
                 <h3 className="text-xl font-semibold text-white mb-2">
-                  {guide.name}
+                  {guide.display_name}
                 </h3>
+                {guide.tagline && (
+                  <p className="text-summit-400 text-sm font-medium mb-3">
+                    {guide.tagline}
+                  </p>
+                )}
                 <p className="text-summit-300 text-sm mb-4">
                   {guide.bio?.substring(0, 100)}...
                 </p>
