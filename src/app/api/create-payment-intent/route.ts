@@ -7,7 +7,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 
 export async function POST(request: NextRequest) {
   try {
-    const { amount, tripId, bookingId, guideName, tripName } = await request.json();
+    const {
+      amount,
+      tripId,
+      bookingId,
+      guideName,
+      tripName,
+      userId,
+      tripDateId,
+      participantCount,
+    } = await request.json();
 
     if (!amount || !tripId || !bookingId) {
       return NextResponse.json(
@@ -16,7 +25,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create payment intent
+    // Create payment intent with metadata
     const paymentIntent = await stripe.paymentIntents.create({
       amount: Math.round(amount * 100), // Convert to cents
       currency: 'usd',
@@ -24,6 +33,9 @@ export async function POST(request: NextRequest) {
       metadata: {
         tripId,
         bookingId,
+        userId,
+        tripDateId,
+        participantCount: participantCount?.toString() || '1',
       },
     });
 

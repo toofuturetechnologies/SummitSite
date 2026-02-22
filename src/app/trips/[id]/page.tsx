@@ -125,29 +125,10 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
         return;
       }
 
-      // Create booking
-      const totalPrice = (trip.price_per_person || 0) * participantCount;
-
-      const { error: bookingError } = await supabase
-        .from('bookings')
-        .insert({
-          trip_id: trip.id,
-          trip_date_id: selectedDate,
-          user_id: authData.user.id,
-          guide_id: trip.guide_id,
-          participant_count: participantCount,
-          total_price: totalPrice,
-          commission_amount: totalPrice * 0.12, // 12% commission
-          guide_payout: totalPrice * 0.88,
-          status: trip.is_instant_book ? 'confirmed' : 'pending',
-        });
-
-      if (bookingError) throw bookingError;
-
-      // Redirect to confirmation
-      window.location.href = `/bookings/confirmed?trip=${trip.id}`;
+      // Redirect to checkout with booking details
+      window.location.href = `/bookings/checkout?trip=${trip.id}&date=${selectedDate}&participants=${participantCount}`;
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create booking');
+      setError(err instanceof Error ? err.message : 'Failed to process booking');
     }
   };
 
