@@ -26,7 +26,7 @@ export default function HomePage() {
               Find Guides
             </Link>
             <Link
-              href="/become-a-guide"
+              href="/auth/signup"
               className="text-sm font-medium text-gray-600 hover:text-summit-700"
             >
               Become a Guide
@@ -35,16 +35,16 @@ export default function HomePage() {
 
           <div className="flex items-center gap-4">
             <Link
-              href="/login"
+              href="/auth/login"
               className="text-sm font-medium text-gray-600 hover:text-summit-700"
             >
               Log in
             </Link>
             <Link
-              href="/register"
+              href="/auth/signup"
               className="rounded-lg bg-summit-700 px-4 py-2 text-sm font-medium text-white hover:bg-summit-800"
             >
-              Sign up
+              Become a Guide
             </Link>
           </div>
         </nav>
