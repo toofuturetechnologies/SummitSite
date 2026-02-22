@@ -21,14 +21,14 @@ export function useAuth() {
 
     getUser();
 
-    const subscription = supabase.auth.onAuthStateChange(
+    const { data } = supabase.auth.onAuthStateChange(
       (event, session) => {
         setUser(session?.user || null);
       }
     );
 
     return () => {
-      subscription?.subscription?.unsubscribe();
+      data?.subscription?.unsubscribe();
     };
   }, []);
 
