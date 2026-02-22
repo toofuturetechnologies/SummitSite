@@ -120,12 +120,20 @@ export default function DashboardPage() {
             </h1>
             <p className="text-summit-300">{guide?.tagline}</p>
           </div>
-          <button
-            onClick={handleLogout}
-            className="bg-red-600 hover:bg-red-500 text-white px-6 py-2 rounded-lg transition"
-          >
-            Logout
-          </button>
+          <div className="flex gap-4">
+            <Link
+              href="/dashboard/bookings"
+              className="bg-summit-600 hover:bg-summit-500 text-white px-6 py-2 rounded-lg transition"
+            >
+              Bookings
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 hover:bg-red-500 text-white px-6 py-2 rounded-lg transition"
+            >
+              Logout
+            </button>
+          </div>
         </div>
 
         {/* Guide Stats */}

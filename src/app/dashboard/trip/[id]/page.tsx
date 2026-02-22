@@ -659,6 +659,13 @@ export default function EditTripPage({ params }: { params: { id: string } }) {
               {saving ? 'Saving...' : 'Save Changes'}
             </button>
 
+            <Link
+              href={`/dashboard/trip/${trip?.id}/dates`}
+              className="bg-blue-600 hover:bg-blue-500 text-white font-medium px-6 py-3 rounded-lg transition"
+            >
+              Manage Dates
+            </Link>
+
             <button
               type="button"
               onClick={() => setShowDeleteConfirm(true)}
