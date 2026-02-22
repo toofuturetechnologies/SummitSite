@@ -251,7 +251,7 @@ export default function BookingsPage() {
                         <Calendar className="w-4 h-4" />
                         <span>
                           {new Date(booking.start_date).toLocaleDateString()}
-                          {booking.start_date !== booking.end_date && 
+                          {booking.start_date !== booking.end_date && booking.end_date && 
                             ` - ${new Date(booking.end_date).toLocaleDateString()}`
                           }
                         </span>
