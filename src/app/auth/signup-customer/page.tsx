@@ -38,14 +38,15 @@ function SignUpContent() {
     setLoading(true);
 
     try {
-      // 1. Create auth user as customer
+      // 1. Create auth user as traveler (customer)
+      // The database trigger will automatically create the profile
       const { data: authData, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
           data: {
             full_name: `${formData.firstName} ${formData.lastName}`,
-            user_type: 'customer',
+            user_type: 'traveler', // Must match schema: 'traveler', 'guide', or 'admin'
           },
         },
       });
@@ -53,22 +54,14 @@ function SignUpContent() {
       if (signUpError) throw signUpError;
       if (!authData.user) throw new Error('User creation failed');
 
-      const userId = authData.user.id;
+      // Profile is automatically created by database trigger
+      // No manual insert needed
 
-      // 2. Create profile (as customer, NOT as guide)
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          id: userId,
-          full_name: `${formData.firstName} ${formData.lastName}`,
-          email: formData.email,
-          user_type: 'customer',
-        });
-
-      if (profileError) throw profileError;
-
-      // Success - redirect back to booking or dashboard
-      router.push(returnTo);
+      // Success - redirect back to booking
+      // Wait a moment for trigger to complete
+      setTimeout(() => {
+        router.push(returnTo);
+      }, 500);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {

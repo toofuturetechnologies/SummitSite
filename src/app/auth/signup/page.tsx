@@ -36,7 +36,8 @@ export default function SignUpPage() {
     setLoading(true);
 
     try {
-      // 1. Create auth user
+      // 1. Create auth user as guide
+      // The database trigger will automatically create the profile
       const { data: authData, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -53,19 +54,10 @@ export default function SignUpPage() {
 
       const userId = authData.user.id;
 
-      // 2. Create profile
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .insert({
-          id: userId,
-          full_name: formData.fullName,
-          email: formData.email,
-          user_type: 'guide',
-        });
+      // Profile is automatically created by database trigger
+      // No manual insert needed
 
-      if (profileError) throw profileError;
-
-      // 3. Create guide profile
+      // 2. Create guide profile
       const { error: guideError } = await supabase
         .from('guides')
         .insert({
@@ -82,7 +74,10 @@ export default function SignUpPage() {
       if (guideError) throw guideError;
 
       // Success - redirect to dashboard
-      router.push('/dashboard');
+      // Wait a moment for trigger to complete
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 500);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
