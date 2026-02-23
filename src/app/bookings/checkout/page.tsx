@@ -31,8 +31,10 @@ function CheckoutContent() {
     const setupPayment = async () => {
       try {
         if (!tripId || !dateId || !participants) {
-          setError('Missing booking information');
-          setLoading(false);
+          // Redirect to trips page if booking info is missing
+          setTimeout(() => {
+            window.location.href = '/trips';
+          }, 1000);
           return;
         }
 
@@ -103,6 +105,23 @@ function CheckoutContent() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
         <p className="text-white text-lg">Setting up payment...</p>
+      </div>
+    );
+  }
+
+  if (!tripId || !dateId || !participants) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center p-4">
+        <div className="max-w-md bg-summit-800/50 border border-summit-700 rounded-lg p-8 text-center">
+          <h1 className="text-2xl font-bold text-white mb-4">Start Your Booking</h1>
+          <p className="text-summit-300 mb-6">Please select a trip first</p>
+          <Link
+            href="/trips"
+            className="block w-full bg-summit-600 hover:bg-summit-500 text-white font-medium py-3 rounded-lg transition"
+          >
+            Browse Trips
+          </Link>
+        </div>
       </div>
     );
   }
