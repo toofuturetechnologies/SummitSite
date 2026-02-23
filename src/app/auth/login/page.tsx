@@ -3,15 +3,19 @@
 import { useState } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnTo = searchParams.get('returnTo') || '/dashboard';
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -39,8 +43,8 @@ export default function LoginPage() {
 
       if (signInError) throw signInError;
 
-      // Success - redirect to dashboard
-      router.push('/dashboard');
+      // Success - redirect to return URL or dashboard
+      router.push(returnTo);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
@@ -100,13 +104,40 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p className="text-summit-300 text-sm mt-6 text-center">
-          Don&apos;t have an account?{' '}
-          <Link href="/auth/signup" className="text-summit-400 hover:text-summit-300">
-            Sign up as a guide
-          </Link>
-        </p>
+        <div className="space-y-3 mt-6">
+          <p className="text-summit-300 text-sm text-center">
+            Don&apos;t have an account?
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            <Link
+              href="/auth/signup-customer"
+              className="block bg-summit-700 hover:bg-summit-600 text-summit-100 text-sm font-medium py-2 rounded-lg transition text-center"
+            >
+              🏕️ Book a Trip
+            </Link>
+            <Link
+              href="/auth/signup"
+              className="block bg-summit-700 hover:bg-summit-600 text-summit-100 text-sm font-medium py-2 rounded-lg transition text-center"
+            >
+              🏔️ Become a Guide
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
+          <p className="text-white text-lg">Loading...</p>
+        </div>
+      }
+    >
+      <LoginContent />
+    </Suspense>
   );
 }

@@ -96,6 +96,12 @@ export default function SignUpPage() {
         <h1 className="text-3xl font-bold text-white mb-2">Become a Guide</h1>
         <p className="text-summit-300 mb-6">Join Summit and share your expertise</p>
 
+        <div className="bg-summit-900/50 border border-summit-700 rounded-lg p-3 mb-6">
+          <p className="text-summit-300 text-sm">
+            🏔️ <strong>Guide Account:</strong> Create and manage adventure trips. Earn money from bookings.
+          </p>
+        </div>
+
         {error && (
           <div className="bg-red-900/50 text-red-100 p-4 rounded-lg mb-6">
             {error}
@@ -200,7 +206,14 @@ export default function SignUpPage() {
           </button>
         </form>
 
-        <p className="text-summit-300 text-sm mt-6 text-center">
+        <p className="text-summit-400 text-sm text-center mt-6">
+          Looking to book trips instead?{' '}
+          <Link href="/auth/signup-customer" className="text-summit-300 hover:text-white font-medium">
+            Customer signup
+          </Link>
+        </p>
+
+        <p className="text-summit-300 text-sm mt-4 text-center">
           Already have an account?{' '}
           <Link href="/auth/login" className="text-summit-400 hover:text-summit-300">
             Sign in

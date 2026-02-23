@@ -55,7 +55,9 @@ function CheckoutContent() {
         // Get current user
         const { data: authData, error: authError } = await supabase.auth.getUser();
         if (authError || !authData.user) {
-          window.location.href = '/auth/login';
+          // Redirect to customer signup with return URL
+          const returnUrl = `/bookings/checkout?trip=${tripId}&date=${dateId}&participants=${participants}`;
+          window.location.href = `/auth/signup-customer?returnTo=${encodeURIComponent(returnUrl)}`;
           return;
         }
 

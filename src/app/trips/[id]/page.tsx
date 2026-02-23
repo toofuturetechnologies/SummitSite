@@ -121,7 +121,8 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
 
       if (!authData.user) {
         // Redirect to login
-        window.location.href = '/auth/login';
+        const returnUrl = `/bookings/checkout?trip=${trip.id}window.location.href = '/auth/login';date=${selectedDate}window.location.href = '/auth/login';participants=${participantCount}`;
+        window.location.href = `/auth/signup-customer?returnTo=${encodeURIComponent(returnUrl)}`;
         return;
       }
 
