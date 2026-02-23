@@ -33,17 +33,36 @@ function LoginContent() {
     setLoading(true);
 
     try {
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      console.log('Attempting login with email:', formData.email);
+      
+      const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       });
 
-      if (signInError) throw signInError;
+      console.log('Auth response:', { authData, signInError });
 
+      if (signInError) {
+        console.error('Sign in error:', signInError);
+        throw signInError;
+      }
+
+      if (!authData.user) {
+        console.error('No user returned from auth');
+        throw new Error('Authentication failed: no user data');
+      }
+
+      console.log('Login successful, user ID:', authData.user.id);
+      console.log('Redirecting to:', returnTo);
+      
       // Success - redirect to return URL or dashboard
-      router.push(returnTo);
+      setTimeout(() => {
+        router.push(returnTo);
+      }, 500);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed');
+      const errorMsg = err instanceof Error ? err.message : 'Login failed';
+      console.error('Login error:', errorMsg);
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }
