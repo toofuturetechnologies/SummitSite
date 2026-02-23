@@ -49,35 +49,70 @@ export default function SignUpPage() {
         },
       });
 
-      if (signUpError) throw signUpError;
-      if (!authData.user) throw new Error('User creation failed');
+      if (signUpError) {
+        console.error('SignUp error:', signUpError);
+        throw new Error(`Signup failed: ${signUpError.message}`);
+      }
+      
+      if (!authData.user) {
+        throw new Error('User creation failed: No user returned');
+      }
 
       const userId = authData.user.id;
+      console.log('Auth user created:', userId);
 
-      // Profile is automatically created by database trigger
-      // No manual insert needed
+      // Wait for database trigger to create profile
+      // Try up to 3 times with 500ms delays
+      let profileExists = false;
+      for (let i = 0; i < 3; i++) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('id', userId)
+          .single();
+        
+        if (profile) {
+          profileExists = true;
+          console.log('Profile created by trigger');
+          break;
+        }
+        
+        if (i === 2) {
+          console.error('Profile creation failed after retries');
+          console.log('Profile check error:', profileError);
+        }
+      }
+
+      if (!profileExists) {
+        throw new Error('Profile was not created. Please check your email and try again.');
+      }
 
       // 2. Create guide profile
+      const slug = formData.displayName
+        .toLowerCase()
+        .replace(/[^a-z0-9-]/g, '-')
+        .replace(/--+/g, '-');
+
       const { error: guideError } = await supabase
         .from('guides')
         .insert({
           user_id: userId,
-          slug: formData.displayName
-            .toLowerCase()
-            .replace(/\s+/g, '-'),
+          slug: slug,
           display_name: formData.displayName,
           tagline: formData.tagline,
           base_location: formData.baseLocation,
           is_active: true,
         });
 
-      if (guideError) throw guideError;
+      if (guideError) {
+        console.error('Guide insert error:', guideError);
+        throw new Error(`Guide creation failed: ${guideError.message}`);
+      }
 
       // Success - redirect to dashboard
-      // Wait a moment for trigger to complete
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 500);
+      router.push('/dashboard');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {

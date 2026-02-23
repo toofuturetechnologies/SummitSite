@@ -44,6 +44,7 @@ function SignUpContent() {
         email: formData.email,
         password: formData.password,
         options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
           data: {
             full_name: `${formData.firstName} ${formData.lastName}`,
             user_type: 'traveler', // Must match schema: 'traveler', 'guide', or 'admin'
@@ -51,17 +52,48 @@ function SignUpContent() {
         },
       });
 
-      if (signUpError) throw signUpError;
-      if (!authData.user) throw new Error('User creation failed');
+      if (signUpError) {
+        console.error('SignUp error:', signUpError);
+        throw new Error(`Signup failed: ${signUpError.message}`);
+      }
+      
+      if (!authData.user) {
+        throw new Error('User creation failed: No user returned');
+      }
 
-      // Profile is automatically created by database trigger
-      // No manual insert needed
+      const userId = authData.user.id;
+      console.log('Auth user created:', userId);
+
+      // Wait for database trigger to create profile
+      // Try up to 3 times with 500ms delays
+      let profileExists = false;
+      for (let i = 0; i < 3; i++) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('id')
+          .eq('id', userId)
+          .single();
+        
+        if (profile) {
+          profileExists = true;
+          console.log('Profile created by trigger');
+          break;
+        }
+        
+        if (i === 2) {
+          console.error('Profile creation failed after retries');
+          console.log('Profile check error:', profileError);
+        }
+      }
+
+      if (!profileExists) {
+        throw new Error('Profile was not created. Please check your email and try again.');
+      }
 
       // Success - redirect back to booking
-      // Wait a moment for trigger to complete
-      setTimeout(() => {
-        router.push(returnTo);
-      }, 500);
+      router.push(returnTo);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
