@@ -78,7 +78,7 @@ export default function EarningsPage() {
         const paidBookings = (bookingsData || []).filter(
           (b: any) => b.payment_status === 'paid'
         );
-        const totalEarnings = paidBookings.reduce((sum: any: any, b: any: any) => sum + b.guide_payout, 0);
+        const totalEarnings = paidBookings.reduce((sum: any, b: any) => sum + b.guide_payout, 0);
         const pendingPayouts = paidBookings.length;
         const averageBookingValue =
           paidBookings.length > 0 ? totalEarnings / paidBookings.length : 0;
