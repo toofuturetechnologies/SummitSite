@@ -1,9 +1,9 @@
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
 // Singleton pattern to avoid multiple client instances
-let supabaseInstance: ReturnType<typeof createSupabaseClient> | null = null;
+let supabaseInstance: any = null;
 
-export function createClient() {
+export function createClient(): any {
   if (!supabaseInstance) {
     supabaseInstance = createSupabaseClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -15,9 +15,9 @@ export function createClient() {
           detectSessionInUrl: true,
         },
       }
-    );
+    ) as any;
   }
-  return supabaseInstance;
+  return supabaseInstance as any;
 }
 
 export const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
