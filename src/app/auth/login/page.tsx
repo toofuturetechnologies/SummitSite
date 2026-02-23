@@ -20,7 +20,10 @@ function LoginContent() {
     password: '',
   });
 
+  console.log('LoginContent component mounted, returnTo:', returnTo);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('Form field changed:', e.target.name);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -28,6 +31,7 @@ function LoginContent() {
   };
 
   const handleLogin = async (e: React.FormEvent) => {
+    console.log('handleLogin called!', e.type);
     e.preventDefault();
     setError(null);
     setLoading(true);
@@ -80,7 +84,8 @@ function LoginContent() {
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-4" onClick={() => console.log('Form clicked')}>
+          {/* Debug: Form is mounted and ready */}
           <div>
             <label className="block text-summit-200 text-sm font-medium mb-2">
               Email
