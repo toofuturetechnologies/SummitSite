@@ -108,7 +108,7 @@ export default function SignUpPage() {
         .replace(/[^a-z0-9-]/g, '-')
         .replace(/--+/g, '-');
 
-      const { error: guideError } = await supabase
+      const { error: guideError } = await (supabase as any)
         .from('guides')
         .insert({
           user_id: userId,
