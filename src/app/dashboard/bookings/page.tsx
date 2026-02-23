@@ -105,10 +105,10 @@ export default function BookingsPage() {
 
           const enhancedBookings = bookingsData.map((b: any) => ({
             ...b,
-            start_date: dateMap.get(b.trip_date_id)?.start_date,
-            end_date: dateMap.get(b.trip_date_id)?.end_date,
+            start_date: (dateMap.get(b.trip_date_id) as any)?.start_date,
+            end_date: (dateMap.get(b.trip_date_id) as any)?.end_date,
             trip: b.trips as any,
-          }));
+          } as any));
 
           setBookings(enhancedBookings);
         } else {
