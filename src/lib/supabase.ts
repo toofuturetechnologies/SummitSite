@@ -1,10 +1,23 @@
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
+// Singleton pattern to avoid multiple client instances
+let supabaseInstance: ReturnType<typeof createSupabaseClient> | null = null;
+
 export function createClient() {
-  return createSupabaseClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  if (!supabaseInstance) {
+    supabaseInstance = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: true,
+        },
+      }
+    );
+  }
+  return supabaseInstance;
 }
 
 export const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
