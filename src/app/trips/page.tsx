@@ -71,12 +71,12 @@ export default function TripsPage() {
 
     // Activity filter
     if (selectedActivity) {
-      filtered = filtered.filter((trip) => trip.activity === selectedActivity);
+      filtered = filtered.filter((trip: any) => trip.activity === selectedActivity);
     }
 
     // Difficulty filter
     if (selectedDifficulty) {
-      filtered = filtered.filter((trip) => trip.difficulty === selectedDifficulty);
+      filtered = filtered.filter((trip: any) => trip.difficulty === selectedDifficulty);
     }
 
     // Price range filter

@@ -76,9 +76,9 @@ export default function EarningsPage() {
 
         // Calculate stats
         const paidBookings = (bookingsData || []).filter(
-          (b) => b.payment_status === 'paid'
+          (b: any) => b.payment_status === 'paid'
         );
-        const totalEarnings = paidBookings.reduce((sum, b) => sum + b.guide_payout, 0);
+        const totalEarnings = paidBookings.reduce((sum: any: any, b: any: any) => sum + b.guide_payout, 0);
         const pendingPayouts = paidBookings.length;
         const averageBookingValue =
           paidBookings.length > 0 ? totalEarnings / paidBookings.length : 0;
@@ -107,8 +107,8 @@ export default function EarningsPage() {
     );
   }
 
-  const paidBookings = bookings.filter((b) => b.payment_status === 'paid');
-  const refundedBookings = bookings.filter((b) => b.payment_status === 'refunded');
+  const paidBookings = bookings.filter((b: any) => b.payment_status === 'paid');
+  const refundedBookings = bookings.filter((b: any) => b.payment_status === 'refunded');
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900">
