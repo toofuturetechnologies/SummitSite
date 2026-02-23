@@ -50,21 +50,22 @@ export default function DashboardPage() {
         setUser(authData.user);
 
         // Fetch guide profile
-        const { data: guideData, error: guideError } = await supabase
+        const { data: guideData, error: guideError } = await (supabase as any)
           .from('guides')
           .select('*')
           .eq('user_id', authData.user.id)
           .single();
 
-        if (guideError) {
-          setError('Guide profile not found');
+        if (guideError || !guideData) {
+          // Not a guide - redirect to trips page
+          router.push('/trips');
           return;
         }
 
         setGuide(guideData);
 
         // Fetch trips
-        const { data: tripData, error: tripError } = await supabase
+        const { data: tripData, error: tripError } = await (supabase as any)
           .from('trips')
           .select('*')
           .eq('guide_id', guideData.id);
