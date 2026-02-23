@@ -37,7 +37,7 @@ function CheckoutContent() {
         }
 
         // Fetch trip and guide info
-        const { data: trip, error: tripError } = await supabase
+        const { data: trip, error: tripError } = await (supabase as any)
           .from('trips')
           .select('*, guides(display_name)')
           .eq('id', tripId)
@@ -58,7 +58,7 @@ function CheckoutContent() {
           return;
         }
 
-        const totalPrice = (trip.price_per_person || 0) * parseInt(participants);
+        const totalPrice = ((trip as any).price_per_person || 0) * parseInt(participants);
 
         // Create payment intent
         const response = await fetch('/api/create-payment-intent', {
