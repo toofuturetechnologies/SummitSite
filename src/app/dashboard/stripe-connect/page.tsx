@@ -127,7 +127,7 @@ function StripeConnectContent() {
         {success === 'true' && (
           <div className="bg-green-900/50 text-green-100 p-4 rounded-lg mb-8 flex items-center gap-3">
             <CheckCircle className="w-5 h-5" />
-            <span>Stripe account connected successfully! You'll now receive automatic payouts.</span>
+            <span>Stripe account connected successfully! You&apos;ll now receive automatic payouts.</span>
           </div>
         )}
 
@@ -180,10 +180,10 @@ function StripeConnectContent() {
 
               <div className="bg-summit-900/50 rounded-lg p-4 space-y-2 mb-6">
                 <p className="text-summit-300 text-sm">
-                  <strong>What you'll need:</strong>
+                  <strong>What you&apos;ll need:</strong>
                 </p>
                 <ul className="text-summit-400 text-sm space-y-1 list-disc list-inside">
-                  <li>Valid government ID (driver's license or passport)</li>
+                  <li>Valid government ID (driver&apos;s license or passport)</li>
                   <li>Bank account for payouts</li>
                   <li>SSN (last 4 digits)</li>
                 </ul>
