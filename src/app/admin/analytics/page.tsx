@@ -33,12 +33,19 @@ export default function AdminAnalyticsPage() {
         // Fetch all paid bookings
         const { data: bookings, error: bookingsError } = await supabase
           .from('bookings')
-          .select('*, guides(display_name)')
+          .select('id, total_price, commission_amount, hosting_fee, guide_payout, guides(display_name)')
           .eq('payment_status', 'paid');
 
         if (bookingsError) throw bookingsError;
 
-        const bookingsList = bookings || [];
+        const bookingsList = (bookings as Array<{
+          id: string;
+          total_price: number;
+          commission_amount: number;
+          hosting_fee: number;
+          guide_payout: number;
+          guides: { display_name: string } | null;
+        }>) || [];
 
         // Calculate metrics
         const totalBookings = bookingsList.length;
