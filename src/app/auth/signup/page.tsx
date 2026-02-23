@@ -85,14 +85,14 @@ export default function SignUpPage() {
       if (!profileExists) {
         console.log('Trigger failed, creating profile manually...');
         // If trigger didn't work, create profile manually
-        const { error: manualProfileError } = await supabase
+        const { error: manualProfileError } = await (supabase
           .from('profiles')
           .insert({
             id: userId,
             full_name: formData.fullName,
             email: formData.email,
             user_type: 'guide',
-          });
+          }) as any);
         
         if (manualProfileError) {
           console.error('Manual profile creation also failed:', manualProfileError);
