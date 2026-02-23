@@ -89,7 +89,23 @@ function SignUpContent() {
       }
 
       if (!profileExists) {
-        throw new Error('Profile was not created. Please check your email and try again.');
+        console.log('Trigger failed, creating profile manually...');
+        // If trigger didn't work, create profile manually
+        const { error: manualProfileError } = await supabase
+          .from('profiles')
+          .insert({
+            id: userId,
+            full_name: `${formData.firstName} ${formData.lastName}`,
+            email: formData.email,
+            user_type: 'traveler',
+          });
+        
+        if (manualProfileError) {
+          console.error('Manual profile creation also failed:', manualProfileError);
+          throw new Error(`Profile creation failed: ${manualProfileError.message}`);
+        }
+        
+        console.log('Profile created manually');
       }
 
       // Success - redirect back to booking

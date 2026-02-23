@@ -86,7 +86,23 @@ export default function SignUpPage() {
       }
 
       if (!profileExists) {
-        throw new Error('Profile was not created. Please check your email and try again.');
+        console.log('Trigger failed, creating profile manually...');
+        // If trigger didn't work, create profile manually
+        const { error: manualProfileError } = await supabase
+          .from('profiles')
+          .insert({
+            id: userId,
+            full_name: formData.fullName,
+            email: formData.email,
+            user_type: 'guide',
+          });
+        
+        if (manualProfileError) {
+          console.error('Manual profile creation also failed:', manualProfileError);
+          throw new Error(`Profile creation failed: ${manualProfileError.message}`);
+        }
+        
+        console.log('Profile created manually');
       }
 
       // 2. Create guide profile
