@@ -56,12 +56,16 @@ export default function DashboardPage() {
           .eq('user_id', authData.user.id)
           .single();
 
+        console.log('Guide fetch result:', { guideData, guideError });
+
         if (guideError || !guideData) {
           // Not a guide - redirect to trips page
+          console.log('No guide found, redirecting to /trips');
           router.push('/trips');
           return;
         }
 
+        console.log('Guide found, setting guide data');
         setGuide(guideData);
 
         // Fetch trips
