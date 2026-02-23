@@ -50,7 +50,7 @@ export default function BookingsPage() {
         }
 
         // Get guide ID
-        const { data: guideData, error: guideError } = await supabase
+        const { data: guideData, error: guideError } = await (supabase as any)
           .from('guides')
           .select('id')
           .eq('user_id', authData.user.id)
@@ -64,7 +64,7 @@ export default function BookingsPage() {
         setGuideId(guideData.id);
 
         // Fetch bookings for this guide
-        let query = supabase
+        let query = (supabase as any)
           .from('bookings')
           .select(`
             id,
