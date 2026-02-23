@@ -95,15 +95,15 @@ export default function BookingsPage() {
 
         // Fetch dates for each booking
         if (bookingsData && bookingsData.length > 0) {
-          const dateIds = Array.from(new Set(bookingsData.map(b => b.trip_date_id)));
+          const dateIds = Array.from(new Set(bookingsData.map((b: any) => b.trip_date_id)));
           const { data: datesData } = await supabase
             .from('trip_dates')
             .select('id, start_date, end_date')
             .in('id', dateIds);
 
-          const dateMap = new Map(datesData?.map(d => [d.id, d]) || []);
+          const dateMap = new Map(datesData?.map((d: any) => [d.id, d]) || []);
 
-          const enhancedBookings = bookingsData.map(b => ({
+          const enhancedBookings = bookingsData.map((b: any) => ({
             ...b,
             start_date: dateMap.get(b.trip_date_id)?.start_date,
             end_date: dateMap.get(b.trip_date_id)?.end_date,
