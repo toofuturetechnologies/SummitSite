@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 import Link from 'next/link';
 
 const supabase = createClient();
 
-export default function LeaveReviewPage() {
+function LeaveReviewPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const bookingId = searchParams.get('booking');
@@ -244,5 +244,17 @@ export default function LeaveReviewPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LeaveReviewPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-summit-950 flex items-center justify-center">
+        <p className="text-summit-400">Loading...</p>
+      </div>
+    }>
+      <LeaveReviewPageInner />
+    </Suspense>
   );
 }
