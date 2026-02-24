@@ -313,6 +313,17 @@ export default function BookingsPage() {
                     </button>
                   </div>
                 )}
+
+                {booking.status === 'completed' && (
+                  <div className="pt-4 border-t border-summit-700">
+                    <Link
+                      href={`/bookings/review?booking=${booking.id}`}
+                      className="block w-full bg-summit-600 hover:bg-summit-500 text-white font-medium py-2 rounded-lg transition text-center"
+                    >
+                      ⭐ Leave a Review
+                    </Link>
+                  </div>
+                )}
               </div>
             ))}
           </div>
