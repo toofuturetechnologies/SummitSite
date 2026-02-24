@@ -30,12 +30,16 @@ interface Trip {
 }
 
 export default function DashboardPage() {
+  console.log('🎯 DashboardPage component rendering');
+  
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
   const [guide, setGuide] = useState<Guide | null>(null);
   const [trips, setTrips] = useState<Trip[]>([]);
   const [error, setError] = useState<string | null>(null);
+  
+  console.log('🔧 State initialized:', { loading, user: user?.id, guide: guide?.id });
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -140,13 +144,18 @@ export default function DashboardPage() {
       <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-8">
         <div className="max-w-4xl mx-auto">
           <div className="bg-yellow-900/50 text-yellow-100 p-4 rounded-lg">
-            <p>Error: Guide profile not fully loaded</p>
+            <p>⚠️ Guide profile not fully loaded</p>
+            <p className="text-sm mt-2">User ID: {user?.id || 'N/A'}</p>
+            <p className="text-sm">Guide ID: {guide?.id || 'N/A'}</p>
+            <p className="text-sm mt-4">Redirecting to login...</p>
           </div>
         </div>
       </div>
     );
   }
 
+  console.log('✨ Rendering dashboard with data:', { guide: guide.display_name, trips: trips.length });
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900">
       <div className="max-w-4xl mx-auto p-8">
