@@ -42,19 +42,27 @@ export default function DashboardPage() {
   console.log('🔧 State initialized:', { loading, user: user?.id, guide: guide?.id });
 
   useEffect(() => {
+    // Prevent infinite loops with a flag
+    let isMounted = true;
+    
     const checkAuth = async () => {
+      if (!isMounted) return;
+      
       try {
         console.log('📊 Dashboard: Starting auth check...');
         const { data: authData, error: authError } = await supabase.auth.getUser();
         
-        console.log('👤 Auth result:', { user: authData?.user?.id, error: authError?.message });
+        console.log('👤 Auth result:', { user: authData?.user?.id, error: authError ? JSON.stringify(authError) : null });
         
         if (authError || !authData.user) {
           console.error('❌ No authenticated user, redirecting to login');
-          router.push('/auth/login');
+          if (isMounted) {
+            router.push('/auth/login');
+          }
           return;
         }
 
+        if (!isMounted) return;
         setUser(authData.user);
 
         // Fetch guide profile
@@ -65,15 +73,18 @@ export default function DashboardPage() {
           .eq('user_id', authData.user.id)
           .single();
 
-        console.log('📋 Guide fetch result:', { guideData: guideData?.id, error: guideError?.message });
+        console.log('📋 Guide fetch result:', { guideData: guideData?.id, error: guideError ? JSON.stringify(guideError) : null });
 
         if (guideError || !guideData) {
           // Not a guide - redirect to trips page
           console.log('⚠️ No guide found, redirecting to /trips');
-          router.push('/trips');
+          if (isMounted) {
+            router.push('/trips');
+          }
           return;
         }
 
+        if (!isMounted) return;
         console.log('✅ Guide found:', guideData.display_name);
         setGuide(guideData);
 
@@ -84,7 +95,9 @@ export default function DashboardPage() {
           .select('*')
           .eq('guide_id', guideData.id);
 
-        console.log('🏔️ Trips fetch result:', { count: tripData?.length, error: tripError?.message });
+        console.log('🏔️ Trips fetch result:', { count: tripData?.length, error: tripError ? JSON.stringify(tripError) : null });
+        
+        if (!isMounted) return;
         
         if (tripError) {
           console.error('❌ Error fetching trips:', tripError);
@@ -94,14 +107,23 @@ export default function DashboardPage() {
       } catch (err) {
         const errorMsg = err instanceof Error ? err.message : 'An error occurred';
         console.error('❌ Dashboard error:', errorMsg, err);
-        setError(errorMsg);
+        if (isMounted) {
+          setError(errorMsg);
+        }
       } finally {
         console.log('✨ Dashboard loading complete');
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     };
 
     checkAuth();
+    
+    // Cleanup function
+    return () => {
+      isMounted = false;
+    };
   }, [router]);
 
   const handleLogout = async () => {
