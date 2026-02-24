@@ -40,9 +40,13 @@ export default function DashboardPage() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
+        console.log('📊 Dashboard: Starting auth check...');
         const { data: authData, error: authError } = await supabase.auth.getUser();
         
+        console.log('👤 Auth result:', { user: authData?.user?.id, error: authError?.message });
+        
         if (authError || !authData.user) {
+          console.error('❌ No authenticated user, redirecting to login');
           router.push('/auth/login');
           return;
         }
@@ -50,38 +54,45 @@ export default function DashboardPage() {
         setUser(authData.user);
 
         // Fetch guide profile
+        console.log('🔍 Fetching guide for user:', authData.user.id);
         const { data: guideData, error: guideError } = await (supabase as any)
           .from('guides')
           .select('*')
           .eq('user_id', authData.user.id)
           .single();
 
-        console.log('Guide fetch result:', { guideData, guideError });
+        console.log('📋 Guide fetch result:', { guideData: guideData?.id, error: guideError?.message });
 
         if (guideError || !guideData) {
           // Not a guide - redirect to trips page
-          console.log('No guide found, redirecting to /trips');
+          console.log('⚠️ No guide found, redirecting to /trips');
           router.push('/trips');
           return;
         }
 
-        console.log('Guide found, setting guide data');
+        console.log('✅ Guide found:', guideData.display_name);
         setGuide(guideData);
 
         // Fetch trips
+        console.log('🎯 Fetching trips for guide:', guideData.id);
         const { data: tripData, error: tripError } = await (supabase as any)
           .from('trips')
           .select('*')
           .eq('guide_id', guideData.id);
 
+        console.log('🏔️ Trips fetch result:', { count: tripData?.length, error: tripError?.message });
+        
         if (tripError) {
-          console.error('Error fetching trips:', tripError);
+          console.error('❌ Error fetching trips:', tripError);
         } else {
           setTrips(tripData || []);
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        const errorMsg = err instanceof Error ? err.message : 'An error occurred';
+        console.error('❌ Dashboard error:', errorMsg, err);
+        setError(errorMsg);
       } finally {
+        console.log('✨ Dashboard loading complete');
         setLoading(false);
       }
     };
@@ -97,7 +108,10 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
-        <p className="text-white text-lg">Loading...</p>
+        <div className="text-center">
+          <p className="text-white text-lg mb-4">Loading dashboard...</p>
+          <p className="text-summit-300 text-sm">Fetching your profile and trips</p>
+        </div>
       </div>
     );
   }
@@ -106,8 +120,27 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-8">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-red-900/50 text-red-100 p-4 rounded-lg">
-            <p>Error: {error}</p>
+          <div className="bg-red-900/50 text-red-100 p-4 rounded-lg mb-4">
+            <h2 className="font-bold mb-2">Dashboard Error</h2>
+            <p>{error}</p>
+          </div>
+          <Link
+            href="/auth/login"
+            className="inline-block bg-summit-600 hover:bg-summit-500 text-white px-6 py-2 rounded-lg transition"
+          >
+            Back to Login
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (!guide || !user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-yellow-900/50 text-yellow-100 p-4 rounded-lg">
+            <p>Error: Guide profile not fully loaded</p>
           </div>
         </div>
       </div>
