@@ -30,92 +30,87 @@ interface Trip {
 }
 
 export default function DashboardPage() {
-  console.log('🎯 DashboardPage component rendering');
-  
   const router = useRouter();
   const [loading, setLoading] = useState(true);
+  const [authState, setAuthState] = useState<'checking' | 'authenticated' | 'unauthenticated'>('checking');
   const [user, setUser] = useState<any>(null);
   const [guide, setGuide] = useState<Guide | null>(null);
   const [trips, setTrips] = useState<Trip[]>([]);
   const [error, setError] = useState<string | null>(null);
-  
-  console.log('🔧 State initialized:', { loading, user: user?.id, guide: guide?.id });
 
   useEffect(() => {
     let isMounted = true;
-    
-    console.log('🔌 Dashboard: Setting up auth listener...');
-    
-    // Use onAuthStateChange as the primary auth check
+
+    console.log('🎯 [Dashboard] Setting up auth listener');
+
+    // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event: any, session: any) => {
-      console.log('🔔 Auth state event:', event, 'User:', session?.user?.id);
-      
-      if (!isMounted) return;
-      
-      try {
-        // If no session, redirect to login
+      console.log('🔔 [Dashboard] Auth state changed:', event, 'Session:', !!session?.user);
+
+      if (!isMounted) {
+        console.log('🛑 [Dashboard] Component unmounted, skipping');
+        return;
+      }
+
+      // Handle INITIAL_SESSION and SIGNED_IN events
+      if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') {
         if (!session?.user) {
-          console.warn('⚠️ No active session, redirecting to login');
-          router.push('/auth/login?returnTo=/dashboard');
+          console.log('⚠️ [Dashboard] No session, waiting for login...');
+          setAuthState('unauthenticated');
+          setLoading(false);
           return;
         }
 
-        // We have a session - set the user
-        console.log('✅ Session found for user:', session.user.id);
+        console.log('✅ [Dashboard] User authenticated:', session.user.id);
+        setAuthState('authenticated');
         setUser(session.user);
 
-        // Fetch guide profile
-        console.log('🔍 Fetching guide for user:', session.user.id);
-        const { data: guideData, error: guideError } = await (supabase as any)
-          .from('guides')
-          .select('*')
-          .eq('user_id', session.user.id)
-          .single();
+        try {
+          // Fetch guide
+          console.log('📋 [Dashboard] Fetching guide data');
+          const { data: guideData, error: guideError } = await (supabase as any)
+            .from('guides')
+            .select('*')
+            .eq('user_id', session.user.id)
+            .single();
 
-        console.log('📋 Guide fetch result:', { 
-          found: !!guideData,
-          id: guideData?.id,
-          name: guideData?.display_name,
-          error: guideError?.message,
-        });
+          if (!isMounted) return;
 
-        if (!isMounted) return;
+          if (guideError || !guideData) {
+            console.log('ℹ️ [Dashboard] User is not a guide');
+            setLoading(false);
+            router.push('/trips');
+            return;
+          }
 
-        if (guideError || !guideData) {
-          console.log('⚠️ Not a guide, redirecting to /trips');
-          router.push('/trips');
-          return;
-        }
+          console.log('✅ [Dashboard] Guide found:', guideData.display_name);
+          setGuide(guideData);
 
-        setGuide(guideData);
+          // Fetch trips
+          console.log('🎯 [Dashboard] Fetching trips');
+          const { data: tripData } = await (supabase as any)
+            .from('trips')
+            .select('*')
+            .eq('guide_id', guideData.id);
 
-        // Fetch trips for this guide
-        console.log('🎯 Fetching trips for guide:', guideData.id);
-        const { data: tripData, error: tripError } = await (supabase as any)
-          .from('trips')
-          .select('*')
-          .eq('guide_id', guideData.id);
+          if (!isMounted) return;
 
-        if (!isMounted) return;
-
-        if (tripError) {
-          console.error('❌ Error fetching trips:', tripError.message);
-        } else {
-          console.log('✅ Found trips:', tripData?.length || 0);
           setTrips(tripData || []);
-        }
-
-        setLoading(false);
-      } catch (err) {
-        console.error('❌ Error:', err);
-        if (isMounted) {
-          setError(err instanceof Error ? err.message : 'An error occurred');
           setLoading(false);
+        } catch (err) {
+          console.error('❌ [Dashboard] Error:', err);
+          if (isMounted) {
+            setError(err instanceof Error ? err.message : 'Error loading dashboard');
+            setLoading(false);
+          }
         }
+      } else if (event === 'SIGNED_OUT') {
+        console.log('👋 [Dashboard] User signed out');
+        setAuthState('unauthenticated');
+        setLoading(false);
       }
     });
 
-    // Cleanup function
     return () => {
       isMounted = false;
       subscription?.unsubscribe();
@@ -127,12 +122,29 @@ export default function DashboardPage() {
     router.push('/');
   };
 
-  if (loading) {
+  if (authState === 'checking' || loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
         <div className="text-center">
-          <p className="text-white text-lg mb-4">Loading dashboard...</p>
-          <p className="text-summit-300 text-sm">Fetching your profile and trips</p>
+          <p className="text-white text-lg mb-4">Loading your dashboard...</p>
+          <p className="text-summit-300 text-sm">Authenticating and fetching your profile</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (authState === 'unauthenticated') {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center p-4">
+        <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-8 w-full max-w-md text-center">
+          <h1 className="text-3xl font-bold text-white mb-4">Authentication Required</h1>
+          <p className="text-summit-300 mb-6">Please log in to access your guide dashboard</p>
+          <Link
+            href="/auth/login?returnTo=/dashboard"
+            className="inline-block w-full bg-summit-600 hover:bg-summit-500 text-white px-6 py-3 rounded-lg transition font-medium"
+          >
+            Go to Login
+          </Link>
         </div>
       </div>
     );
@@ -143,36 +155,29 @@ export default function DashboardPage() {
       <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-8">
         <div className="max-w-4xl mx-auto">
           <div className="bg-red-900/50 text-red-100 p-4 rounded-lg mb-4">
-            <h2 className="font-bold mb-2">Dashboard Error</h2>
+            <h2 className="font-bold mb-2">Error</h2>
             <p>{error}</p>
           </div>
           <Link
-            href="/auth/login"
+            href="/"
             className="inline-block bg-summit-600 hover:bg-summit-500 text-white px-6 py-2 rounded-lg transition"
           >
-            Back to Login
+            Back to Home
           </Link>
         </div>
       </div>
     );
   }
 
-  if (!guide || !user) {
+  if (!guide) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-8">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-yellow-900/50 text-yellow-100 p-4 rounded-lg">
-            <p>⚠️ Guide profile not fully loaded</p>
-            <p className="text-sm mt-2">User ID: {user?.id || 'N/A'}</p>
-            <p className="text-sm">Guide ID: {guide?.id || 'N/A'}</p>
-            <p className="text-sm mt-4">Redirecting to login...</p>
-          </div>
+          <p className="text-white">Guide profile not found. Redirecting...</p>
         </div>
       </div>
     );
   }
-
-  console.log('✨ Rendering dashboard with data:', { guide: guide.display_name, trips: trips.length });
   
   return (
     <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900">
