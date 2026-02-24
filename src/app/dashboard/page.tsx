@@ -50,19 +50,35 @@ export default function DashboardPage() {
       
       try {
         console.log('📊 Dashboard: Starting auth check...');
+        console.log('⏱️ Timestamp:', new Date().toISOString());
+        
         const { data: authData, error: authError } = await supabase.auth.getUser();
         
-        console.log('👤 Auth result:', { user: authData?.user?.id, error: authError ? JSON.stringify(authError) : null });
+        console.log('👤 Auth response:', {
+          hasUser: !!authData?.user,
+          userId: authData?.user?.id,
+          userEmail: authData?.user?.email,
+          hasError: !!authError,
+          errorCode: authError?.code,
+          errorStatus: authError?.status,
+          errorMessage: authError?.message,
+        });
         
-        if (authError || !authData.user) {
-          console.error('❌ No authenticated user, redirecting to login');
+        if (authError) {
+          console.error('❌ Auth error:', authError.message, authError.code, authError.status);
+        }
+        
+        if (!authData?.user) {
+          console.error('❌ No authenticated user in authData');
           if (isMounted) {
+            console.log('🔄 Pushing to login...');
             router.push('/auth/login');
           }
           return;
         }
 
         if (!isMounted) return;
+        console.log('✅ User authenticated:', authData.user.id);
         setUser(authData.user);
 
         // Fetch guide profile

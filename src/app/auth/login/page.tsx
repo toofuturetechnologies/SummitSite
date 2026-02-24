@@ -59,10 +59,11 @@ function LoginContent() {
       console.log('Login successful, user ID:', authData.user.id);
       console.log('Redirecting to:', returnTo);
       
-      // Success - redirect to return URL or dashboard
+      // Wait a bit longer to ensure session is established
       setTimeout(() => {
+        console.log('⏱️ Redirecting after 1s delay...');
         router.push(returnTo);
-      }, 500);
+      }, 1000);
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'Login failed';
       console.error('Login error:', errorMsg);
