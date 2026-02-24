@@ -127,15 +127,23 @@ export default function DashboardPage() {
             <h1 className="text-4xl font-bold text-white mb-2">{guide.display_name}</h1>
             <p className="text-summit-300">{guide.tagline || 'Guide'}</p>
           </div>
-          <button
-            onClick={async () => {
-              await supabase.auth.signOut();
-              router.push('/');
-            }}
-            className="bg-red-600 hover:bg-red-500 text-white px-6 py-2 rounded-lg transition"
-          >
-            Logout
-          </button>
+          <div className="flex gap-3">
+            <Link
+              href="/dashboard/analytics"
+              className="bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-lg transition font-medium"
+            >
+              📊 Analytics
+            </Link>
+            <button
+              onClick={async () => {
+                await supabase.auth.signOut();
+                router.push('/');
+              }}
+              className="bg-red-600 hover:bg-red-500 text-white px-6 py-2 rounded-lg transition"
+            >
+              Logout
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
