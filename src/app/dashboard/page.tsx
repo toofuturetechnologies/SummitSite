@@ -158,9 +158,17 @@ export default function DashboardPage() {
           </div>
           <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
             <p className="text-summit-300 text-sm mb-2">Quick Links</p>
-            <Link href="/dashboard/bookings" className="text-summit-400 hover:text-summit-300">
-              View Bookings →
-            </Link>
+            <div className="space-y-2">
+              <Link href="/dashboard/bookings" className="text-summit-400 hover:text-summit-300 block">
+                View Bookings →
+              </Link>
+              <Link href="/dashboard/messages" className="text-summit-400 hover:text-summit-300 block">
+                Messages →
+              </Link>
+              <Link href="/dashboard/earnings" className="text-summit-400 hover:text-summit-300 block">
+                Earnings →
+              </Link>
+            </div>
           </div>
         </div>
 

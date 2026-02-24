@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase';
 import Link from 'next/link';
-import { Star, Users, MapPin, Calendar } from 'lucide-react';
+import { Star, Users, MapPin, Calendar, MessageSquare } from 'lucide-react';
+import ReviewsSection from '@/components/ReviewsSection';
 
 const supabase = createClient();
 
@@ -201,20 +202,27 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
         {/* Guide Info */}
         {guide && (
           <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-semibold text-white mb-4">About Your Guide</h2>
-            <div className="flex items-start gap-4">
+            <div className="flex items-start justify-between">
               <div className="flex-1">
+                <h2 className="text-xl font-semibold text-white mb-4">About Your Guide</h2>
                 <h3 className="text-lg font-semibold text-white">{guide.display_name}</h3>
                 <p className="text-summit-400 text-sm mb-2">{guide.tagline}</p>
-                <div className="flex items-center gap-2 text-summit-300">
+                <div className="flex items-center gap-2 text-summit-300 mb-3">
                   <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                   <span>{guide.rating.toFixed(1)}</span>
                   <span className="text-summit-400">({guide.review_count} reviews)</span>
                 </div>
                 {guide.bio && (
-                  <p className="text-summit-300 text-sm mt-3 line-clamp-3">{guide.bio}</p>
+                  <p className="text-summit-300 text-sm line-clamp-3">{guide.bio}</p>
                 )}
               </div>
+              <Link
+                href={`/dashboard/messages?contact=${guide.id}`}
+                className="ml-4 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 flex-shrink-0 text-sm"
+              >
+                <MessageSquare className="w-4 h-4" />
+                Message
+              </Link>
             </div>
           </div>
         )}
@@ -291,6 +299,9 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
                 </div>
               )}
             </div>
+
+            {/* Reviews Section */}
+            <ReviewsSection tripId={trip.id} guideId={trip.guide_id} />
           </div>
 
           {/* Booking Sidebar */}
