@@ -59,6 +59,15 @@ function LoginContent() {
       console.log('Login successful, user ID:', authData.user.id);
       console.log('Redirecting to:', returnTo);
       
+      // Store auth flag in localStorage for dashboard to detect
+      try {
+        localStorage.setItem('auth_user_id', authData.user.id);
+        localStorage.setItem('auth_timestamp', Date.now().toString());
+        console.log('✅ Stored auth in localStorage');
+      } catch (e) {
+        console.warn('⚠️ Could not store auth in localStorage');
+      }
+      
       // Wait a bit longer to ensure session is established
       setTimeout(() => {
         console.log('⏱️ Redirecting after 1s delay...');

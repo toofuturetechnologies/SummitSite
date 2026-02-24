@@ -40,12 +40,20 @@ export default function DashboardPage() {
 
   useEffect(() => {
     let isMounted = true;
+    let sessionCheckTimeout: NodeJS.Timeout;
 
     console.log('🎯 [Dashboard] Setting up auth listener');
 
+    // Check localStorage for recent login
+    const recentAuthUserId = typeof window !== 'undefined' ? localStorage.getItem('auth_user_id') : null;
+    const authTimestamp = typeof window !== 'undefined' ? localStorage.getItem('auth_timestamp') : null;
+    const isRecentLogin = recentAuthUserId && authTimestamp && (Date.now() - parseInt(authTimestamp)) < 5000;
+    
+    console.log('📱 [Dashboard] Recent login in localStorage:', isRecentLogin ? recentAuthUserId : 'none');
+
     // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event: any, session: any) => {
-      console.log('🔔 [Dashboard] Auth state changed:', event, 'Session:', !!session?.user);
+      console.log('🔔 [Dashboard] Auth state changed:', event, 'Session:', !!session?.user, 'Event:', event);
 
       if (!isMounted) {
         console.log('🛑 [Dashboard] Component unmounted, skipping');
@@ -55,7 +63,26 @@ export default function DashboardPage() {
       // Handle INITIAL_SESSION and SIGNED_IN events
       if (event === 'INITIAL_SESSION' || event === 'SIGNED_IN') {
         if (!session?.user) {
-          console.log('⚠️ [Dashboard] No session, waiting for login...');
+          // If we have a recent login in localStorage, give it more time to load
+          if (isRecentLogin && !sessionCheckTimeout) {
+            console.log('⏳ [Dashboard] No session yet but recent login detected, waiting...');
+            sessionCheckTimeout = setTimeout(async () => {
+              if (isMounted) {
+                const { data: { user } } = await supabase.auth.getUser();
+                if (user) {
+                  console.log('✅ [Dashboard] Session loaded after delay');
+                  // Trigger a re-check
+                } else {
+                  console.log('⚠️ [Dashboard] Still no session after wait');
+                  setAuthState('unauthenticated');
+                  setLoading(false);
+                }
+              }
+            }, 1500);
+            return;
+          }
+          
+          console.log('⚠️ [Dashboard] No session, user needs to login');
           setAuthState('unauthenticated');
           setLoading(false);
           return;
@@ -114,6 +141,7 @@ export default function DashboardPage() {
     return () => {
       isMounted = false;
       subscription?.unsubscribe();
+      if (sessionCheckTimeout) clearTimeout(sessionCheckTimeout);
     };
   }, [router]);
 
