@@ -155,6 +155,31 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* Stripe Connect CTA */}
+        {!guide?.stripe_account_id && (
+          <div className="bg-blue-900/50 border border-blue-700 rounded-lg p-6 mb-8">
+            <h2 className="text-xl font-bold text-white mb-2">💰 Ready to Get Paid?</h2>
+            <p className="text-blue-200 mb-4">
+              Connect your bank account to receive automatic payouts from bookings. You'll get 88% of each booking price.
+            </p>
+            <Link
+              href="/dashboard/stripe-connect"
+              className="inline-block bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition font-medium"
+            >
+              Set Up Payouts →
+            </Link>
+          </div>
+        )}
+
+        {guide?.stripe_account_id && (
+          <div className="bg-green-900/50 border border-green-700 rounded-lg p-6 mb-8">
+            <h2 className="text-xl font-bold text-white mb-2">✅ Payouts Connected</h2>
+            <p className="text-green-200">
+              Your Stripe account is connected. You'll receive automatic payouts for each booking!
+            </p>
+          </div>
+        )}
+
         <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
           <h2 className="text-2xl font-bold text-white mb-4">Your Trips</h2>
           {trips.length === 0 ? (

@@ -173,6 +173,44 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
 
     console.log('✅ Booking created successfully:', { bookingId: bookingData?.[0]?.id, tripId, userId });
 
+    // Handle Stripe Connect payout to guide
+    console.log('💸 Processing Stripe Connect payout...');
+    try {
+      const { data: guideData, error: guideDataError } = await supabase
+        .from('guides')
+        .select('stripe_account_id')
+        .eq('id', trip.guide_id)
+        .single();
+
+      if (guideDataError) {
+        console.warn('⚠️ Could not fetch guide Stripe account:', guideDataError);
+      } else if (guideData?.stripe_account_id) {
+        console.log('🔗 Stripe account found:', guideData.stripe_account_id);
+        
+        // Create transfer to guide's connected account
+        try {
+          const transfer = await stripe.transfers.create({
+            amount: Math.round(guidePayoutAmount * 100), // Convert to cents
+            currency: 'usd',
+            destination: guideData.stripe_account_id,
+            description: `Payout for booking ${bookingData?.[0]?.id} - ${trip.title}`,
+            metadata: {
+              bookingId: bookingData?.[0]?.id,
+              tripId: tripId,
+              guideId: trip.guide_id,
+            },
+          });
+          console.log('✅ Stripe transfer created:', transfer.id);
+        } catch (transferError) {
+          console.error('❌ Failed to create transfer:', transferError instanceof Error ? transferError.message : transferError);
+        }
+      } else {
+        console.log('ℹ️ Guide has not connected Stripe account yet - no automatic payout');
+      }
+    } catch (payoutError) {
+      console.error('❌ Payout processing error:', payoutError);
+    }
+
     // Send confirmation emails
     console.log('📧 Sending customer confirmation email to:', user.email);
     try {
