@@ -68,10 +68,10 @@ function LoginContent() {
         console.warn('⚠️ Could not store auth in localStorage');
       }
       
-      // Wait a bit longer to ensure session is established
+      // Use window.location for a hard navigation (not Next.js routing)
       setTimeout(() => {
-        console.log('⏱️ Redirecting after 1s delay...');
-        router.push(returnTo);
+        console.log('⏱️ Hard redirect after 1s delay to:', returnTo);
+        window.location.href = returnTo;
       }, 1000);
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : 'Login failed';
