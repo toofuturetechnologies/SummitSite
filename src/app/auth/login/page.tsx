@@ -114,6 +114,14 @@ function LoginContent() {
               className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="Enter your password"
             />
+            <div className="text-right mt-2">
+              <Link
+                href="/auth/forgot-password"
+                className="text-summit-400 hover:text-summit-300 text-sm"
+              >
+                Forgot password?
+              </Link>
+            </div>
           </div>
 
           <button
