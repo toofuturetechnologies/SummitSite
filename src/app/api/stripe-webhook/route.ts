@@ -81,7 +81,12 @@ export async function POST(request: NextRequest) {
 }
 
 async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) {
-  console.log('Checkout session completed:', session.id);
+  console.log('🎯 Checkout session completed:', session.id);
+  console.log('📊 Session data:', {
+    payment_status: session.payment_status,
+    amount_total: session.amount_total,
+    metadata: session.metadata,
+  });
 
   const { tripId, userId, participantCount, tripDateId, commission, guidePayout } =
     session.metadata || {};
@@ -132,6 +137,17 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
     const guidePayoutAmount = parseFloat(guidePayout || '0');
 
     // Create booking with payment confirmation
+    console.log('💾 Creating booking with:', {
+      trip_id: tripId,
+      user_id: userId,
+      guide_id: trip.guide_id,
+      participant_count: parseInt(participantCount || '1'),
+      total_price: amount,
+      commission_amount: platformCommission,
+      hosting_fee: hostingFee,
+      guide_payout: guidePayoutAmount,
+    });
+
     const { error: bookingError, data: bookingData } = await supabase
       .from('bookings')
       .insert({
@@ -151,29 +167,41 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
       .select();
 
     if (bookingError) {
-      console.error('Booking creation failed:', bookingError);
+      console.error('❌ Booking creation failed:', bookingError);
       return;
     }
 
-    console.log('Booking created successfully:', { tripId, userId });
+    console.log('✅ Booking created successfully:', { bookingId: bookingData?.[0]?.id, tripId, userId });
 
     // Send confirmation emails
-    await sendBookingConfirmationEmail(
-      user.email,
-      trip.title,
-      trip.guides.display_name,
-      amount,
-      new Date().toLocaleDateString()
-    );
+    console.log('📧 Sending customer confirmation email to:', user.email);
+    try {
+      await sendBookingConfirmationEmail(
+        user.email,
+        trip.title,
+        trip.guides.display_name,
+        amount,
+        new Date().toLocaleDateString()
+      );
+      console.log('✅ Customer email sent');
+    } catch (emailError) {
+      console.error('❌ Failed to send customer email:', emailError);
+    }
 
     if (guide?.email) {
-      await sendPayoutNotificationEmail(
-        guide.email,
-        trip.guides.display_name,
-        trip.title,
-        guidePayoutAmount,
-        hostingFee
-      );
+      console.log('📧 Sending guide payout email to:', guide.email);
+      try {
+        await sendPayoutNotificationEmail(
+          guide.email,
+          trip.guides.display_name,
+          trip.title,
+          guidePayoutAmount,
+          hostingFee
+        );
+        console.log('✅ Guide email sent');
+      } catch (emailError) {
+        console.error('❌ Failed to send guide email:', emailError);
+      }
     }
 
     // Log payment for analytics
