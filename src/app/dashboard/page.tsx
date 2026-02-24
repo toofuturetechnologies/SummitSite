@@ -48,78 +48,54 @@ export default function DashboardPage() {
     const checkAuth = async () => {
       if (!isMounted) return;
       
-      // Attempt to restore session first
-      console.log('🔄 Attempting to restore session...');
-      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-      console.log('📌 Session restore result:', { 
-        hasSession: !!session,
-        userId: session?.user?.id,
-        error: sessionError ? sessionError.message : null 
-      });
-      
-      if (sessionError) {
-        console.error('❌ Session restore error:', sessionError);
-      }
-      
       try {
         console.log('📊 Dashboard: Starting auth check...');
         console.log('⏱️ Timestamp:', new Date().toISOString());
         
-        // If we have a session, use it. Otherwise, try getUser()
-        let authData;
-        let authError;
+        // Try to get current user - if this fails, we're not authenticated
+        console.log('👤 Calling getUser()...');
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
         
-        if (session?.user) {
-          console.log('✅ Using restored session user');
-          authData = { user: session.user };
-          authError = null;
-        } else {
-          console.log('🔍 Session not found, trying getUser()...');
-          const result = await supabase.auth.getUser();
-          authData = result.data;
-          authError = result.error;
-        }
-        
-        console.log('👤 Auth response:', {
-          hasUser: !!authData?.user,
-          userId: authData?.user?.id,
-          userEmail: authData?.user?.email,
-          hasError: !!authError,
-          errorCode: authError?.code,
-          errorStatus: authError?.status,
-          errorMessage: authError?.message,
+        console.log('👤 getUser() result:', {
+          userId: user?.id,
+          userEmail: user?.email,
+          hasError: !!userError,
+          errorMessage: userError?.message,
         });
         
-        if (authError) {
-          console.error('❌ Auth error:', authError.message, authError.code, authError.status);
-        }
-        
-        if (!authData?.user) {
-          console.error('❌ No authenticated user in authData');
+        if (userError || !user) {
+          console.error('❌ User authentication failed:', userError?.message || 'No user');
+          console.log('🔄 Redirecting to login...');
           if (isMounted) {
-            console.log('🔄 Pushing to login...');
-            router.push('/auth/login');
+            router.push('/auth/login?returnTo=/dashboard');
           }
           return;
         }
 
         if (!isMounted) return;
-        console.log('✅ User authenticated:', authData.user.id);
-        setUser(authData.user);
+        console.log('✅ User authenticated:', user.id);
+        setUser(user);
 
         // Fetch guide profile
-        console.log('🔍 Fetching guide for user:', authData.user.id);
+        console.log('🔍 Fetching guide for user:', user.id);
         const { data: guideData, error: guideError } = await (supabase as any)
           .from('guides')
           .select('*')
-          .eq('user_id', authData.user.id)
+          .eq('user_id', user.id)
           .single();
 
-        console.log('📋 Guide fetch result:', { guideData: guideData?.id, error: guideError ? JSON.stringify(guideError) : null });
+        console.log('📋 Guide fetch result:', { 
+          guideFound: !!guideData,
+          guideId: guideData?.id,
+          guideName: guideData?.display_name,
+          hasError: !!guideError,
+          errorCode: guideError?.code,
+          errorMessage: guideError?.message,
+        });
 
         if (guideError || !guideData) {
           // Not a guide - redirect to trips page
-          console.log('⚠️ No guide found, redirecting to /trips');
+          console.log('⚠️ No guide found for this user, redirecting to /trips');
           if (isMounted) {
             router.push('/trips');
           }
