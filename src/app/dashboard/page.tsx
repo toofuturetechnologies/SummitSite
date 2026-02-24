@@ -163,8 +163,8 @@ export default function DashboardPage() {
     checkAuth();
     
     // Also listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('🔔 Auth state changed:', event, session?.user?.id);
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
+      console.log('🔔 Auth state changed:', _event, session?.user?.id);
       if (isMounted) {
         if (session?.user) {
           setUser(session.user);
