@@ -11,6 +11,7 @@ interface Guide {
   id: string;
   display_name: string;
   tagline?: string;
+  stripe_account_id?: string;
 }
 
 interface Trip {
