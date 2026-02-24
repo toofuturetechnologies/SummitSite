@@ -48,11 +48,37 @@ export default function DashboardPage() {
     const checkAuth = async () => {
       if (!isMounted) return;
       
+      // Attempt to restore session first
+      console.log('🔄 Attempting to restore session...');
+      const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+      console.log('📌 Session restore result:', { 
+        hasSession: !!session,
+        userId: session?.user?.id,
+        error: sessionError ? sessionError.message : null 
+      });
+      
+      if (sessionError) {
+        console.error('❌ Session restore error:', sessionError);
+      }
+      
       try {
         console.log('📊 Dashboard: Starting auth check...');
         console.log('⏱️ Timestamp:', new Date().toISOString());
         
-        const { data: authData, error: authError } = await supabase.auth.getUser();
+        // If we have a session, use it. Otherwise, try getUser()
+        let authData;
+        let authError;
+        
+        if (session?.user) {
+          console.log('✅ Using restored session user');
+          authData = { user: session.user };
+          authError = null;
+        } else {
+          console.log('🔍 Session not found, trying getUser()...');
+          const result = await supabase.auth.getUser();
+          authData = result.data;
+          authError = result.error;
+        }
         
         console.log('👤 Auth response:', {
           hasUser: !!authData?.user,
@@ -136,9 +162,20 @@ export default function DashboardPage() {
 
     checkAuth();
     
+    // Also listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('🔔 Auth state changed:', event, session?.user?.id);
+      if (isMounted) {
+        if (session?.user) {
+          setUser(session.user);
+        }
+      }
+    });
+    
     // Cleanup function
     return () => {
       isMounted = false;
+      subscription?.unsubscribe();
     };
   }, [router]);
 
