@@ -52,6 +52,10 @@ export async function POST(request: NextRequest) {
 
   try {
     switch (event.type) {
+      case 'checkout.session.completed':
+        await handleCheckoutSessionCompleted(event.data.object as Stripe.Checkout.Session);
+        break;
+
       case 'payment_intent.succeeded':
         await handlePaymentSucceeded(event.data.object as Stripe.PaymentIntent);
         break;
@@ -73,6 +77,114 @@ export async function POST(request: NextRequest) {
     console.error('Webhook handler error:', error);
     // Return 200 to acknowledge receipt, log the error for investigation
     return NextResponse.json({ received: true }, { status: 200 });
+  }
+}
+
+async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) {
+  console.log('Checkout session completed:', session.id);
+
+  const { tripId, userId, participantCount, tripDateId, commission, guidePayout } =
+    session.metadata || {};
+
+  if (!tripId || !userId) {
+    console.warn('Missing metadata for checkout session:', session.id);
+    return;
+  }
+
+  if (!session.payment_status || session.payment_status !== 'paid') {
+    console.log('Session not paid yet:', session.id);
+    return;
+  }
+
+  try {
+    // Fetch trip, guide, and user info
+    const { data: trip, error: tripError } = await supabase
+      .from('trips')
+      .select('*, guides(display_name, user_id)')
+      .eq('id', tripId)
+      .single();
+
+    if (tripError || !trip) {
+      console.error('Trip not found:', tripId);
+      return;
+    }
+
+    const { data: user, error: userError } = await supabase
+      .from('profiles')
+      .select('email')
+      .eq('id', userId)
+      .single();
+
+    if (userError || !user) {
+      console.error('User not found:', userId);
+      return;
+    }
+
+    const { data: guide, error: guideError } = await supabase
+      .from('profiles')
+      .select('email')
+      .eq('id', trip.guides.user_id)
+      .single();
+
+    const amount = (session.amount_total || 0) / 100; // Convert cents to dollars
+    const platformCommission = parseInt(commission || '0') / 100;
+    const hostingFee = amount - parseFloat(guidePayout || '0');
+    const guidePayoutAmount = parseFloat(guidePayout || '0');
+
+    // Create booking with payment confirmation
+    const { error: bookingError, data: bookingData } = await supabase
+      .from('bookings')
+      .insert({
+        trip_id: tripId,
+        trip_date_id: tripDateId,
+        user_id: userId,
+        guide_id: trip.guide_id,
+        participant_count: parseInt(participantCount || '1'),
+        total_price: amount,
+        commission_amount: platformCommission,
+        hosting_fee: hostingFee,
+        guide_payout: guidePayoutAmount,
+        status: 'confirmed',
+        payment_status: 'paid',
+        stripe_payment_intent_id: session.payment_intent?.toString(),
+      })
+      .select();
+
+    if (bookingError) {
+      console.error('Booking creation failed:', bookingError);
+      return;
+    }
+
+    console.log('Booking created successfully:', { tripId, userId });
+
+    // Send confirmation emails
+    await sendBookingConfirmationEmail(
+      user.email,
+      trip.title,
+      trip.guides.display_name,
+      amount,
+      new Date().toLocaleDateString()
+    );
+
+    if (guide?.email) {
+      await sendPayoutNotificationEmail(
+        guide.email,
+        trip.guides.display_name,
+        trip.title,
+        guidePayoutAmount,
+        hostingFee
+      );
+    }
+
+    // Log payment for analytics
+    console.log('Payment processed:', {
+      bookingId: bookingData?.[0]?.id,
+      amount,
+      platformRevenue: platformCommission + hostingFee,
+      guidePayout: guidePayoutAmount,
+    });
+  } catch (error) {
+    console.error('Error handling checkout session completed:', error);
   }
 }
 

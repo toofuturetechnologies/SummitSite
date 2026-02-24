@@ -4,24 +4,16 @@ import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 import Link from 'next/link';
-import { loadStripe } from '@stripe/stripe-js';
-import {
-  EmbeddedCheckoutProvider,
-  EmbeddedCheckout,
-} from '@stripe/react-stripe-js';
 
 const supabase = createClient();
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ''
-);
-
 function CheckoutContent() {
   const searchParams = useSearchParams();
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [bookingData, setBookingData] = useState<any>(null);
+  const [processing, setProcessing] = useState(false);
 
   const tripId = searchParams.get('trip');
   const dateId = searchParams.get('date');
@@ -62,14 +54,13 @@ function CheckoutContent() {
 
         const totalPrice = ((trip as any).price_per_person || 0) * parseInt(participants);
 
-        // Create payment intent
-        const response = await fetch('/api/create-payment-intent', {
+        // Create Stripe Checkout Session
+        const response = await fetch('/api/create-checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             amount: totalPrice,
             tripId,
-            bookingId: `${tripId}-${dateId}-${Date.now()}`,
             tripName: trip.title,
             guideName: trip.guides?.display_name || 'Guide',
             userId: authData.user.id,
@@ -79,11 +70,11 @@ function CheckoutContent() {
         });
 
         if (!response.ok) {
-          throw new Error('Failed to create payment intent');
+          throw new Error('Failed to create checkout session');
         }
 
         const data = await response.json();
-        setClientSecret(data.clientSecret);
+        setCheckoutUrl(data.url);
         setBookingData({
           trip,
           totalPrice,
@@ -143,10 +134,10 @@ function CheckoutContent() {
     );
   }
 
-  if (!clientSecret) {
+  if (!checkoutUrl) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
-        <p className="text-white text-lg">Loading payment form...</p>
+        <p className="text-white text-lg">Loading checkout...</p>
       </div>
     );
   }
@@ -186,25 +177,19 @@ function CheckoutContent() {
             </p>
           </div>
 
-          {/* Stripe Checkout */}
-          <EmbeddedCheckoutProvider
-            stripe={stripePromise}
-            options={{
-              clientSecret,
-              onComplete: async () => {
-                try {
-                  // Payment succeeded - webhook will create booking
-                  // Just redirect to confirmation
-                  window.location.href = `/bookings/confirmed?trip=${tripId}`;
-                } catch (err) {
-                  console.error('Checkout completion error:', err);
-                  window.location.href = `/bookings/error?error=Checkout+error`;
-                }
-              },
+          {/* Payment Button */}
+          <button
+            onClick={() => {
+              setProcessing(true);
+              if (checkoutUrl) {
+                window.location.href = checkoutUrl;
+              }
             }}
+            disabled={processing}
+            className="w-full bg-gradient-to-r from-summit-500 to-summit-600 hover:from-summit-400 hover:to-summit-500 disabled:from-summit-700 disabled:to-summit-700 text-white font-bold py-4 rounded-lg transition text-lg"
           >
-            <EmbeddedCheckout />
-          </EmbeddedCheckoutProvider>
+            {processing ? 'Redirecting to Stripe...' : 'Proceed to Payment'}
+          </button>
         </div>
       </div>
     </div>
