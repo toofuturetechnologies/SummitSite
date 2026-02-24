@@ -29,12 +29,22 @@ export default function DashboardPage() {
   useEffect(() => {
     const loadDashboard = async () => {
       try {
+        // Wait for Supabase session to fully load from storage
+        console.log('⏳ Dashboard: Waiting for session to load...');
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        
         console.log('🎯 Dashboard: Getting user...');
         const { data: { user }, error: userError } = await supabase.auth.getUser();
 
-        if (userError || !user) {
-          console.log('❌ Dashboard: No user, redirecting to login');
-          router.push('/auth/login?returnTo=/dashboard');
+        if (userError) {
+          console.error('❌ Dashboard: Auth error:', userError.message);
+        }
+
+        if (!user) {
+          console.log('⚠️ Dashboard: No user, redirecting to login');
+          setTimeout(() => {
+            router.push('/auth/login?returnTo=/dashboard');
+          }, 300);
           return;
         }
 
