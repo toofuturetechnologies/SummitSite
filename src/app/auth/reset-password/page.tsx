@@ -16,8 +16,8 @@ export default function ResetPasswordPage() {
 
   useEffect(() => {
     // Check if user is authenticated (should be after email click)
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!user) {
+    supabase.auth.getUser().then(({ data }: any) => {
+      if (!data?.user) {
         router.push('/auth/login');
       }
     });
