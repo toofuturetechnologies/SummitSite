@@ -42,112 +42,79 @@ export default function DashboardPage() {
   console.log('🔧 State initialized:', { loading, user: user?.id, guide: guide?.id });
 
   useEffect(() => {
-    // Prevent infinite loops with a flag
     let isMounted = true;
     
-    const checkAuth = async () => {
+    console.log('🔌 Dashboard: Setting up auth listener...');
+    
+    // Use onAuthStateChange as the primary auth check
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event: any, session: any) => {
+      console.log('🔔 Auth state event:', event, 'User:', session?.user?.id);
+      
       if (!isMounted) return;
       
       try {
-        console.log('📊 Dashboard: Starting auth check...');
-        console.log('⏱️ Timestamp:', new Date().toISOString());
-        
-        // Try to get current user - if this fails, we're not authenticated
-        console.log('👤 Calling getUser()...');
-        const { data: { user }, error: userError } = await supabase.auth.getUser();
-        
-        console.log('👤 getUser() result:', {
-          userId: user?.id,
-          userEmail: user?.email,
-          hasError: !!userError,
-          errorMessage: userError?.message,
-        });
-        
-        if (userError || !user) {
-          console.error('❌ User authentication failed:', userError?.message || 'No user');
-          console.log('🔄 Redirecting to login...');
-          if (isMounted) {
-            router.push('/auth/login?returnTo=/dashboard');
-          }
+        // If no session, redirect to login
+        if (!session?.user) {
+          console.warn('⚠️ No active session, redirecting to login');
+          router.push('/auth/login?returnTo=/dashboard');
           return;
         }
 
-        if (!isMounted) return;
-        console.log('✅ User authenticated:', user.id);
-        setUser(user);
+        // We have a session - set the user
+        console.log('✅ Session found for user:', session.user.id);
+        setUser(session.user);
 
         // Fetch guide profile
-        console.log('🔍 Fetching guide for user:', user.id);
+        console.log('🔍 Fetching guide for user:', session.user.id);
         const { data: guideData, error: guideError } = await (supabase as any)
           .from('guides')
           .select('*')
-          .eq('user_id', user.id)
+          .eq('user_id', session.user.id)
           .single();
 
         console.log('📋 Guide fetch result:', { 
-          guideFound: !!guideData,
-          guideId: guideData?.id,
-          guideName: guideData?.display_name,
-          hasError: !!guideError,
-          errorCode: guideError?.code,
-          errorMessage: guideError?.message,
+          found: !!guideData,
+          id: guideData?.id,
+          name: guideData?.display_name,
+          error: guideError?.message,
         });
 
+        if (!isMounted) return;
+
         if (guideError || !guideData) {
-          // Not a guide - redirect to trips page
-          console.log('⚠️ No guide found for this user, redirecting to /trips');
-          if (isMounted) {
-            router.push('/trips');
-          }
+          console.log('⚠️ Not a guide, redirecting to /trips');
+          router.push('/trips');
           return;
         }
 
-        if (!isMounted) return;
-        console.log('✅ Guide found:', guideData.display_name);
         setGuide(guideData);
 
-        // Fetch trips
+        // Fetch trips for this guide
         console.log('🎯 Fetching trips for guide:', guideData.id);
         const { data: tripData, error: tripError } = await (supabase as any)
           .from('trips')
           .select('*')
           .eq('guide_id', guideData.id);
 
-        console.log('🏔️ Trips fetch result:', { count: tripData?.length, error: tripError ? JSON.stringify(tripError) : null });
-        
         if (!isMounted) return;
-        
+
         if (tripError) {
-          console.error('❌ Error fetching trips:', tripError);
+          console.error('❌ Error fetching trips:', tripError.message);
         } else {
+          console.log('✅ Found trips:', tripData?.length || 0);
           setTrips(tripData || []);
         }
+
+        setLoading(false);
       } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : 'An error occurred';
-        console.error('❌ Dashboard error:', errorMsg, err);
+        console.error('❌ Error:', err);
         if (isMounted) {
-          setError(errorMsg);
-        }
-      } finally {
-        console.log('✨ Dashboard loading complete');
-        if (isMounted) {
+          setError(err instanceof Error ? err.message : 'An error occurred');
           setLoading(false);
         }
       }
-    };
-
-    checkAuth();
-    
-    // Also listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
-      console.log('🔔 Auth state changed:', _event, session?.user?.id);
-      if (isMounted) {
-        if (session?.user) {
-          setUser(session.user);
-        }
-      }
     });
-    
+
     // Cleanup function
     return () => {
       isMounted = false;
