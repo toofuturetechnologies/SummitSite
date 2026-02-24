@@ -1,16 +1,17 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import Navbar from '@/components/Navbar'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
   title: {
-    default: 'Summit - Find Your Guide. Reach Your Peak.',
+    default: 'Summit — Find Your Guide. Reach Your Peak.',
     template: '%s | Summit',
   },
   description:
-    'Book guided outdoor adventures with certified mountain guides. Mountaineering, rock climbing, ski touring, and more.',
+    'Book guided outdoor adventures with certified mountain guides. Mountaineering, rock climbing, ski touring, ice climbing, and more across the American West.',
   keywords: [
     'mountain guide',
     'outdoor adventure',
@@ -19,6 +20,9 @@ export const metadata: Metadata = {
     'ski touring',
     'guided trips',
     'Colorado',
+    'Yosemite',
+    'Mount Rainier',
+    'ice climbing',
   ],
   authors: [{ name: 'Summit' }],
   openGraph: {
@@ -26,13 +30,13 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: process.env.NEXT_PUBLIC_APP_URL,
     siteName: 'Summit',
-    title: 'Summit - Find Your Guide. Reach Your Peak.',
+    title: 'Summit — Find Your Guide. Reach Your Peak.',
     description:
       'Book guided outdoor adventures with certified mountain guides.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Summit - Find Your Guide. Reach Your Peak.',
+    title: 'Summit — Find Your Guide. Reach Your Peak.',
     description:
       'Book guided outdoor adventures with certified mountain guides.',
   },
@@ -49,7 +53,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-white font-sans antialiased">
+      <body className="min-h-screen bg-summit-950 font-sans antialiased">
+        <Navbar />
         {children}
       </body>
     </html>
