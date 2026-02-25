@@ -78,10 +78,10 @@ export default function Navbar() {
           <Link
             href="/"
             className={`flex items-center gap-2 transition ${
-              scrolled ? 'text-gray-900' : 'text-white hover:text-gray-200'
+              scrolled ? 'text-gray-900' : 'text-white hover:text-white/90'
             }`}
           >
-            <Mountain className="w-7 h-7 text-blue-500" />
+            <Mountain className="w-7 h-7 text-blue-400" />
             <span className="text-xl font-black tracking-tight">Summit</span>
           </Link>
 
@@ -101,7 +101,7 @@ export default function Navbar() {
                       : 'text-white bg-white/20'
                     : scrolled
                     ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                    : 'text-white/80 hover:text-white hover:bg-white/20'
+                    : 'text-white hover:text-white/90 hover:bg-white/10'
                 }`}
               >
                 {link.label}
@@ -118,7 +118,7 @@ export default function Navbar() {
                   className={`flex items-center gap-2 px-4 py-2 text-sm rounded-lg transition ${
                     scrolled
                       ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
-                      : 'text-white/80 hover:text-white hover:bg-white/20'
+                      : 'text-white hover:text-white/90 hover:bg-white/10'
                   }`}
                 >
                   <LayoutDashboard className="w-4 h-4" />
@@ -129,7 +129,7 @@ export default function Navbar() {
                   className={`flex items-center gap-2 px-4 py-2 text-sm transition ${
                     scrolled
                       ? 'text-gray-600 hover:text-red-600'
-                      : 'text-white/70 hover:text-white'
+                      : 'text-white hover:text-white/80'
                   }`}
                 >
                   <LogOut className="w-4 h-4" />
@@ -143,7 +143,7 @@ export default function Navbar() {
                   className={`px-4 py-2 text-sm transition font-medium ${
                     scrolled
                       ? 'text-gray-700 hover:text-blue-600'
-                      : 'text-white/80 hover:text-white'
+                      : 'text-white hover:text-white/90'
                   }`}
                 >
                   Sign In
@@ -160,7 +160,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className={`md:hidden p-2 ${scrolled ? 'text-gray-900' : 'text-white'}`}
+            className={`md:hidden p-2 transition ${scrolled ? 'text-gray-900 hover:text-gray-700' : 'text-white hover:text-white/80'}`}
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
