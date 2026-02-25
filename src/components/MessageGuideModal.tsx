@@ -12,7 +12,8 @@ const supabase = createClient(
 );
 
 interface MessageGuideModalProps {
-  guideId: string;
+  guideId: string;        // guides.id
+  guideUserId: string;    // guide's user_id (for recipient_id)
   guideName: string;
   tripId: string;
   tripTitle: string;
@@ -140,7 +141,7 @@ export default function MessageGuideModal({
         .from('messages')
         .insert({
           sender_id: user.id,
-          recipient_id: guideId,
+          recipient_id: guideUserId,  // Use guide's user_id, not guide_id
           content: messageContent,
           trip_id: tripId || null,
         })

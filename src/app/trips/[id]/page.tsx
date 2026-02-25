@@ -406,6 +406,7 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
         {trip && guide && (
           <MessageGuideModal
             guideId={guide.id}
+            guideUserId={guide.user_id}
             guideName={guide.display_name}
             tripId={trip.id}
             tripTitle={trip.title}
