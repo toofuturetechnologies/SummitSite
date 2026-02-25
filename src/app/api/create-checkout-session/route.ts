@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
       userId,
       tripDateId,
       participantCount,
+      referralUserId,
     } = await request.json();
 
     if (!amount || !tripId) {
@@ -61,6 +62,7 @@ export async function POST(request: NextRequest) {
         participantCount: participantCount?.toString() || '1',
         commission: commission.toString(),
         guidePayout: guidePayout.toString(),
+        referralUserId: referralUserId || '', // Add referral user ID
       },
     });
 
