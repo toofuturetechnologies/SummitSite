@@ -129,29 +129,29 @@ export default function CustomerDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-6">
+    <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-4 lg:p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">
+        <div className="mb-6 lg:mb-8">
+          <h1 className="text-2xl lg:text-4xl font-bold text-white mb-2">
             Welcome back, {user?.user_metadata?.full_name?.split(' ')[0]}!
           </h1>
-          <p className="text-summit-300">
+          <p className="text-sm lg:text-base text-summit-300">
             {upcomingTrips.length} upcoming trip{upcomingTrips.length !== 1 ? 's' : ''} • {chats.length} active chat{chats.length !== 1 ? 's' : ''}
           </p>
         </div>
 
         {/* Main Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-8">
           {/* Recent Chats */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-                <MessageSquare className="w-5 h-5" />
-                Recent Chats
+          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-4 lg:p-6">
+            <div className="flex items-center justify-between mb-4 gap-2">
+              <h2 className="text-base lg:text-lg font-semibold text-white flex items-center gap-2 min-w-0">
+                <MessageSquare className="w-4 lg:w-5 h-4 lg:h-5 flex-shrink-0" />
+                <span className="truncate">Chats</span>
               </h2>
               {chats.length > 0 && (
-                <Link href="/dashboard/messages" className="text-summit-400 hover:text-summit-300 text-sm">
+                <Link href="/dashboard/messages" className="text-summit-400 hover:text-summit-300 text-xs lg:text-sm whitespace-nowrap flex-shrink-0">
                   View all
                 </Link>
               )}
@@ -160,20 +160,20 @@ export default function CustomerDashboard() {
             {chats.length === 0 ? (
               <p className="text-summit-400 text-sm">No active chats yet</p>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-2 lg:space-y-3">
                 {chats.map((chat) => (
                   <Link
                     key={chat.otherUserId}
                     href="/dashboard/messages"
                     className="block p-3 bg-summit-900/50 hover:bg-summit-700/50 rounded-lg transition border border-summit-600"
                   >
-                    <div className="flex items-start justify-between">
+                    <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-white truncate">{chat.otherUserName}</p>
-                        <p className="text-summit-300 text-sm truncate">{chat.lastMessage}</p>
+                        <p className="font-semibold text-white text-sm lg:text-base truncate">{chat.otherUserName}</p>
+                        <p className="text-summit-300 text-xs lg:text-sm truncate mt-1">{chat.lastMessage}</p>
                       </div>
                       {chat.unreadCount > 0 && (
-                        <span className="bg-blue-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 ml-2">
+                        <span className="bg-blue-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0">
                           {chat.unreadCount}
                         </span>
                       )}
@@ -185,13 +185,13 @@ export default function CustomerDashboard() {
           </div>
 
           {/* Upcoming Trips */}
-          <div className="lg:col-span-2 bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-                <Calendar className="w-5 h-5" />
-                Upcoming Trips
+          <div className="lg:col-span-2 bg-summit-800/50 border border-summit-700 rounded-lg p-4 lg:p-6">
+            <div className="flex items-center justify-between mb-4 gap-2">
+              <h2 className="text-base lg:text-lg font-semibold text-white flex items-center gap-2 min-w-0">
+                <Calendar className="w-4 lg:w-5 h-4 lg:h-5 flex-shrink-0" />
+                <span className="truncate">Upcoming</span>
               </h2>
-              <Link href="/trips" className="text-summit-400 hover:text-summit-300 text-sm">
+              <Link href="/trips" className="text-summit-400 hover:text-summit-300 text-xs lg:text-sm whitespace-nowrap flex-shrink-0">
                 Browse more
               </Link>
             </div>
@@ -255,9 +255,9 @@ export default function CustomerDashboard() {
 
         {/* Past Trips */}
         {pastTrips.length > 0 && (
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-            <h2 className="text-lg font-semibold text-white mb-4">Past Trips</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-4 lg:p-6">
+            <h2 className="text-base lg:text-lg font-semibold text-white mb-4">Past Trips</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
               {pastTrips.map((booking) => (
                 <Link
                   key={booking.id}
