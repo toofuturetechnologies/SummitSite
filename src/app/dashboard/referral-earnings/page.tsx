@@ -80,7 +80,7 @@ export default function ReferralEarningsPage() {
 
       // Calculate trip breakdown
       const breakdown: { [key: string]: TripEarnings } = {};
-      data?.forEach((earning) => {
+      data?.forEach((earning: ReferralEarning) => {
         const tripId = earning.trip_id;
         if (!breakdown[tripId]) {
           breakdown[tripId] = {
