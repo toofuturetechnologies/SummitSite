@@ -57,30 +57,44 @@ export default function ReferralEarningsPage() {
       // Fetch referral earnings
       const { data, error: earningsError } = await supabase
         .from('referral_earnings')
-        .select(`
-          id,
-          trip_id,
-          trip:trip_id(id, title),
-          booking_id,
-          earnings_amount,
-          status,
-          created_at,
-          paid_at
-        `)
+        .select('*')
         .eq('referrer_user_id', authUser.id)
         .order('created_at', { ascending: false });
 
       if (earningsError) {
+        console.error('Earnings fetch error:', earningsError);
         setError('Failed to load earnings');
         setLoading(false);
         return;
       }
 
-      setEarnings(data as ReferralEarning[]);
+      // Fetch trips separately to avoid RLS issues
+      const tripIdsSet = new Set((data || []).map((e: any) => e.trip_id));
+      const tripIds = Array.from(tripIdsSet) as string[];
+      let tripsMap: { [key: string]: any } = {};
+
+      if (tripIds.length > 0) {
+        const { data: tripsData, error: tripsError } = await supabase
+          .from('trips')
+          .select('id, title')
+          .in('id', tripIds);
+
+        if (!tripsError && tripsData) {
+          tripsMap = Object.fromEntries(tripsData.map((t: any) => [t.id, t]));
+        }
+      }
+
+      // Enrich earnings with trip data
+      const enrichedEarnings = (data || []).map((earning: any) => ({
+        ...earning,
+        trip: tripsMap[earning.trip_id] || { id: earning.trip_id, title: 'Unknown Trip' },
+      }));
+
+      setEarnings(enrichedEarnings as ReferralEarning[]);
 
       // Calculate trip breakdown
       const breakdown: { [key: string]: TripEarnings } = {};
-      data?.forEach((earning: ReferralEarning) => {
+      enrichedEarnings.forEach((earning: ReferralEarning) => {
         const tripId = earning.trip_id;
         if (!breakdown[tripId]) {
           breakdown[tripId] = {
