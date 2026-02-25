@@ -45,7 +45,7 @@ export default function CustomerDashboard() {
       try {
         const { data: authData, error: authError } = await supabase.auth.getUser();
         if (authError || !authData.user) {
-          router.push('/auth/login');
+          setLoading(false);
           return;
         }
 
@@ -102,6 +102,23 @@ export default function CustomerDashboard() {
     const days = Math.ceil((date.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
     return days;
   };
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center p-6">
+        <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-8 max-w-md text-center">
+          <h1 className="text-2xl font-bold text-white mb-4">Sign In Required</h1>
+          <p className="text-summit-300 mb-6">Please sign in to view your dashboard</p>
+          <Link
+            href="/auth/login"
+            className="inline-block bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition font-semibold"
+          >
+            Sign In
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
