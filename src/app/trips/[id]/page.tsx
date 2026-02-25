@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase';
 import Link from 'next/link';
-import { Star, Users, MapPin, Calendar, MessageSquare } from 'lucide-react';
+import { Star, Users, MapPin, Calendar, MessageSquare, MessageCircle } from 'lucide-react';
 import ReviewsSection from '@/components/ReviewsSection';
+import ReviewForm from '@/components/ReviewForm';
 import TikTokUGCWidget from '@/components/TikTokUGCWidget';
 import MessageGuideModal from '@/components/MessageGuideModal';
 
@@ -60,6 +61,9 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
   const [participantCount, setParticipantCount] = useState(1);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [showMessageModal, setShowMessageModal] = useState(false);
+  const [reviewModalOpen, setReviewModalOpen] = useState(false);
+  const [reviewType, setReviewType] = useState<'trip' | 'guide'>('trip');
+  const [reviewsRefresh, setReviewsRefresh] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -220,13 +224,25 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
                   <p className="text-gray-700 text-sm line-clamp-3">{guide.bio}</p>
                 )}
               </div>
-              <button
-                onClick={() => setShowMessageModal(true)}
-                className="ml-4 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 flex-shrink-0 text-sm"
-              >
-                <MessageSquare className="w-4 h-4" />
-                Message
-              </button>
+              <div className="ml-4 flex flex-col gap-2 flex-shrink-0">
+                <button
+                  onClick={() => setShowMessageModal(true)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 text-sm font-medium"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  Message
+                </button>
+                <button
+                  onClick={() => {
+                    setReviewType('guide');
+                    setReviewModalOpen(true);
+                  }}
+                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 text-sm font-medium"
+                >
+                  <Star className="w-4 h-4" />
+                  Review
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -237,7 +253,19 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
           <div className="lg:col-span-2 space-y-8">
             {/* Description */}
             <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">About This Trip</h2>
+              <div className="flex items-start justify-between mb-4">
+                <h2 className="text-xl font-semibold text-gray-900">About This Trip</h2>
+                <button
+                  onClick={() => {
+                    setReviewType('trip');
+                    setReviewModalOpen(true);
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 text-sm font-medium flex-shrink-0"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  Leave Review
+                </button>
+              </div>
               <p className="text-gray-700 whitespace-pre-line leading-relaxed">{trip.description}</p>
             </div>
 
@@ -417,6 +445,17 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
             tripTitle={trip.title}
             isOpen={showMessageModal}
             onClose={() => setShowMessageModal(false)}
+          />
+        )}
+
+        {/* Review Form Modal */}
+        {trip && guide && reviewModalOpen && (
+          <ReviewForm
+            tripId={trip.id}
+            guideId={guide.id}
+            reviewType={reviewType}
+            onClose={() => setReviewModalOpen(false)}
+            onSuccess={() => setReviewsRefresh(!reviewsRefresh)}
           />
         )}
       </div>
