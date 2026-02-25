@@ -84,8 +84,8 @@ function LoginContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
-      <div className="bg-gray-100 border border-gray-200 rounded-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-white mb-2">Sign In</h1>
+      <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-lg">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Sign In</h1>
         <p className="text-gray-600 mb-6">Welcome back to Summit</p>
 
         {error && (
@@ -127,7 +127,7 @@ function LoginContent() {
             <div className="text-right mt-2">
               <Link
                 href="/auth/forgot-password"
-                className="text-gray-600 hover:text-gray-600 text-sm"
+                className="text-blue-600 hover:text-blue-700 text-sm font-medium transition"
               >
                 Forgot password?
               </Link>
@@ -137,26 +137,26 @@ function LoginContent() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-summit-600 hover:bg-summit-500 disabled:opacity-50 text-white font-medium py-2 rounded-lg transition"
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-2 rounded-lg transition"
           >
             {loading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
 
         <div className="space-y-3 mt-6">
-          <p className="text-gray-600 text-sm text-center">
+          <p className="text-gray-700 text-sm text-center font-medium">
             Don&apos;t have an account?
           </p>
           <div className="grid grid-cols-2 gap-2">
             <Link
               href="/auth/signup-customer"
-              className="block bg-gray-200 hover:bg-summit-600 text-summit-100 text-sm font-medium py-2 rounded-lg transition text-center"
+              className="block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 rounded-lg transition text-center"
             >
               🏕️ Book a Trip
             </Link>
             <Link
               href="/auth/signup"
-              className="block bg-gray-200 hover:bg-summit-600 text-summit-100 text-sm font-medium py-2 rounded-lg transition text-center"
+              className="block bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold py-2 rounded-lg transition text-center"
             >
               🏔️ Become a Guide
             </Link>
@@ -172,7 +172,7 @@ export default function LoginPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-          <p className="text-white text-lg">Loading...</p>
+          <p className="text-gray-900 text-lg font-medium">Loading...</p>
         </div>
       }
     >

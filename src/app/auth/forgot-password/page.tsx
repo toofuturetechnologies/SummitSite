@@ -38,8 +38,8 @@ export default function ForgotPasswordPage() {
   if (success) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
-        <div className="bg-gray-100 border border-gray-200 rounded-lg p-8 w-full max-w-md text-center">
-          <h1 className="text-3xl font-bold text-white mb-4">Check Your Email</h1>
+        <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md text-center shadow-lg">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Check Your Email</h1>
           <p className="text-gray-600 mb-6">
             We&apos;ve sent a password reset link to <strong>{email}</strong>
           </p>
@@ -48,7 +48,7 @@ export default function ForgotPasswordPage() {
           </p>
           <Link
             href="/auth/login"
-            className="block w-full bg-summit-600 hover:bg-summit-500 text-white font-medium py-2 rounded-lg transition"
+            className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
           >
             Back to Login
           </Link>
@@ -59,8 +59,8 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
-      <div className="bg-gray-100 border border-gray-200 rounded-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-white mb-2">Reset Password</h1>
+      <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-lg">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Reset Password</h1>
         <p className="text-gray-600 mb-6">Enter your email to receive a password reset link</p>
 
         {error && (
@@ -87,7 +87,7 @@ export default function ForgotPasswordPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-summit-600 hover:bg-summit-500 disabled:opacity-50 text-white font-medium py-2 rounded-lg transition"
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-2 rounded-lg transition"
           >
             {loading ? 'Sending...' : 'Send Reset Link'}
           </button>
@@ -96,7 +96,7 @@ export default function ForgotPasswordPage() {
         <div className="mt-6">
           <Link
             href="/auth/login"
-            className="block text-gray-600 hover:text-gray-600 text-center text-sm"
+            className="block text-blue-600 hover:text-blue-700 text-center text-sm font-medium transition"
           >
             Back to Login
           </Link>

@@ -135,12 +135,12 @@ export default function SignUpPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
-      <div className="bg-gray-100 border border-gray-200 rounded-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-white mb-2">Become a Guide</h1>
+      <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-lg">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Become a Guide</h1>
         <p className="text-gray-600 mb-6">Join Summit and share your expertise</p>
 
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-6">
-          <p className="text-gray-600 text-sm">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6">
+          <p className="text-blue-900 text-sm">
             🏔️ <strong>Guide Account:</strong> Create and manage adventure trips. Earn money from bookings.
           </p>
         </div>
@@ -243,22 +243,22 @@ export default function SignUpPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-summit-600 hover:bg-summit-500 disabled:opacity-50 text-white font-medium py-2 rounded-lg transition"
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-2 rounded-lg transition"
           >
             {loading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
 
-        <p className="text-gray-600 text-sm text-center mt-6">
+        <p className="text-gray-700 text-sm text-center mt-6">
           Looking to book trips instead?{' '}
-          <Link href="/auth/signup-customer" className="text-gray-600 hover:text-white font-medium">
+          <Link href="/auth/signup-customer" className="text-blue-600 hover:text-blue-700 font-medium transition">
             Customer signup
           </Link>
         </p>
 
-        <p className="text-gray-600 text-sm mt-4 text-center">
+        <p className="text-gray-700 text-sm mt-4 text-center">
           Already have an account?{' '}
-          <Link href="/auth/login" className="text-gray-600 hover:text-gray-600">
+          <Link href="/auth/login" className="text-blue-600 hover:text-blue-700 font-medium transition">
             Sign in
           </Link>
         </p>

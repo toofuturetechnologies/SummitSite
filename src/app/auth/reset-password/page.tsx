@@ -63,8 +63,8 @@ export default function ResetPasswordPage() {
   if (success) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
-        <div className="bg-gray-100 border border-gray-200 rounded-lg p-8 w-full max-w-md text-center">
-          <h1 className="text-3xl font-bold text-white mb-4">Password Reset</h1>
+        <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md text-center shadow-lg">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Password Reset</h1>
           <p className="text-gray-600 mb-6">
             Your password has been successfully reset!
           </p>
@@ -78,8 +78,8 @@ export default function ResetPasswordPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
-      <div className="bg-gray-100 border border-gray-200 rounded-lg p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-white mb-2">Create New Password</h1>
+      <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-lg">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Create New Password</h1>
         <p className="text-gray-600 mb-6">Enter a new password for your account</p>
 
         {error && (
@@ -120,7 +120,7 @@ export default function ResetPasswordPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-summit-600 hover:bg-summit-500 disabled:opacity-50 text-white font-medium py-2 rounded-lg transition"
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-2 rounded-lg transition"
           >
             {loading ? 'Resetting...' : 'Reset Password'}
           </button>
