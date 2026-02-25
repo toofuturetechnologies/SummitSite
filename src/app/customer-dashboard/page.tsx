@@ -259,25 +259,36 @@ export default function CustomerDashboard() {
             <h2 className="text-base lg:text-lg font-semibold text-gray-900 mb-4">Past Trips</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
               {pastTrips.map((booking) => (
-                <Link
+                <div
                   key={booking.id}
-                  href={`/trips/${booking.trip_id}`}
-                  className="p-4 bg-white hover:bg-blue-50 rounded-lg transition border border-gray-300 hover:border-blue-300"
+                  className="p-4 bg-white hover:bg-gray-50 rounded-lg transition border border-gray-300"
                 >
-                  <h3 className="font-semibold text-gray-900 mb-2">{booking.trip.title}</h3>
-                  <p className="text-gray-600 text-sm mb-2">
-                    {new Date(booking.tripDate.start_date).toLocaleDateString()}
-                  </p>
-                  <p className="text-gray-600 text-sm">{booking.guide.display_name}</p>
-                  {booking.status === 'completed' && !booking.id.includes('reviewed') && (
+                  <Link
+                    href={`/trips/${booking.trip_id}`}
+                    className="block hover:text-blue-600"
+                  >
+                    <h3 className="font-semibold text-gray-900 mb-2">{booking.trip.title}</h3>
+                    <p className="text-gray-600 text-sm mb-2">
+                      {new Date(booking.tripDate.start_date).toLocaleDateString()}
+                    </p>
+                    <p className="text-gray-600 text-sm">{booking.guide.display_name}</p>
+                  </Link>
+                  
+                  {booking.status === 'completed' && (
                     <Link
                       href={`/bookings/review?booking=${booking.id}`}
-                      className="text-blue-600 hover:text-blue-700 text-sm mt-2 inline-block font-medium"
+                      className="block mt-3 w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 rounded-lg transition text-center"
                     >
-                      Leave review →
+                      Leave a Review
                     </Link>
                   )}
-                </Link>
+                  
+                  {booking.status !== 'completed' && (
+                    <p className="text-gray-500 text-xs mt-3 text-center">
+                      Available to review after trip completion
+                    </p>
+                  )}
+                </div>
               ))}
             </div>
           </div>

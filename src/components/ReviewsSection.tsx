@@ -115,7 +115,7 @@ export default function ReviewsSection({ tripId, guideId }: { tripId: string; gu
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+    <div id="reviews" className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm scroll-mt-20">
       <h2 className="text-xl font-semibold text-gray-900 mb-6">Reviews ({reviews.length})</h2>
 
       <div className="space-y-6">

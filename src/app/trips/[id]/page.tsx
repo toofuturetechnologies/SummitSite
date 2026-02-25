@@ -215,11 +215,14 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
                 <h2 className="text-xl font-semibold text-gray-900 mb-4">About Your Guide</h2>
                 <h3 className="text-lg font-bold text-gray-900">{guide.display_name}</h3>
                 <p className="text-gray-700 text-sm mb-2">{guide.tagline}</p>
-                <div className="flex items-center gap-2 text-gray-800 mb-3">
+                <Link
+                  href={`/trips/${trip.id}#reviews`}
+                  className="flex items-center gap-2 text-gray-800 mb-3 hover:text-blue-600 transition cursor-pointer"
+                >
                   <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
                   <span className="font-medium">{guide.rating.toFixed(1)}</span>
-                  <span className="text-gray-600">({guide.review_count} reviews)</span>
-                </div>
+                  <span className="text-gray-600 hover:text-blue-600">({guide.review_count} reviews)</span>
+                </Link>
                 {guide.bio && (
                   <p className="text-gray-700 text-sm line-clamp-3">{guide.bio}</p>
                 )}
@@ -232,16 +235,6 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
                   <MessageSquare className="w-4 h-4" />
                   Message
                 </button>
-                <button
-                  onClick={() => {
-                    setReviewType('guide');
-                    setReviewModalOpen(true);
-                  }}
-                  className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 text-sm font-medium"
-                >
-                  <Star className="w-4 h-4" />
-                  Review
-                </button>
               </div>
             </div>
           </div>
@@ -253,19 +246,7 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
           <div className="lg:col-span-2 space-y-8">
             {/* Description */}
             <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-              <div className="flex items-start justify-between mb-4">
-                <h2 className="text-xl font-semibold text-gray-900">About This Trip</h2>
-                <button
-                  onClick={() => {
-                    setReviewType('trip');
-                    setReviewModalOpen(true);
-                  }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 text-sm font-medium flex-shrink-0"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  Leave Review
-                </button>
-              </div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">About This Trip</h2>
               <p className="text-gray-700 whitespace-pre-line leading-relaxed">{trip.description}</p>
             </div>
 
