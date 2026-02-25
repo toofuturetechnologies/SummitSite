@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Send, MessageCircle, ChevronLeft } from 'lucide-react';
+import { Send, MessageCircle, ChevronLeft, Plus } from 'lucide-react';
 
 const supabase = createClient();
 

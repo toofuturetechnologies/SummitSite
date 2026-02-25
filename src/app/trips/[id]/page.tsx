@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase';
 import Link from 'next/link';
 import { Star, Users, MapPin, Calendar, MessageSquare } from 'lucide-react';
 import ReviewsSection from '@/components/ReviewsSection';
+import MessageGuideModal from '@/components/MessageGuideModal';
 
 const supabase = createClient();
 
@@ -56,6 +57,7 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [participantCount, setParticipantCount] = useState(1);
   const [showBookingForm, setShowBookingForm] = useState(false);
+  const [showMessageModal, setShowMessageModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -216,13 +218,13 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
                   <p className="text-summit-300 text-sm line-clamp-3">{guide.bio}</p>
                 )}
               </div>
-              <Link
-                href={`/dashboard/messages?contact=${guide.id}`}
+              <button
+                onClick={() => setShowMessageModal(true)}
                 className="ml-4 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 flex-shrink-0 text-sm"
               >
                 <MessageSquare className="w-4 h-4" />
                 Message
-              </Link>
+              </button>
             </div>
           </div>
         )}
@@ -399,6 +401,18 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
             </div>
           </div>
         </div>
+
+        {/* Message Guide Modal */}
+        {trip && guide && (
+          <MessageGuideModal
+            guideId={guide.id}
+            guideName={guide.display_name}
+            tripId={trip.id}
+            tripTitle={trip.title}
+            isOpen={showMessageModal}
+            onClose={() => setShowMessageModal(false)}
+          />
+        )}
       </div>
     </div>
   );
