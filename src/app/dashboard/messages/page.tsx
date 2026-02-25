@@ -113,7 +113,7 @@ export default function MessagesPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex pt-20 lg:pt-24 items-center justify-center">
-        <p className="text-white">Loading messages...</p>
+        <p className="text-gray-900 font-medium text-lg">Loading messages...</p>
       </div>
     );
   }
@@ -122,18 +122,18 @@ export default function MessagesPage() {
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 pt-20 lg:pt-24">
       <div className="max-w-6xl mx-auto h-screen flex flex-col">
         {/* Header */}
-        <div className="border-b border-gray-200 p-6 bg-gray-100">
+        <div className="border-b border-gray-200 p-6 bg-white">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-white flex items-center gap-2">
-                <MessageCircle className="w-8 h-8" />
+              <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
+                <MessageCircle className="w-8 h-8 text-blue-600" />
                 Messages
               </h1>
-              <p className="text-gray-600 mt-1">Chat with guides and customers</p>
+              <p className="text-gray-700 mt-1 font-medium">Chat with guides and customers</p>
             </div>
             <Link
               href="/dashboard"
-              className="text-gray-600 hover:text-gray-600"
+              className="text-blue-600 hover:text-blue-700 font-medium transition"
             >
               ← Back to Dashboard
             </Link>
@@ -148,33 +148,33 @@ export default function MessagesPage() {
 
         <div className="flex flex-1 overflow-hidden">
           {/* Conversations List */}
-          <div className="w-80 border-r border-gray-200 overflow-y-auto bg-gray-200/20">
+          <div className="w-80 border-r border-gray-200 overflow-y-auto bg-white">
             {conversations.length === 0 ? (
               <div className="p-6 text-center text-gray-600">
-                <p>No messages yet</p>
+                <p className="font-medium">No messages yet</p>
                 <p className="text-sm mt-2">Messages with guides or customers will appear here</p>
               </div>
             ) : (
-              <div className="divide-y divide-summit-700">
+              <div className="divide-y divide-gray-200">
                 {conversations.map((conv) => (
                   <button
                     key={conv.otherUserId}
                     onClick={() => loadConversation(conv.otherUserId)}
                     className={`w-full p-4 text-left transition ${
                       selectedConversation === conv.otherUserId
-                        ? 'bg-gray-200'
-                        : 'hover:bg-gray-100'
+                        ? 'bg-blue-50 border-l-4 border-blue-600'
+                        : 'hover:bg-gray-50'
                     }`}
                   >
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 rounded-full bg-summit-600 flex items-center justify-center text-white font-bold flex-shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold flex-shrink-0">
                         {conv.otherUserName?.[0]?.toUpperCase()}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-white truncate">
+                        <p className="font-bold text-gray-900 truncate">
                           {conv.otherUserName}
                         </p>
-                        <p className="text-xs text-gray-600 mt-1">
+                        <p className="text-xs text-gray-700 mt-1 font-medium">
                           {new Date(conv.lastMessageTime).toLocaleDateString()}
                         </p>
                       </div>
@@ -184,7 +184,7 @@ export default function MessagesPage() {
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-gray-600 truncate">
+                    <p className="text-sm text-gray-700 truncate">
                       {conv.lastMessage}
                     </p>
                   </button>
@@ -197,10 +197,10 @@ export default function MessagesPage() {
           {selectedConversation ? (
             <div className="flex-1 flex flex-col">
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-white">
                 {messages.length === 0 ? (
                   <div className="h-full flex items-center justify-center text-gray-600">
-                    <p>Start the conversation</p>
+                    <p className="font-medium">Start the conversation</p>
                   </div>
                 ) : (
                   messages.map((msg) => (
@@ -214,11 +214,11 @@ export default function MessagesPage() {
                         className={`max-w-xs px-4 py-2 rounded-lg ${
                           msg.sender_id === user.id
                             ? 'bg-blue-600 text-white rounded-br-none'
-                            : 'bg-gray-200 text-summit-100 rounded-bl-none'
+                            : 'bg-gray-200 text-gray-900 rounded-bl-none shadow-sm'
                         }`}
                       >
-                        <p>{msg.content}</p>
-                        <p className="text-xs opacity-70 mt-1">
+                        <p className="font-medium">{msg.content}</p>
+                        <p className={`text-xs mt-1 ${msg.sender_id === user.id ? 'text-blue-100' : 'text-gray-700'}`}>
                           {new Date(msg.created_at).toLocaleTimeString([], {
                             hour: '2-digit',
                             minute: '2-digit',
@@ -231,19 +231,19 @@ export default function MessagesPage() {
               </div>
 
               {/* Input */}
-              <div className="border-t border-gray-200 p-6 bg-gray-100">
+              <div className="border-t border-gray-200 p-6 bg-white">
                 <form onSubmit={sendMessage} className="flex gap-2">
                   <input
                     type="text"
                     value={messageText}
                     onChange={(e) => setMessageText(e.target.value)}
                     placeholder="Type a message..."
-                    className="flex-1 bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                    className="flex-1 bg-white border border-gray-300 text-gray-900 px-4 py-2 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                   />
                   <button
                     type="submit"
                     disabled={!messageText.trim() || sending}
-                    className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white px-4 py-2 rounded-lg transition flex items-center gap-2"
+                    className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg transition flex items-center gap-2 font-medium"
                   >
                     <Send className="w-4 h-4" />
                     {sending ? 'Sending...' : 'Send'}
@@ -252,8 +252,8 @@ export default function MessagesPage() {
               </div>
             </div>
           ) : (
-            <div className="flex-1 flex items-center justify-center text-gray-600">
-              <p>Select a conversation to start messaging</p>
+            <div className="flex-1 flex items-center justify-center text-gray-600 bg-white">
+              <p className="font-medium text-lg">Select a conversation to start messaging</p>
             </div>
           )}
         </div>
