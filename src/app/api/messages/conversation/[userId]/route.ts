@@ -34,7 +34,7 @@ export async function GET(
         created_at,
         read_at,
         booking_id,
-        profiles!messages_sender_id_fkey(full_name, avatar_url)
+        sender:sender_id(full_name, avatar_url)
       `
       )
       .or(

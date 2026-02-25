@@ -33,8 +33,8 @@ export async function GET(request: NextRequest) {
         read_at,
         booking_id,
         trip_id,
-        profiles!messages_sender_id_fkey(full_name, avatar_url),
-        profiles!messages_recipient_id_fkey(full_name, avatar_url)
+        sender:sender_id(full_name, avatar_url),
+        recipient:recipient_id(full_name, avatar_url)
       `
       )
       .or(`sender_id.eq.${userId},recipient_id.eq.${userId}`)
@@ -51,8 +51,8 @@ export async function GET(request: NextRequest) {
       const otherUserId = msg.sender_id === userId ? msg.recipient_id : msg.sender_id;
       const otherProfile =
         msg.sender_id === userId
-          ? msg.profiles__messages_recipient_id_fkey
-          : msg.profiles__messages_sender_id_fkey;
+          ? msg.recipient
+          : msg.sender;
 
       if (!conversations[otherUserId]) {
         conversations[otherUserId] = {
