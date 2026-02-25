@@ -79,6 +79,7 @@ export default function UGCReferralSettingsPage() {
 
   useEffect(() => {
     loadTrips();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router]);
 
   const toggleTrip = (tripId: string) => {

@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate UGC code
-    console.log(`🔍 Validating UGC code: ${ugcCode} for trip: ${trip_id}`);
+    console.log(`🔍 Validating UGC code: ${ugc_code} for trip: ${trip_id}`);
 
     const { data: booking, error: bookingError } = await supabase
       .from('bookings')
