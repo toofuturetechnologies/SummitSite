@@ -95,7 +95,7 @@ export default function StripeConnectPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
         <p className="text-white">Loading...</p>
       </div>
     );
@@ -103,7 +103,7 @@ export default function StripeConnectPage() {
 
   if (!guide) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-8">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
         <div className="max-w-4xl mx-auto">
           <p className="text-white">Not a guide</p>
         </div>
@@ -112,15 +112,15 @@ export default function StripeConnectPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-8">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
       <div className="max-w-2xl mx-auto">
-        <Link href="/dashboard" className="text-summit-400 hover:text-summit-300 mb-8 inline-block">
+        <Link href="/dashboard" className="text-gray-600 hover:text-gray-600 mb-8 inline-block">
           ← Back to Dashboard
         </Link>
 
-        <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-8">
+        <div className="bg-gray-100 border border-gray-200 rounded-lg p-8">
           <h1 className="text-3xl font-bold text-white mb-2">💰 Stripe Payouts</h1>
-          <p className="text-summit-300 mb-8">
+          <p className="text-gray-600 mb-8">
             Connect your bank account to receive automatic payouts from bookings
           </p>
 
@@ -138,9 +138,9 @@ export default function StripeConnectPage() {
             </div>
           )}
 
-          <div className="bg-summit-900/50 rounded-lg p-6 mb-8">
+          <div className="bg-gray-50 rounded-lg p-6 mb-8">
             <h2 className="text-xl font-bold text-white mb-4">How It Works</h2>
-            <ol className="text-summit-300 space-y-3 text-sm">
+            <ol className="text-gray-600 space-y-3 text-sm">
               <li className="flex gap-3">
                 <span className="text-summit-500 font-bold flex-shrink-0">1.</span>
                 <span>Click "Connect Bank Account" below</span>
@@ -183,9 +183,9 @@ export default function StripeConnectPage() {
           )}
         </div>
 
-        <div className="mt-8 bg-summit-800/30 border border-summit-700 rounded-lg p-6">
+        <div className="mt-8 bg-gray-200/30 border border-gray-200 rounded-lg p-6">
           <h3 className="text-white font-bold mb-3">❓ FAQ</h3>
-          <div className="space-y-4 text-sm text-summit-300">
+          <div className="space-y-4 text-sm text-gray-600">
             <div>
               <p className="font-bold text-white mb-1">How long does verification take?</p>
               <p>Usually instant or 1-2 business days. You'll receive an email when your account is verified.</p>

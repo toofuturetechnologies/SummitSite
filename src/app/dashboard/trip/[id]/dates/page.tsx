@@ -173,27 +173,27 @@ export default function TripDatesPage({ params }: { params: { id: string } }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
         <p className="text-white text-lg">Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-2xl mx-auto p-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <Link
             href={`/dashboard/trip/${params.id}`}
-            className="text-summit-400 hover:text-summit-300"
+            className="text-gray-600 hover:text-gray-600"
           >
             ← Back to Trip
           </Link>
         </div>
 
         <h1 className="text-3xl font-bold text-white mb-2">{tripTitle}</h1>
-        <p className="text-summit-300 mb-8">Add dates when this trip is available</p>
+        <p className="text-gray-600 mb-8">Add dates when this trip is available</p>
 
         {error && (
           <div className="bg-red-900/50 text-red-100 p-4 rounded-lg mb-6">
@@ -202,13 +202,13 @@ export default function TripDatesPage({ params }: { params: { id: string } }) {
         )}
 
         {/* Add Date Form */}
-        <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6 mb-8">
+        <div className="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold text-white mb-4">Add Availability Date</h2>
 
           <form onSubmit={handleAddDate} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-summit-200 text-sm font-medium mb-2">
+                <label className="block text-gray-700 text-sm font-medium mb-2">
                   Start Date *
                 </label>
                 <input
@@ -217,12 +217,12 @@ export default function TripDatesPage({ params }: { params: { id: string } }) {
                   value={formData.start_date}
                   onChange={handleChange}
                   required
-                  className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                  className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-summit-200 text-sm font-medium mb-2">
+                <label className="block text-gray-700 text-sm font-medium mb-2">
                   End Date *
                 </label>
                 <input
@@ -231,14 +231,14 @@ export default function TripDatesPage({ params }: { params: { id: string } }) {
                   value={formData.end_date}
                   onChange={handleChange}
                   required
-                  className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                  className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-summit-200 text-sm font-medium mb-2">
+                <label className="block text-gray-700 text-sm font-medium mb-2">
                   Number of Spots
                 </label>
                 <input
@@ -247,16 +247,16 @@ export default function TripDatesPage({ params }: { params: { id: string } }) {
                   value={formData.spots_total}
                   onChange={handleChange}
                   min="1"
-                  className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                  className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-summit-200 text-sm font-medium mb-2">
+                <label className="block text-gray-700 text-sm font-medium mb-2">
                   Special Price (Optional)
                 </label>
                 <div className="relative">
-                  <span className="absolute left-4 top-2 text-summit-400">$</span>
+                  <span className="absolute left-4 top-2 text-gray-600">$</span>
                   <input
                     type="number"
                     name="price_override"
@@ -264,11 +264,11 @@ export default function TripDatesPage({ params }: { params: { id: string } }) {
                     onChange={handleChange}
                     min="0"
                     step="50"
-                    className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 pl-8 rounded-lg focus:border-summit-500 focus:outline-none"
+                    className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 pl-8 rounded-lg focus:border-summit-500 focus:outline-none"
                     placeholder="Leave empty for standard price"
                   />
                 </div>
-                <p className="text-summit-400 text-xs mt-1">
+                <p className="text-gray-600 text-xs mt-1">
                   Override the trip&apos;s base price for this date
                 </p>
               </div>
@@ -285,26 +285,26 @@ export default function TripDatesPage({ params }: { params: { id: string } }) {
         </div>
 
         {/* Existing Dates */}
-        <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
+        <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
           <h2 className="text-xl font-semibold text-white mb-4">
             Your Availability Dates ({dates.length})
           </h2>
 
           {dates.length === 0 ? (
-            <p className="text-summit-300">No dates added yet. Add one above to get started!</p>
+            <p className="text-gray-600">No dates added yet. Add one above to get started!</p>
           ) : (
             <div className="space-y-3">
               {dates.map(date => (
                 <div
                   key={date.id}
-                  className="flex items-center justify-between p-4 bg-summit-900/50 rounded-lg border border-summit-700/50"
+                  className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200/50"
                 >
                   <div className="flex-1">
                     <h3 className="text-white font-medium">
                       {new Date(date.start_date).toLocaleDateString()} to{' '}
                       {new Date(date.end_date).toLocaleDateString()}
                     </h3>
-                    <p className="text-summit-400 text-sm">
+                    <p className="text-gray-600 text-sm">
                       {date.spots_available}/{date.spots_total} spots available
                       {date.price_override && ` • $${date.price_override}/person`}
                     </p>

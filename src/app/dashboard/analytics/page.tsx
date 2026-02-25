@@ -135,7 +135,7 @@ export default function AnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
         <p className="text-white">Loading analytics...</p>
       </div>
     );
@@ -143,9 +143,9 @@ export default function AnalyticsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-8">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
         <div className="max-w-4xl mx-auto">
-          <Link href="/dashboard" className="text-summit-400 hover:text-summit-300 mb-8 inline-block">
+          <Link href="/dashboard" className="text-gray-600 hover:text-gray-600 mb-8 inline-block">
             ← Back to Dashboard
           </Link>
           <div className="bg-red-900/50 text-red-100 p-6 rounded-lg">
@@ -157,62 +157,62 @@ export default function AnalyticsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-8">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
       <div className="max-w-6xl mx-auto">
-        <Link href="/dashboard" className="text-summit-400 hover:text-summit-300 mb-8 inline-block">
+        <Link href="/dashboard" className="text-gray-600 hover:text-gray-600 mb-8 inline-block">
           ← Back to Dashboard
         </Link>
 
         <h1 className="text-4xl font-bold text-white mb-2">📊 Your Analytics</h1>
-        <p className="text-summit-300 mb-8">Track your earnings, bookings, and customer satisfaction</p>
+        <p className="text-gray-600 mb-8">Track your earnings, bookings, and customer satisfaction</p>
 
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           {/* Total Earnings */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-summit-300 text-sm">Total Earnings</p>
+              <p className="text-gray-600 text-sm">Total Earnings</p>
               <DollarSign className="w-5 h-5 text-green-400" />
             </div>
             <p className="text-3xl font-bold text-white">${stats.totalEarnings.toFixed(2)}</p>
-            <p className="text-summit-400 text-xs mt-2">All time</p>
+            <p className="text-gray-600 text-xs mt-2">All time</p>
           </div>
 
           {/* Total Bookings */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-summit-300 text-sm">Total Bookings</p>
+              <p className="text-gray-600 text-sm">Total Bookings</p>
               <Users className="w-5 h-5 text-blue-400" />
             </div>
             <p className="text-3xl font-bold text-white">{stats.totalBookings}</p>
-            <p className="text-summit-400 text-xs mt-2">{stats.completedBookings} completed</p>
+            <p className="text-gray-600 text-xs mt-2">{stats.completedBookings} completed</p>
           </div>
 
           {/* Average Rating */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-summit-300 text-sm">Average Rating</p>
+              <p className="text-gray-600 text-sm">Average Rating</p>
               <Star className="w-5 h-5 text-yellow-400" />
             </div>
             <p className="text-3xl font-bold text-white">{stats.averageRating}/5.0</p>
-            <p className="text-summit-400 text-xs mt-2">{stats.totalReviews} reviews</p>
+            <p className="text-gray-600 text-xs mt-2">{stats.totalReviews} reviews</p>
           </div>
 
           {/* Conversion Rate */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-summit-300 text-sm">Completion Rate</p>
+              <p className="text-gray-600 text-sm">Completion Rate</p>
               <TrendingUp className="w-5 h-5 text-purple-400" />
             </div>
             <p className="text-3xl font-bold text-white">
               {stats.totalBookings > 0 ? Math.round((stats.completedBookings / stats.totalBookings) * 100) : 0}%
             </p>
-            <p className="text-summit-400 text-xs mt-2">Of all bookings</p>
+            <p className="text-gray-600 text-xs mt-2">Of all bookings</p>
           </div>
         </div>
 
         {/* Monthly Earnings Chart (Text-based) */}
-        <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6 mb-8">
+        <div className="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-8">
           <h2 className="text-2xl font-bold text-white mb-6">💰 Monthly Earnings</h2>
           <div className="space-y-3">
             {stats.monthlyEarnings.map((data: any, idx: number) => {
@@ -221,10 +221,10 @@ export default function AnalyticsPage() {
               return (
                 <div key={idx}>
                   <div className="flex justify-between mb-1">
-                    <span className="text-summit-300 text-sm">{data.month}</span>
+                    <span className="text-gray-600 text-sm">{data.month}</span>
                     <span className="text-white font-bold">${data.earnings.toFixed(2)}</span>
                   </div>
-                  <div className="w-full bg-summit-900 rounded-full h-2">
+                  <div className="w-full bg-gray-900 rounded-full h-2">
                     <div
                       className="bg-gradient-to-r from-green-500 to-green-400 h-2 rounded-full"
                       style={{ width: `${percentage}%` }}
@@ -238,11 +238,11 @@ export default function AnalyticsPage() {
 
         {/* Popular Trips */}
         {stats.popularTrips.length > 0 && (
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
             <h2 className="text-2xl font-bold text-white mb-6">🏔️ Most Popular Trips</h2>
             <div className="space-y-3">
               {stats.popularTrips.map((trip: any, idx: number) => (
-                <div key={idx} className="flex items-center justify-between pb-3 border-b border-summit-700 last:border-0">
+                <div key={idx} className="flex items-center justify-between pb-3 border-b border-gray-200 last:border-0">
                   <span className="text-white">{trip.title}</span>
                   <span className="bg-summit-600 text-white px-3 py-1 rounded-full text-sm font-bold">
                     {trip.bookings} booking{trip.bookings !== 1 ? 's' : ''}

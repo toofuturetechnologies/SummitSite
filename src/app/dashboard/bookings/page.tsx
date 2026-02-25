@@ -144,7 +144,7 @@ export default function BookingsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
         <p className="text-white text-lg">Loading...</p>
       </div>
     );
@@ -164,18 +164,18 @@ export default function BookingsPage() {
     : bookings.filter(b => b.status === filterStatus);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-6xl mx-auto p-8">
         {/* Header */}
         <div className="mb-8">
           <Link
             href="/dashboard"
-            className="text-summit-400 hover:text-summit-300 mb-4 inline-block"
+            className="text-gray-600 hover:text-gray-600 mb-4 inline-block"
           >
             ← Back to Dashboard
           </Link>
           <h1 className="text-3xl font-bold text-white mb-2">Bookings</h1>
-          <p className="text-summit-300">Manage your trip bookings and payments</p>
+          <p className="text-gray-600">Manage your trip bookings and payments</p>
         </div>
 
         {error && (
@@ -186,20 +186,20 @@ export default function BookingsPage() {
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-4">
-            <p className="text-summit-300 text-sm mb-1">Pending</p>
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-4">
+            <p className="text-gray-600 text-sm mb-1">Pending</p>
             <p className="text-3xl font-bold text-white">{stats.pending}</p>
           </div>
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-4">
-            <p className="text-summit-300 text-sm mb-1">Confirmed</p>
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-4">
+            <p className="text-gray-600 text-sm mb-1">Confirmed</p>
             <p className="text-3xl font-bold text-white">{stats.confirmed}</p>
           </div>
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-4">
-            <p className="text-summit-300 text-sm mb-1">Completed</p>
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-4">
+            <p className="text-gray-600 text-sm mb-1">Completed</p>
             <p className="text-3xl font-bold text-white">{stats.completed}</p>
           </div>
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-4">
-            <p className="text-summit-300 text-sm mb-1">Total Payout</p>
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-4">
+            <p className="text-gray-600 text-sm mb-1">Total Payout</p>
             <p className="text-3xl font-bold text-green-400">${stats.totalPayout.toFixed(0)}</p>
           </div>
         </div>
@@ -213,7 +213,7 @@ export default function BookingsPage() {
               className={`px-4 py-2 rounded-lg font-medium transition ${
                 filterStatus === status
                   ? 'bg-summit-600 text-white'
-                  : 'bg-summit-800/50 text-summit-300 hover:bg-summit-700/50'
+                  : 'bg-gray-100 text-gray-600 hover:bg-gray-100'
               }`}
             >
               {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -223,8 +223,8 @@ export default function BookingsPage() {
 
         {/* Bookings List */}
         {filteredBookings.length === 0 ? (
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-12 text-center">
-            <p className="text-summit-300 text-lg">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-12 text-center">
+            <p className="text-gray-600 text-lg">
               {filterStatus === 'all' 
                 ? 'No bookings yet' 
                 : `No ${filterStatus} bookings`}
@@ -235,7 +235,7 @@ export default function BookingsPage() {
             {filteredBookings.map(booking => (
               <div
                 key={booking.id}
-                className="bg-summit-800/50 border border-summit-700 rounded-lg p-6 hover:bg-summit-700/30 transition"
+                className="bg-gray-100 border border-gray-200 rounded-lg p-6 hover:bg-gray-200/30 transition"
               >
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                   {/* Trip & Date */}
@@ -244,7 +244,7 @@ export default function BookingsPage() {
                       {booking.trip?.title || 'Trip'}
                     </h3>
                     {booking.start_date && (
-                      <div className="flex items-center gap-2 text-summit-300 text-sm">
+                      <div className="flex items-center gap-2 text-gray-600 text-sm">
                         <Calendar className="w-4 h-4" />
                         <span>
                           {new Date(booking.start_date).toLocaleDateString()}
@@ -258,7 +258,7 @@ export default function BookingsPage() {
 
                   {/* Participants */}
                   <div>
-                    <p className="text-summit-400 text-sm mb-2">Participants</p>
+                    <p className="text-gray-600 text-sm mb-2">Participants</p>
                     <div className="flex items-center gap-2 text-white">
                       <Users className="w-4 h-4" />
                       <span className="text-lg font-semibold">{booking.participant_count}</span>
@@ -267,7 +267,7 @@ export default function BookingsPage() {
 
                   {/* Payment */}
                   <div>
-                    <p className="text-summit-400 text-sm mb-2">Your Payout</p>
+                    <p className="text-gray-600 text-sm mb-2">Your Payout</p>
                     <div className="flex items-center gap-2 text-green-400">
                       <DollarSign className="w-4 h-4" />
                       <span className="text-lg font-semibold">
@@ -278,7 +278,7 @@ export default function BookingsPage() {
 
                   {/* Status */}
                   <div>
-                    <p className="text-summit-400 text-sm mb-2">Status</p>
+                    <p className="text-gray-600 text-sm mb-2">Status</p>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${STATUS_COLORS[booking.status]}`}>
                       {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                     </span>
@@ -287,7 +287,7 @@ export default function BookingsPage() {
 
                 {/* Actions */}
                 {booking.status === 'pending' && (
-                  <div className="flex gap-2 pt-4 border-t border-summit-700">
+                  <div className="flex gap-2 pt-4 border-t border-gray-200">
                     <button
                       onClick={() => handleStatusChange(booking.id, 'confirmed')}
                       className="flex-1 bg-green-600 hover:bg-green-500 text-white font-medium py-2 rounded-lg transition"
@@ -304,7 +304,7 @@ export default function BookingsPage() {
                 )}
 
                 {booking.status === 'confirmed' && (
-                  <div className="flex gap-2 pt-4 border-t border-summit-700">
+                  <div className="flex gap-2 pt-4 border-t border-gray-200">
                     <button
                       onClick={() => handleStatusChange(booking.id, 'completed')}
                       className="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-medium py-2 rounded-lg transition"
@@ -315,7 +315,7 @@ export default function BookingsPage() {
                 )}
 
                 {booking.status === 'completed' && (
-                  <div className="pt-4 border-t border-summit-700">
+                  <div className="pt-4 border-t border-gray-200">
                     <Link
                       href={`/bookings/review?booking=${booking.id}`}
                       className="block w-full bg-summit-600 hover:bg-summit-500 text-white font-medium py-2 rounded-lg transition text-center"

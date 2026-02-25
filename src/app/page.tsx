@@ -80,7 +80,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-summit-950 text-white">
+    <div className="min-h-screen bg-white text-white">
       {/* ─── HERO ─────────────────────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background image */}
@@ -152,7 +152,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── STATS BAR ─────────────────────────────────────────────────────────── */}
-      <section className="bg-summit-900 border-y border-summit-800">
+      <section className="bg-gray-900 border-y border-summit-800">
         <div className="max-w-6xl mx-auto px-6 py-6 grid grid-cols-2 md:grid-cols-4 gap-6">
           {[
             { value: '8', label: 'Expert Guides', sub: 'AMGA & IFMGA certified' },
@@ -162,7 +162,7 @@ export default function HomePage() {
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <p className="text-2xl sm:text-3xl font-black text-white">{stat.value}</p>
-              <p className="text-summit-200 text-sm font-semibold">{stat.label}</p>
+              <p className="text-gray-700 text-sm font-semibold">{stat.label}</p>
               <p className="text-summit-500 text-xs mt-0.5 hidden sm:block">{stat.sub}</p>
             </div>
           ))}
@@ -174,7 +174,7 @@ export default function HomePage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Browse by Activity</h2>
-            <p className="text-summit-400 mt-1">Choose your adventure type</p>
+            <p className="text-gray-600 mt-1">Choose your adventure type</p>
           </div>
         </div>
         <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-3">
@@ -182,12 +182,12 @@ export default function HomePage() {
             <Link
               key={cat.id}
               href={`/trips?activity=${cat.id}`}
-              className="flex flex-col items-center gap-2 p-3 bg-summit-900 hover:bg-summit-800 border border-summit-800 hover:border-summit-600 rounded-xl transition-all duration-200 group"
+              className="flex flex-col items-center gap-2 p-3 bg-gray-900 hover:bg-gray-200 border border-summit-800 hover:border-gray-300 rounded-xl transition-all duration-200 group"
             >
               <span className="text-2xl group-hover:scale-110 transition-transform duration-200">
                 {cat.emoji}
               </span>
-              <span className="text-xs text-summit-300 group-hover:text-white text-center leading-tight font-medium transition-colors">
+              <span className="text-xs text-gray-600 group-hover:text-white text-center leading-tight font-medium transition-colors">
                 {cat.label}
               </span>
             </Link>
@@ -200,7 +200,7 @@ export default function HomePage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Featured Adventures</h2>
-            <p className="text-summit-400 mt-1">Top-rated trips from certified guides</p>
+            <p className="text-gray-600 mt-1">Top-rated trips from certified guides</p>
           </div>
           <Link
             href="/trips"
@@ -216,13 +216,13 @@ export default function HomePage() {
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
-                className="bg-summit-900 border border-summit-800 rounded-2xl overflow-hidden animate-pulse"
+                className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden animate-pulse"
               >
-                <div className="h-52 bg-summit-800" />
+                <div className="h-52 bg-gray-200" />
                 <div className="p-5 space-y-3">
-                  <div className="h-4 bg-summit-800 rounded w-2/3" />
-                  <div className="h-3 bg-summit-800 rounded w-full" />
-                  <div className="h-3 bg-summit-800 rounded w-4/5" />
+                  <div className="h-4 bg-gray-200 rounded w-2/3" />
+                  <div className="h-3 bg-gray-200 rounded w-full" />
+                  <div className="h-3 bg-gray-200 rounded w-4/5" />
                 </div>
               </div>
             ))}
@@ -246,11 +246,11 @@ export default function HomePage() {
       </section>
 
       {/* ─── HOW IT WORKS ─────────────────────────────────────────────────────── */}
-      <section className="bg-summit-900 border-y border-summit-800 py-20">
+      <section className="bg-gray-900 border-y border-summit-800 py-20">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
             <h2 className="text-3xl font-bold text-white mb-3">How Summit Works</h2>
-            <p className="text-summit-400 max-w-xl mx-auto">
+            <p className="text-gray-600 max-w-xl mx-auto">
               Book your dream adventure in minutes — verified guides, secure payments, instant confirmation.
             </p>
           </div>
@@ -278,14 +278,14 @@ export default function HomePage() {
               },
             ].map((step) => (
               <div key={step.num} className="relative flex flex-col items-center text-center">
-                <div className="w-20 h-20 bg-summit-800 border border-summit-700 rounded-2xl flex items-center justify-center text-blue-400 mb-6 shadow-xl">
+                <div className="w-20 h-20 bg-gray-200 border border-gray-200 rounded-2xl flex items-center justify-center text-blue-400 mb-6 shadow-xl">
                   {step.icon}
                 </div>
                 <div className="absolute -top-2 -right-2 w-7 h-7 bg-blue-500 rounded-lg flex items-center justify-center">
                   <span className="text-white text-xs font-bold">{step.num}</span>
                 </div>
                 <h3 className="text-lg font-bold text-white mb-3">{step.title}</h3>
-                <p className="text-summit-400 text-sm leading-relaxed max-w-xs">{step.desc}</p>
+                <p className="text-gray-600 text-sm leading-relaxed max-w-xs">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -298,7 +298,7 @@ export default function HomePage() {
           <div className="flex items-center justify-between mb-10">
             <div>
               <h2 className="text-3xl font-bold text-white mb-2">Meet Our Guides</h2>
-              <p className="text-summit-400">Certified professionals with decades of combined experience</p>
+              <p className="text-gray-600">Certified professionals with decades of combined experience</p>
             </div>
             <Link
               href="/guides"
@@ -312,7 +312,7 @@ export default function HomePage() {
             {guides.map((guide: any) => (
               <div
                 key={guide.id}
-                className="bg-summit-900 border border-summit-800 rounded-2xl p-6 hover:border-summit-600 transition-all duration-200 group"
+                className="bg-gray-900 border border-summit-800 rounded-2xl p-6 hover:border-gray-300 transition-all duration-200 group"
               >
                 {/* Avatar */}
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-summit-700 flex items-center justify-center text-2xl font-black text-white mb-4 shadow-lg">
@@ -328,7 +328,7 @@ export default function HomePage() {
                   )}
                 </div>
 
-                <p className="text-summit-400 text-xs mb-3 line-clamp-2 leading-relaxed">
+                <p className="text-gray-600 text-xs mb-3 line-clamp-2 leading-relaxed">
                   {guide.tagline}
                 </p>
 
@@ -348,7 +348,7 @@ export default function HomePage() {
                 {guide.specialties?.length > 0 && (
                   <div className="flex flex-wrap gap-1 mt-3">
                     {guide.specialties.slice(0, 2).map((s: string) => (
-                      <span key={s} className="bg-summit-800 text-summit-300 text-xs px-2 py-0.5 rounded-full">
+                      <span key={s} className="bg-gray-200 text-gray-600 text-xs px-2 py-0.5 rounded-full">
                         {s.replace(/_/g, ' ')}
                       </span>
                     ))}
@@ -372,7 +372,7 @@ export default function HomePage() {
             <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
               Grow Your Guiding Business
             </h2>
-            <p className="text-summit-300 text-lg max-w-2xl mx-auto mb-10">
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-10">
               Join Summit and reach thousands of adventurers looking for expert guidance.
               Zero upfront cost — we only earn when you do.
             </p>
@@ -385,7 +385,7 @@ export default function HomePage() {
                 <div key={item.title} className="bg-white/5 border border-white/10 rounded-xl p-5">
                   <div className="text-2xl mb-3">{item.icon}</div>
                   <h3 className="text-white font-bold mb-2">{item.title}</h3>
-                  <p className="text-summit-400 text-sm">{item.desc}</p>
+                  <p className="text-gray-600 text-sm">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -402,7 +402,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── FOOTER ──────────────────────────────────────────────────────────── */}
-      <footer className="bg-summit-950 border-t border-summit-900 py-14">
+      <footer className="bg-white border-t border-summit-900 py-14">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-10">
             <div className="col-span-2">
@@ -462,7 +462,7 @@ function TripCard({ trip, imgSrc }: { trip: any; imgSrc: string }) {
 
   return (
     <Link href={`/trips/${trip.id}`} className="group block">
-      <div className="bg-summit-900 border border-summit-800 rounded-2xl overflow-hidden hover:border-summit-600 hover:-translate-y-1 transition-all duration-300 shadow-xl hover:shadow-2xl">
+      <div className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden hover:border-gray-300 hover:-translate-y-1 transition-all duration-300 shadow-xl hover:shadow-2xl">
         {/* Image */}
         <div className="relative h-52 overflow-hidden">
           <img
@@ -476,7 +476,7 @@ function TripCard({ trip, imgSrc }: { trip: any; imgSrc: string }) {
 
           {/* Badges */}
           <div className="absolute top-3 left-3 flex gap-2">
-            <span className="bg-summit-950/80 backdrop-blur-sm text-summit-200 text-xs px-2.5 py-1 rounded-lg capitalize font-medium">
+            <span className="bg-white/80 backdrop-blur-sm text-gray-700 text-xs px-2.5 py-1 rounded-lg capitalize font-medium">
               {trip.activity?.replace(/_/g, ' ')}
             </span>
           </div>
@@ -511,7 +511,7 @@ function TripCard({ trip, imgSrc }: { trip: any; imgSrc: string }) {
           </p>
 
           {/* Meta row */}
-          <div className="flex items-center gap-4 text-summit-400 text-xs mb-4">
+          <div className="flex items-center gap-4 text-gray-600 text-xs mb-4">
             <div className="flex items-center gap-1">
               <Clock className="w-3.5 h-3.5" />
               {trip.duration_days}d
@@ -535,7 +535,7 @@ function TripCard({ trip, imgSrc }: { trip: any; imgSrc: string }) {
               <span className="text-summit-500 text-xs"> /person</span>
             </div>
             <div className="text-right">
-              <p className="text-summit-400 text-xs">{trip.guides?.display_name}</p>
+              <p className="text-gray-600 text-xs">{trip.guides?.display_name}</p>
               {trip.guides?.rating > 0 && (
                 <div className="flex items-center gap-1 text-amber-400 text-xs justify-end">
                   <Star className="w-3 h-3 fill-current" />

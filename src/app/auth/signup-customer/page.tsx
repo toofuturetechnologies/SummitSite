@@ -114,10 +114,10 @@ function SignUpContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center p-4">
-      <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-8 w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
+      <div className="bg-gray-100 border border-gray-200 rounded-lg p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-white mb-2">Create Account</h1>
-        <p className="text-summit-300 mb-6">Book your next adventure</p>
+        <p className="text-gray-600 mb-6">Book your next adventure</p>
 
         {error && (
           <div className="bg-red-900/50 text-red-100 p-4 rounded-lg mb-6">
@@ -128,7 +128,7 @@ function SignUpContent() {
         <form onSubmit={handleSignUp} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-summit-200 text-sm font-medium mb-2">
+              <label className="block text-gray-700 text-sm font-medium mb-2">
                 First Name
               </label>
               <input
@@ -137,12 +137,12 @@ function SignUpContent() {
                 value={formData.firstName}
                 onChange={handleChange}
                 required
-                className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                 placeholder="John"
               />
             </div>
             <div>
-              <label className="block text-summit-200 text-sm font-medium mb-2">
+              <label className="block text-gray-700 text-sm font-medium mb-2">
                 Last Name
               </label>
               <input
@@ -151,14 +151,14 @@ function SignUpContent() {
                 value={formData.lastName}
                 onChange={handleChange}
                 required
-                className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                 placeholder="Doe"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Email
             </label>
             <input
@@ -167,13 +167,13 @@ function SignUpContent() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="your@email.com"
             />
           </div>
 
           <div>
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Password
             </label>
             <input
@@ -182,7 +182,7 @@ function SignUpContent() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="Create a password"
             />
           </div>
@@ -196,16 +196,16 @@ function SignUpContent() {
           </button>
         </form>
 
-        <p className="text-summit-400 text-sm text-center mt-6">
+        <p className="text-gray-600 text-sm text-center mt-6">
           Already have an account?{' '}
-          <Link href="/auth/login" className="text-summit-300 hover:text-white">
+          <Link href="/auth/login" className="text-gray-600 hover:text-white">
             Sign in
           </Link>
         </p>
 
-        <p className="text-summit-400 text-sm text-center mt-4">
+        <p className="text-gray-600 text-sm text-center mt-4">
           Want to become a guide?{' '}
-          <Link href="/auth/signup" className="text-summit-300 hover:text-white">
+          <Link href="/auth/signup" className="text-gray-600 hover:text-white">
             Create a guide account
           </Link>
         </p>
@@ -218,7 +218,7 @@ export default function SignUpCustomerPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
+        <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
           <p className="text-white text-lg">Loading...</p>
         </div>
       }

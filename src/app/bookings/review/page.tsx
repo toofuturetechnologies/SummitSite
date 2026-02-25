@@ -133,7 +133,7 @@ function LeaveReviewPageInner() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
         <p className="text-white">Loading...</p>
       </div>
     );
@@ -141,7 +141,7 @@ function LeaveReviewPageInner() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-8">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
         <div className="max-w-2xl mx-auto">
           <div className="bg-red-900/50 text-red-100 p-6 rounded-lg mb-6">
             <h2 className="font-bold mb-2">Error</h2>
@@ -157,7 +157,7 @@ function LeaveReviewPageInner() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
         <div className="bg-green-900/50 border border-green-700 rounded-lg p-8 text-center max-w-md">
           <h1 className="text-3xl font-bold text-white mb-4">✅ Thank You!</h1>
           <p className="text-green-200 mb-6">Your review has been posted. Redirecting to trip...</p>
@@ -167,20 +167,20 @@ function LeaveReviewPageInner() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-8">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
       <div className="max-w-2xl mx-auto">
-        <Link href="/dashboard/bookings" className="text-summit-400 hover:text-summit-300 mb-8 inline-block">
+        <Link href="/dashboard/bookings" className="text-gray-600 hover:text-gray-600 mb-8 inline-block">
           ← Back to Bookings
         </Link>
 
-        <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-8">
+        <div className="bg-gray-100 border border-gray-200 rounded-lg p-8">
           <h1 className="text-3xl font-bold text-white mb-2">Leave a Review</h1>
-          <p className="text-summit-300 mb-8">Tell us about your experience on <strong>{trip?.title}</strong></p>
+          <p className="text-gray-600 mb-8">Tell us about your experience on <strong>{trip?.title}</strong></p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Rating */}
             <div>
-              <label className="block text-summit-200 font-medium mb-3">How was your experience? ⭐</label>
+              <label className="block text-gray-700 font-medium mb-3">How was your experience? ⭐</label>
               <div className="flex gap-2">
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
@@ -195,35 +195,35 @@ function LeaveReviewPageInner() {
                   </button>
                 ))}
               </div>
-              <p className="text-summit-400 text-sm mt-2">{formData.rating} star{formData.rating !== 1 ? 's' : ''}</p>
+              <p className="text-gray-600 text-sm mt-2">{formData.rating} star{formData.rating !== 1 ? 's' : ''}</p>
             </div>
 
             {/* Title */}
             <div>
-              <label className="block text-summit-200 font-medium mb-2">Review Title</label>
+              <label className="block text-gray-700 font-medium mb-2">Review Title</label>
               <input
                 type="text"
                 placeholder="e.g., 'Amazing experience!' or 'Good but could be better'"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 maxLength={100}
-                className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               />
-              <p className="text-summit-400 text-sm mt-1">{formData.title.length}/100</p>
+              <p className="text-gray-600 text-sm mt-1">{formData.title.length}/100</p>
             </div>
 
             {/* Comment */}
             <div>
-              <label className="block text-summit-200 font-medium mb-2">Your Review (Optional)</label>
+              <label className="block text-gray-700 font-medium mb-2">Your Review (Optional)</label>
               <textarea
                 placeholder="Tell other adventurers what you liked about this trip..."
                 value={formData.comment}
                 onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
                 maxLength={500}
                 rows={5}
-                className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
+                className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
               />
-              <p className="text-summit-400 text-sm mt-1">{formData.comment.length}/500</p>
+              <p className="text-gray-600 text-sm mt-1">{formData.comment.length}/500</p>
             </div>
 
             {/* Submit */}
@@ -236,8 +236,8 @@ function LeaveReviewPageInner() {
             </button>
           </form>
 
-          <div className="mt-8 bg-summit-900/50 p-4 rounded-lg">
-            <p className="text-summit-300 text-sm">
+          <div className="mt-8 bg-gray-50 p-4 rounded-lg">
+            <p className="text-gray-600 text-sm">
               💡 <strong>Help other adventurers:</strong> Be honest and specific about your experience. Reviews help improve the platform for everyone!
             </p>
           </div>
@@ -250,8 +250,8 @@ function LeaveReviewPageInner() {
 export default function LeaveReviewPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-summit-950 flex items-center justify-center">
-        <p className="text-summit-400">Loading...</p>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <p className="text-gray-600">Loading...</p>
       </div>
     }>
       <LeaveReviewPageInner />

@@ -58,9 +58,9 @@ function TripCard({ trip }: { trip: any }) {
 
   return (
     <Link href={`/trips/${trip.id}`} className="group block h-full">
-      <div className="bg-summit-900 border border-summit-800 rounded-2xl overflow-hidden hover:border-summit-600 hover:-translate-y-1 transition-all duration-300 h-full shadow-xl hover:shadow-2xl flex flex-col">
+      <div className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden hover:border-gray-300 hover:-translate-y-1 transition-all duration-300 h-full shadow-xl hover:shadow-2xl flex flex-col">
         {/* Image */}
-        <div className="relative h-52 overflow-hidden bg-summit-800 shrink-0">
+        <div className="relative h-52 overflow-hidden bg-gray-200 shrink-0">
           <img
             src={imgSrc}
             alt={trip.title}
@@ -69,7 +69,7 @@ function TripCard({ trip }: { trip: any }) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-summit-900/60 via-transparent to-transparent" />
           <div className="absolute top-3 left-3">
-            <span className="inline-block bg-summit-950/80 backdrop-blur-sm text-summit-200 text-xs px-3 py-1.5 rounded-lg capitalize font-medium">
+            <span className="inline-block bg-white/80 backdrop-blur-sm text-gray-700 text-xs px-3 py-1.5 rounded-lg capitalize font-medium">
               {trip.activity?.replace(/_/g, ' ')}
             </span>
           </div>
@@ -119,7 +119,7 @@ function TripCard({ trip }: { trip: any }) {
               <span className="text-summit-500 text-xs"> /person</span>
             </div>
             <div className="text-right">
-              <p className="text-summit-400 text-xs font-medium">{trip.guides?.display_name}</p>
+              <p className="text-gray-600 text-xs font-medium">{trip.guides?.display_name}</p>
               {trip.guides?.rating > 0 && (
                 <div className="flex items-center gap-1 text-amber-400 text-xs justify-end mt-0.5">
                   <Star className="w-3 h-3 fill-current" />
@@ -206,7 +206,7 @@ function TripsPageInner() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-summit-950 pt-24 px-6">
+      <div className="min-h-screen bg-white pt-24 px-6">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl font-bold text-white mb-4">Browse Adventures</h1>
           <div className="bg-red-900/30 border border-red-800 text-red-200 p-6 rounded-xl">
@@ -218,14 +218,14 @@ function TripsPageInner() {
   }
 
   return (
-    <div className="min-h-screen bg-summit-950">
+    <div className="min-h-screen bg-white">
       {/* Page Header */}
       <section className="pt-24 pb-12 px-6 border-b border-summit-800">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl sm:text-5xl font-black text-white mb-3">
             Browse All Adventures
           </h1>
-          <p className="text-summit-400 text-lg mb-8">
+          <p className="text-gray-600 text-lg mb-8">
             {loading ? '...' : `${trips.length} world-class guided trips across the American West`}
           </p>
 
@@ -237,7 +237,7 @@ function TripsPageInner() {
               placeholder="Search trips by name, guide, or location..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-summit-900 border border-summit-800 text-white rounded-xl placeholder-summit-500 focus:border-blue-500 focus:outline-none transition"
+              className="w-full pl-12 pr-4 py-3 bg-gray-900 border border-summit-800 text-white rounded-xl placeholder-summit-500 focus:border-blue-500 focus:outline-none transition"
             />
           </div>
         </div>
@@ -248,14 +248,14 @@ function TripsPageInner() {
         <div className="mb-8">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-summit-900 border border-summit-800 hover:border-summit-700 text-white rounded-lg transition font-medium text-sm"
+            className="flex items-center gap-2 px-4 py-2.5 bg-gray-900 border border-summit-800 hover:border-gray-200 text-white rounded-lg transition font-medium text-sm"
           >
             <Filter className="w-4 h-4" />
             {showFilters ? 'Hide Filters' : 'Show Filters'}
           </button>
 
           {showFilters && (
-            <div className="mt-6 bg-summit-900/50 border border-summit-800 rounded-2xl p-6">
+            <div className="mt-6 bg-gray-50 border border-summit-800 rounded-2xl p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {/* Activity */}
                 <div>
@@ -263,7 +263,7 @@ function TripsPageInner() {
                   <div className="space-y-1 max-h-48 overflow-y-auto">
                     <button
                       onClick={() => setSelectedActivity('')}
-                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === '' ? 'bg-blue-500 text-white' : 'text-summit-300 hover:bg-summit-800'}`}
+                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === '' ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-200'}`}
                     >
                       All Activities
                     </button>
@@ -271,7 +271,7 @@ function TripsPageInner() {
                       <button
                         key={act.id}
                         onClick={() => setSelectedActivity(act.id)}
-                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === act.id ? 'bg-blue-500 text-white' : 'text-summit-300 hover:bg-summit-800'}`}
+                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === act.id ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-200'}`}
                       >
                         {act.emoji} {act.label}
                       </button>
@@ -285,7 +285,7 @@ function TripsPageInner() {
                   <div className="space-y-1">
                     <button
                       onClick={() => setSelectedDifficulty('')}
-                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === '' ? 'bg-blue-500 text-white' : 'text-summit-300 hover:bg-summit-800'}`}
+                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === '' ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-200'}`}
                     >
                       All Levels
                     </button>
@@ -293,7 +293,7 @@ function TripsPageInner() {
                       <button
                         key={diff.id}
                         onClick={() => setSelectedDifficulty(diff.id)}
-                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === diff.id ? 'bg-blue-500 text-white' : 'text-summit-300 hover:bg-summit-800'}`}
+                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === diff.id ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-200'}`}
                       >
                         {diff.emoji} {diff.label}
                       </button>
@@ -325,7 +325,7 @@ function TripsPageInner() {
                 <div className="flex items-end">
                   <button
                     onClick={clearFilters}
-                    className="w-full px-4 py-2.5 bg-summit-800 hover:bg-summit-700 text-white rounded-lg transition text-sm font-medium"
+                    className="w-full px-4 py-2.5 bg-gray-200 hover:bg-gray-200 text-white rounded-lg transition text-sm font-medium"
                   >
                     Reset All Filters
                   </button>
@@ -337,7 +337,7 @@ function TripsPageInner() {
 
         {/* Results Count */}
         <div className="mb-6">
-          <p className="text-summit-400 text-sm">
+          <p className="text-gray-600 text-sm">
             Showing{' '}
             <span className="text-white font-semibold">{filteredTrips.length}</span>{' '}
             of{' '}
@@ -350,21 +350,21 @@ function TripsPageInner() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: 9 }).map((_, i) => (
-              <div key={i} className="bg-summit-900 border border-summit-800 rounded-2xl overflow-hidden animate-pulse">
-                <div className="h-52 bg-summit-800" />
+              <div key={i} className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden animate-pulse">
+                <div className="h-52 bg-gray-200" />
                 <div className="p-5 space-y-3">
-                  <div className="h-4 bg-summit-800 rounded w-2/3" />
-                  <div className="h-3 bg-summit-800 rounded w-full" />
-                  <div className="h-3 bg-summit-800 rounded w-4/5" />
+                  <div className="h-4 bg-gray-200 rounded w-2/3" />
+                  <div className="h-3 bg-gray-200 rounded w-full" />
+                  <div className="h-3 bg-gray-200 rounded w-4/5" />
                 </div>
               </div>
             ))}
           </div>
         ) : filteredTrips.length === 0 ? (
-          <div className="bg-summit-900 border border-summit-800 rounded-2xl p-16 text-center">
+          <div className="bg-gray-900 border border-summit-800 rounded-2xl p-16 text-center">
             <div className="text-5xl mb-4">🏔️</div>
             <p className="text-white text-lg font-semibold mb-2">No trips match your filters</p>
-            <p className="text-summit-400 mb-6">Try adjusting your search or clearing filters</p>
+            <p className="text-gray-600 mb-6">Try adjusting your search or clearing filters</p>
             <button
               onClick={clearFilters}
               className="inline-block bg-blue-500 hover:bg-blue-400 text-white px-8 py-3 rounded-xl font-semibold transition"
@@ -389,8 +389,8 @@ function TripsPageInner() {
 export default function TripsPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-summit-950 flex items-center justify-center">
-        <p className="text-summit-400">Loading trips...</p>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <p className="text-gray-600">Loading trips...</p>
       </div>
     }>
       <TripsPageInner />

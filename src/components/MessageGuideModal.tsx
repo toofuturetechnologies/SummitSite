@@ -199,16 +199,16 @@ export default function MessageGuideModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-summit-900 rounded-lg w-full max-w-md h-96 flex flex-col border border-summit-700 shadow-xl">
+      <div className="bg-gray-900 rounded-lg w-full max-w-md h-96 flex flex-col border border-gray-200 shadow-xl">
         {/* Header */}
-        <div className="border-b border-summit-700 p-4 flex items-center justify-between bg-summit-800/50">
+        <div className="border-b border-gray-200 p-4 flex items-center justify-between bg-gray-100">
           <div className="flex-1">
             <h2 className="text-lg font-semibold text-white">{guideName}</h2>
-            <p className="text-xs text-summit-400">{tripTitle}</p>
+            <p className="text-xs text-gray-600">{tripTitle}</p>
           </div>
           <button
             onClick={onClose}
-            className="text-summit-400 hover:text-summit-200 transition"
+            className="text-gray-600 hover:text-gray-700 transition"
           >
             <X className="w-5 h-5" />
           </button>
@@ -218,11 +218,11 @@ export default function MessageGuideModal({
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
           {loading ? (
             <div className="flex items-center justify-center h-full">
-              <Loader className="w-6 h-6 text-summit-400 animate-spin" />
+              <Loader className="w-6 h-6 text-gray-600 animate-spin" />
             </div>
           ) : error && error.includes('Please sign in') ? (
             <div className="flex flex-col items-center justify-center h-full gap-3">
-              <p className="text-summit-300 text-sm text-center">{error}</p>
+              <p className="text-gray-600 text-sm text-center">{error}</p>
               <Link
                 href={`/auth/login?returnTo=${encodeURIComponent(
                   `/trips/${tripId}#message-${guideId}`
@@ -234,7 +234,7 @@ export default function MessageGuideModal({
             </div>
           ) : messages.length === 0 ? (
             <div className="flex items-center justify-center h-full">
-              <p className="text-summit-400 text-sm">Start a conversation...</p>
+              <p className="text-gray-600 text-sm">Start a conversation...</p>
             </div>
           ) : (
             messages.map((msg) => (
@@ -246,7 +246,7 @@ export default function MessageGuideModal({
                   className={`max-w-xs px-3 py-2 rounded-lg text-sm ${
                     msg.sender_id === user?.id
                       ? 'bg-blue-600 text-white rounded-br-none'
-                      : 'bg-summit-700 text-summit-100 rounded-bl-none'
+                      : 'bg-gray-200 text-summit-100 rounded-bl-none'
                   }`}
                 >
                   <p>{msg.content}</p>
@@ -274,7 +274,7 @@ export default function MessageGuideModal({
         {!error?.includes('Please sign in') && user && (
           <form
             onSubmit={handleSendMessage}
-            className="border-t border-summit-700 p-3 bg-summit-800/50 flex gap-2"
+            className="border-t border-gray-200 p-3 bg-gray-100 flex gap-2"
           >
             <input
               type="text"
@@ -282,7 +282,7 @@ export default function MessageGuideModal({
               onChange={(e) => setMessageText(e.target.value)}
               placeholder="Type a message..."
               disabled={sending}
-              className="flex-1 bg-summit-900 border border-summit-600 text-white px-3 py-2 rounded-lg focus:border-summit-500 focus:outline-none text-sm disabled:opacity-50"
+              className="flex-1 bg-gray-900 border border-gray-300 text-white px-3 py-2 rounded-lg focus:border-summit-500 focus:outline-none text-sm disabled:opacity-50"
             />
             <button
               type="submit"

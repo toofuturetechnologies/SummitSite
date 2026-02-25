@@ -134,13 +134,13 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center p-4">
-      <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-8 w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
+      <div className="bg-gray-100 border border-gray-200 rounded-lg p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-white mb-2">Become a Guide</h1>
-        <p className="text-summit-300 mb-6">Join Summit and share your expertise</p>
+        <p className="text-gray-600 mb-6">Join Summit and share your expertise</p>
 
-        <div className="bg-summit-900/50 border border-summit-700 rounded-lg p-3 mb-6">
-          <p className="text-summit-300 text-sm">
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-6">
+          <p className="text-gray-600 text-sm">
             🏔️ <strong>Guide Account:</strong> Create and manage adventure trips. Earn money from bookings.
           </p>
         </div>
@@ -153,7 +153,7 @@ export default function SignUpPage() {
 
         <form onSubmit={handleSignUp} className="space-y-4">
           <div>
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Full Name
             </label>
             <input
@@ -162,13 +162,13 @@ export default function SignUpPage() {
               value={formData.fullName}
               onChange={handleChange}
               required
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="Your full name"
             />
           </div>
 
           <div>
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Display Name
             </label>
             <input
@@ -177,13 +177,13 @@ export default function SignUpPage() {
               value={formData.displayName}
               onChange={handleChange}
               required
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="How you'll appear to customers"
             />
           </div>
 
           <div>
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Professional Tagline
             </label>
             <input
@@ -192,12 +192,12 @@ export default function SignUpPage() {
               value={formData.tagline}
               onChange={handleChange}
               placeholder="e.g., 'Expert mountaineer with 15+ years'"
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Base Location
             </label>
             <input
@@ -206,12 +206,12 @@ export default function SignUpPage() {
               value={formData.baseLocation}
               onChange={handleChange}
               placeholder="e.g., 'Colorado, USA'"
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Email
             </label>
             <input
@@ -220,13 +220,13 @@ export default function SignUpPage() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="your@email.com"
             />
           </div>
 
           <div>
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Password
             </label>
             <input
@@ -235,7 +235,7 @@ export default function SignUpPage() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="Create a strong password"
             />
           </div>
@@ -249,16 +249,16 @@ export default function SignUpPage() {
           </button>
         </form>
 
-        <p className="text-summit-400 text-sm text-center mt-6">
+        <p className="text-gray-600 text-sm text-center mt-6">
           Looking to book trips instead?{' '}
-          <Link href="/auth/signup-customer" className="text-summit-300 hover:text-white font-medium">
+          <Link href="/auth/signup-customer" className="text-gray-600 hover:text-white font-medium">
             Customer signup
           </Link>
         </p>
 
-        <p className="text-summit-300 text-sm mt-4 text-center">
+        <p className="text-gray-600 text-sm mt-4 text-center">
           Already have an account?{' '}
-          <Link href="/auth/login" className="text-summit-400 hover:text-summit-300">
+          <Link href="/auth/login" className="text-gray-600 hover:text-gray-600">
             Sign in
           </Link>
         </p>

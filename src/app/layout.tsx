@@ -53,7 +53,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen bg-summit-950 font-sans antialiased">
+      <body className="min-h-screen bg-white font-sans antialiased">
         <Navbar />
         {children}
       </body>

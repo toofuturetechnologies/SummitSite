@@ -53,7 +53,7 @@ export default function GuidesPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-summit-950 pt-24 px-6">
+      <div className="min-h-screen bg-white pt-24 px-6">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl font-bold text-white mb-4">Our Guides</h1>
           <div className="bg-red-900/30 border border-red-800 text-red-200 p-6 rounded-xl">
@@ -65,7 +65,7 @@ export default function GuidesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-summit-950">
+    <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative pt-24 pb-12 px-6 border-b border-summit-800">
         <div className="max-w-7xl mx-auto">
@@ -73,7 +73,7 @@ export default function GuidesPage() {
             <h1 className="text-4xl sm:text-5xl font-black text-white mb-3">
               Expert Mountain Guides
             </h1>
-            <p className="text-summit-400 text-lg">
+            <p className="text-gray-600 text-lg">
               AMGA & IFMGA certified professionals with decades of experience
             </p>
           </div>
@@ -86,7 +86,7 @@ export default function GuidesPage() {
               placeholder="Search guides by name, location, or specialty..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-summit-900 border border-summit-800 text-white rounded-xl placeholder-summit-500 focus:border-blue-500 focus:outline-none transition"
+              className="w-full pl-12 pr-4 py-3 bg-gray-900 border border-summit-800 text-white rounded-xl placeholder-summit-500 focus:border-blue-500 focus:outline-none transition"
             />
           </div>
         </div>
@@ -99,31 +99,31 @@ export default function GuidesPage() {
             {Array.from({ length: 8 }).map((_, i) => (
               <div
                 key={i}
-                className="bg-summit-900 border border-summit-800 rounded-2xl p-6 animate-pulse"
+                className="bg-gray-900 border border-summit-800 rounded-2xl p-6 animate-pulse"
               >
-                <div className="w-16 h-16 bg-summit-800 rounded-2xl mb-4" />
-                <div className="h-4 bg-summit-800 rounded w-3/4 mb-2" />
-                <div className="h-3 bg-summit-800 rounded w-full mb-4" />
-                <div className="h-2 bg-summit-800 rounded w-1/2" />
+                <div className="w-16 h-16 bg-gray-200 rounded-2xl mb-4" />
+                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                <div className="h-3 bg-gray-200 rounded w-full mb-4" />
+                <div className="h-2 bg-gray-200 rounded w-1/2" />
               </div>
             ))}
           </div>
         ) : filteredGuides.length === 0 ? (
-          <div className="bg-summit-900 border border-summit-800 rounded-2xl p-16 text-center">
+          <div className="bg-gray-900 border border-summit-800 rounded-2xl p-16 text-center">
             <div className="text-4xl mb-4">🏔️</div>
             <p className="text-white text-lg font-semibold mb-2">No guides found</p>
-            <p className="text-summit-400">Try a different search</p>
+            <p className="text-gray-600">Try a different search</p>
           </div>
         ) : (
           <div>
-            <p className="text-summit-400 text-sm mb-8">
+            <p className="text-gray-600 text-sm mb-8">
               Found <span className="text-white font-semibold">{filteredGuides.length}</span> guide{filteredGuides.length !== 1 ? 's' : ''}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {filteredGuides.map((guide: any) => (
                 <div
                   key={guide.id}
-                  className="bg-summit-900 border border-summit-800 rounded-2xl overflow-hidden hover:border-summit-600 transition-all duration-300 group"
+                  className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden hover:border-gray-300 transition-all duration-300 group"
                 >
                   {/* Avatar Section */}
                   <div className="bg-gradient-to-br from-blue-500 to-summit-700 p-6 flex flex-col items-center justify-center min-h-[140px] relative">
@@ -178,7 +178,7 @@ export default function GuidesPage() {
                         <p className="text-summit-600 text-xs font-semibold mb-2">Specialties</p>
                         <div className="flex flex-wrap gap-1">
                           {guide.specialties.slice(0, 3).map((s: string) => (
-                            <span key={s} className="bg-summit-800 text-summit-300 text-xs px-2 py-1 rounded-full">
+                            <span key={s} className="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded-full">
                               {s.replace(/_/g, ' ')}
                             </span>
                           ))}

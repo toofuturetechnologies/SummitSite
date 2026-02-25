@@ -83,10 +83,10 @@ function LoginContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center p-4">
-      <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-8 w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
+      <div className="bg-gray-100 border border-gray-200 rounded-lg p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-white mb-2">Sign In</h1>
-        <p className="text-summit-300 mb-6">Welcome back to Summit</p>
+        <p className="text-gray-600 mb-6">Welcome back to Summit</p>
 
         {error && (
           <div className="bg-red-900/50 text-red-100 p-4 rounded-lg mb-6">
@@ -97,7 +97,7 @@ function LoginContent() {
         <form onSubmit={handleLogin} className="space-y-4" onClick={() => console.log('Form clicked')}>
           {/* Debug: Form is mounted and ready */}
           <div>
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Email
             </label>
             <input
@@ -106,13 +106,13 @@ function LoginContent() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="your@email.com"
             />
           </div>
 
           <div>
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Password
             </label>
             <input
@@ -121,13 +121,13 @@ function LoginContent() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="Enter your password"
             />
             <div className="text-right mt-2">
               <Link
                 href="/auth/forgot-password"
-                className="text-summit-400 hover:text-summit-300 text-sm"
+                className="text-gray-600 hover:text-gray-600 text-sm"
               >
                 Forgot password?
               </Link>
@@ -144,19 +144,19 @@ function LoginContent() {
         </form>
 
         <div className="space-y-3 mt-6">
-          <p className="text-summit-300 text-sm text-center">
+          <p className="text-gray-600 text-sm text-center">
             Don&apos;t have an account?
           </p>
           <div className="grid grid-cols-2 gap-2">
             <Link
               href="/auth/signup-customer"
-              className="block bg-summit-700 hover:bg-summit-600 text-summit-100 text-sm font-medium py-2 rounded-lg transition text-center"
+              className="block bg-gray-200 hover:bg-summit-600 text-summit-100 text-sm font-medium py-2 rounded-lg transition text-center"
             >
               🏕️ Book a Trip
             </Link>
             <Link
               href="/auth/signup"
-              className="block bg-summit-700 hover:bg-summit-600 text-summit-100 text-sm font-medium py-2 rounded-lg transition text-center"
+              className="block bg-gray-200 hover:bg-summit-600 text-summit-100 text-sm font-medium py-2 rounded-lg transition text-center"
             >
               🏔️ Become a Guide
             </Link>
@@ -171,7 +171,7 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
+        <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
           <p className="text-white text-lg">Loading...</p>
         </div>
       }

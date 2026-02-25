@@ -136,27 +136,27 @@ export default function ProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
         <p className="text-white text-lg">Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-2xl mx-auto p-8">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <Link
             href="/dashboard"
-            className="text-summit-400 hover:text-summit-300"
+            className="text-gray-600 hover:text-gray-600"
           >
             ← Back to Dashboard
           </Link>
         </div>
 
         <h1 className="text-3xl font-bold text-white mb-2">Edit Profile</h1>
-        <p className="text-summit-300 mb-8">Update your guide information</p>
+        <p className="text-gray-600 mb-8">Update your guide information</p>
 
         {error && (
           <div className="bg-red-900/50 text-red-100 p-4 rounded-lg mb-6">
@@ -172,8 +172,8 @@ export default function ProfilePage() {
 
         <form onSubmit={handleSave} className="space-y-6">
           {/* Display Name */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Display Name *
             </label>
             <input
@@ -182,14 +182,14 @@ export default function ProfilePage() {
               value={formData.display_name}
               onChange={handleChange}
               required
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="How you appear to customers"
             />
           </div>
 
           {/* Tagline */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Professional Tagline
             </label>
             <input
@@ -197,35 +197,35 @@ export default function ProfilePage() {
               name="tagline"
               value={formData.tagline}
               onChange={handleChange}
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="e.g., 'Expert climber with 15+ years'"
             />
-            <p className="text-summit-400 text-xs mt-2">
+            <p className="text-gray-600 text-xs mt-2">
               A short, catchy description that appears on your profile
             </p>
           </div>
 
           {/* Bio */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Biography
             </label>
             <textarea
               name="bio"
               value={formData.bio}
               onChange={handleChange}
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
               rows={4}
               placeholder="Tell customers about your experience, certifications, and passion for guiding..."
             />
-            <p className="text-summit-400 text-xs mt-2">
+            <p className="text-gray-600 text-xs mt-2">
               Max 500 characters. Help customers get to know you better.
             </p>
           </div>
 
           {/* Base Location */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Base Location
             </label>
             <input
@@ -233,14 +233,14 @@ export default function ProfilePage() {
               name="base_location"
               value={formData.base_location}
               onChange={handleChange}
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="e.g., 'Colorado, USA'"
             />
           </div>
 
           {/* Years of Experience */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Years of Experience
             </label>
             <input
@@ -250,13 +250,13 @@ export default function ProfilePage() {
               onChange={handleChange}
               min="0"
               max="100"
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
             />
           </div>
 
           {/* Specialties */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Specialties
             </label>
             <input
@@ -264,17 +264,17 @@ export default function ProfilePage() {
               name="specialties"
               value={formData.specialties}
               onChange={handleChange}
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="e.g., mountaineering, rock_climbing, ski_touring (separate with commas)"
             />
-            <p className="text-summit-400 text-xs mt-2">
+            <p className="text-gray-600 text-xs mt-2">
               Separate multiple specialties with commas
             </p>
           </div>
 
           {/* Languages */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Languages Spoken
             </label>
             <input
@@ -282,17 +282,17 @@ export default function ProfilePage() {
               name="languages"
               value={formData.languages}
               onChange={handleChange}
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="e.g., English, Spanish, French (separate with commas)"
             />
-            <p className="text-summit-400 text-xs mt-2">
+            <p className="text-gray-600 text-xs mt-2">
               Languages you can guide in
             </p>
           </div>
 
           {/* Video URL */}
-          <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-6">
-            <label className="block text-summit-200 text-sm font-medium mb-2">
+          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+            <label className="block text-gray-700 text-sm font-medium mb-2">
               Profile Video URL (Optional)
             </label>
             <input
@@ -300,10 +300,10 @@ export default function ProfilePage() {
               name="profile_video_url"
               value={formData.profile_video_url}
               onChange={handleChange}
-              className="w-full bg-summit-900 border border-summit-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="https://vimeo.com/... or https://youtube.com/..."
             />
-            <p className="text-summit-400 text-xs mt-2">
+            <p className="text-gray-600 text-xs mt-2">
               Share a video introducing yourself to customers
             </p>
           </div>
@@ -319,7 +319,7 @@ export default function ProfilePage() {
             </button>
             <Link
               href="/dashboard"
-              className="bg-summit-700 hover:bg-summit-600 text-white font-medium px-6 py-3 rounded-lg transition"
+              className="bg-gray-200 hover:bg-summit-600 text-white font-medium px-6 py-3 rounded-lg transition"
             >
               Cancel
             </Link>

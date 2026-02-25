@@ -94,7 +94,7 @@ function CheckoutContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
         <p className="text-white text-lg">Setting up payment...</p>
       </div>
     );
@@ -102,10 +102,10 @@ function CheckoutContent() {
 
   if (!tripId || !dateId || !participants) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center p-4">
-        <div className="max-w-md bg-summit-800/50 border border-summit-700 rounded-lg p-8 text-center">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
+        <div className="max-w-md bg-gray-100 border border-gray-200 rounded-lg p-8 text-center">
           <h1 className="text-2xl font-bold text-white mb-4">Start Your Booking</h1>
-          <p className="text-summit-300 mb-6">Please select a trip first</p>
+          <p className="text-gray-600 mb-6">Please select a trip first</p>
           <Link
             href="/trips"
             className="block w-full bg-summit-600 hover:bg-summit-500 text-white font-medium py-3 rounded-lg transition"
@@ -119,10 +119,10 @@ function CheckoutContent() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center p-4">
-        <div className="max-w-md bg-summit-800/50 border border-summit-700 rounded-lg p-8 text-center">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
+        <div className="max-w-md bg-gray-100 border border-gray-200 rounded-lg p-8 text-center">
           <h1 className="text-2xl font-bold text-white mb-4">Payment Setup Error</h1>
-          <p className="text-summit-300 mb-6">{error}</p>
+          <p className="text-gray-600 mb-6">{error}</p>
           <Link
             href="/trips"
             className="block w-full bg-summit-600 hover:bg-summit-500 text-white font-medium py-3 rounded-lg transition"
@@ -136,43 +136,43 @@ function CheckoutContent() {
 
   if (!checkoutUrl) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
         <p className="text-white text-lg">Loading checkout...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 p-4">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-4">
       <div className="max-w-2xl mx-auto">
         <Link
           href="/trips"
-          className="text-summit-400 hover:text-summit-300 mb-8 inline-block"
+          className="text-gray-600 hover:text-gray-600 mb-8 inline-block"
         >
           ← Back to Trips
         </Link>
 
-        <div className="bg-summit-800/50 border border-summit-700 rounded-lg p-8">
+        <div className="bg-gray-100 border border-gray-200 rounded-lg p-8">
           <h1 className="text-3xl font-bold text-white mb-2">Complete Your Booking</h1>
-          <p className="text-summit-300 mb-8">
+          <p className="text-gray-600 mb-8">
             {bookingData?.trip?.title} • {bookingData?.participantCount} {bookingData?.participantCount === 1 ? 'person' : 'people'}
           </p>
 
           {/* Price Summary */}
-          <div className="bg-summit-900/50 rounded-lg p-4 mb-8">
+          <div className="bg-gray-50 rounded-lg p-4 mb-8">
             <div className="flex justify-between mb-2">
-              <span className="text-summit-300">Price per person:</span>
+              <span className="text-gray-600">Price per person:</span>
               <span className="text-white font-semibold">${bookingData?.trip?.price_per_person}</span>
             </div>
             <div className="flex justify-between mb-2 text-sm">
-              <span className="text-summit-400">Subtotal ({bookingData?.participantCount} {bookingData?.participantCount === 1 ? 'person' : 'people'}):</span>
-              <span className="text-summit-300">${bookingData?.totalPrice.toFixed(2)}</span>
+              <span className="text-gray-600">Subtotal ({bookingData?.participantCount} {bookingData?.participantCount === 1 ? 'person' : 'people'}):</span>
+              <span className="text-gray-600">${bookingData?.totalPrice.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-lg font-bold border-t border-summit-700 pt-2">
+            <div className="flex justify-between text-lg font-bold border-t border-gray-200 pt-2">
               <span className="text-white">You Pay:</span>
               <span className="text-green-400">${bookingData?.totalPrice.toFixed(2)}</span>
             </div>
-            <p className="text-summit-400 text-xs mt-3">
+            <p className="text-gray-600 text-xs mt-3">
               💡 Platform fee: 12% + $1 hosting. Your guide keeps 88% minus fees.
             </p>
           </div>
@@ -200,7 +200,7 @@ export default function CheckoutPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-gradient-to-b from-summit-700 to-summit-900 flex items-center justify-center">
+        <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
           <p className="text-white text-lg">Loading...</p>
         </div>
       }
