@@ -41,7 +41,7 @@ export default function Navbar() {
           .select('id')
           .eq('user_id', session.user.id)
           .single()
-          .then(({ data: guideData }) => setIsGuide(!!guideData));
+          .then(({ data: guideData }: { data: any }) => setIsGuide(!!guideData));
       } else {
         setIsGuide(false);
       }
