@@ -10,6 +10,7 @@ const supabase = createClient();
 
 export default function Navbar() {
   const [user, setUser] = useState<any>(null);
+  const [isGuide, setIsGuide] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
@@ -19,11 +20,31 @@ export default function Navbar() {
     const getUser = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user ?? null);
+
+      if (session?.user) {
+        const { data: guideData } = await supabase
+          .from('guides')
+          .select('id')
+          .eq('user_id', session.user.id)
+          .single();
+
+        setIsGuide(!!guideData);
+      }
     };
     getUser();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: any, session: any) => {
       setUser(session?.user ?? null);
+      if (session?.user) {
+        supabase
+          .from('guides')
+          .select('id')
+          .eq('user_id', session.user.id)
+          .single()
+          .then(({ data: guideData }) => setIsGuide(!!guideData));
+      } else {
+        setIsGuide(false);
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -87,7 +108,7 @@ export default function Navbar() {
             {user ? (
               <>
                 <Link
-                  href="/dashboard"
+                  href={isGuide ? "/dashboard" : "/customer-dashboard"}
                   className="flex items-center gap-2 px-4 py-2 text-sm text-summit-200 hover:text-white hover:bg-summit-800/50 rounded-lg transition"
                 >
                   <LayoutDashboard className="w-4 h-4" />
@@ -149,7 +170,7 @@ export default function Navbar() {
           {user ? (
             <>
               <Link
-                href="/dashboard"
+                href={isGuide ? "/dashboard" : "/customer-dashboard"}
                 onClick={() => setMenuOpen(false)}
                 className="block px-4 py-3 text-summit-200 hover:text-white hover:bg-summit-800/50 rounded-lg transition"
               >
