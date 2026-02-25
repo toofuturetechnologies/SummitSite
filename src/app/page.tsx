@@ -87,85 +87,124 @@ export default function HomePage() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&q=85&fit=crop')`,
+            backgroundImage: `url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=85&fit=crop')`,
           }}
         />
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-summit-950/70 via-summit-950/50 to-summit-950" />
+        {/* Sophisticated gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/45 to-white" />
 
         {/* Hero content */}
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center pt-24 pb-32">
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 px-4 py-2 rounded-full text-sm font-medium mb-8">
-            <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-            8 Expert Guides · 18 Adventures · Across the American West
+          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/30 text-white px-4 py-2 rounded-full text-sm font-medium mb-8">
+            <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
+            105 Expert Guides · 84+ Adventures · World-Class Experience
           </div>
 
           <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-white mb-6 leading-[1.1] tracking-tight">
-            Find Your Guide.
+            Book Unique Guided
             <br />
-            <span className="bg-gradient-to-r from-blue-400 via-sky-300 to-blue-500 bg-clip-text text-transparent">
-              Reach Your Peak.
-            </span>
+            <span className="text-white">Adventures</span>
           </h1>
 
-          <p className="text-lg sm:text-xl text-white/75 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Book world-class mountain adventures with AMGA and IFMGA-certified guides.
-            Colorado, California, Utah, Washington — your next summit starts here.
+          <p className="text-lg sm:text-xl text-white/85 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Connect with AMGA & IFMGA-certified mountain guides. From Colorado's peaks to international expeditions — 
+            verified expertise, secure payments, and life-changing experiences.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/trips"
-              className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-400 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all duration-200 shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold px-10 py-4 rounded-xl text-lg transition-all duration-200 shadow-2xl shadow-blue-500/40 hover:shadow-blue-500/60 hover:-translate-y-1"
             >
               Browse Adventures
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
               href="/guides"
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm hover:bg-white/20 border border-white/20 text-white font-semibold px-8 py-4 rounded-xl text-lg transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm hover:bg-white/30 border border-white/40 text-white font-semibold px-10 py-4 rounded-xl text-lg transition-all duration-200"
             >
-              Meet Our Guides
+              Meet Guides
             </Link>
           </div>
 
-          {/* Trust badges */}
-          <div className="flex flex-wrap gap-6 justify-center mt-12 text-white/60 text-sm">
-            {[
-              { icon: '🛡️', text: 'AMGA & IFMGA Certified Guides' },
-              { icon: '💳', text: 'Secure Stripe Payments' },
-              { icon: '⭐', text: '4.9★ Average Rating' },
-            ].map((badge) => (
-              <div key={badge.text} className="flex items-center gap-2">
-                <span>{badge.icon}</span>
-                <span>{badge.text}</span>
-              </div>
-            ))}
+          {/* Trust section */}
+          <div className="mt-16 pt-8 border-t border-white/20">
+            <p className="text-white/70 text-sm font-medium mb-4">Trusted by adventurers worldwide</p>
+            <div className="flex flex-wrap gap-8 justify-center text-white/80 text-sm">
+              {[
+                { icon: '⭐', text: '4.9★ Rating', sub: 'Verified reviews' },
+                { icon: '🔐', text: 'Certified Guides', sub: 'AMGA & IFMGA' },
+                { icon: '💳', text: 'Secure Payments', sub: 'Stripe verified' },
+              ].map((badge) => (
+                <div key={badge.text} className="text-center">
+                  <span className="text-2xl">{badge.icon}</span>
+                  <p className="text-white font-semibold text-sm mt-1">{badge.text}</p>
+                  <p className="text-white/60 text-xs">{badge.sub}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 animate-bounce">
-          <div className="w-px h-8 bg-white/20" />
-          <span className="text-xs tracking-widest uppercase">Scroll</span>
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50 animate-bounce">
+          <div className="w-px h-8 bg-white/30" />
+          <span className="text-xs tracking-widest uppercase">Explore</span>
         </div>
       </section>
 
       {/* ─── STATS BAR ─────────────────────────────────────────────────────────── */}
-      <section className="bg-gray-900 border-y border-summit-800">
-        <div className="max-w-6xl mx-auto px-6 py-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+      <section className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
           {[
-            { value: '8', label: 'Expert Guides', sub: 'AMGA & IFMGA certified' },
-            { value: '18+', label: 'Adventures', sub: 'Across 4 states' },
-            { value: '4.9★', label: 'Avg Rating', sub: 'From verified reviews' },
-            { value: '88%', label: 'Goes to Guides', sub: 'Fair commission model' },
+            { value: '105', label: 'Expert Guides', sub: 'Verified professionals' },
+            { value: '84+', label: 'Adventures', sub: 'Worldwide locations' },
+            { value: '4.9★', label: 'Avg Rating', sub: 'Trusted reviews' },
+            { value: '88%', label: 'Fair Pricing', sub: 'Guides earn more' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <p className="text-2xl sm:text-3xl font-black text-white">{stat.value}</p>
-              <p className="text-gray-700 text-sm font-semibold">{stat.label}</p>
-              <p className="text-summit-500 text-xs mt-0.5 hidden sm:block">{stat.sub}</p>
+              <p className="text-3xl sm:text-4xl font-black text-blue-600">{stat.value}</p>
+              <p className="text-gray-800 text-sm font-semibold mt-1">{stat.label}</p>
+              <p className="text-gray-600 text-xs mt-1">{stat.sub}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ─── WHY CHOOSE SUMMIT ──────────────────────────────────────────────── */}
+      <section className="bg-gradient-to-br from-gray-50 to-white py-20">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Why Choose Summit</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              We connect you with the world's best mountain guides. Verified expertise, transparent pricing, and unforgettable experiences.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                icon: '✓',
+                title: 'Verified & Certified Guides',
+                desc: 'Every guide is AMGA or IFMGA certified with proven mountain experience and excellent reviews.',
+              },
+              {
+                icon: '💳',
+                title: 'Easy & Secure Booking',
+                desc: 'Simple payment process via Stripe. Instant confirmation and 24/7 customer support when you need it.',
+              },
+              {
+                icon: '📍',
+                title: '84+ Adventures Worldwide',
+                desc: 'From alpine climbing to backcountry skiing. Explore curated experiences across the globe.',
+              },
+            ].map((item, i) => (
+              <div key={i} className="bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-lg transition-shadow">
+                <div className="text-3xl font-bold text-blue-600 mb-4">{item.icon}</div>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -173,7 +212,7 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-6 py-16">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Browse by Activity</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Browse by Activity</h2>
             <p className="text-gray-600 mt-1">Choose your adventure type</p>
           </div>
         </div>
@@ -182,12 +221,12 @@ export default function HomePage() {
             <Link
               key={cat.id}
               href={`/trips?activity=${cat.id}`}
-              className="flex flex-col items-center gap-2 p-3 bg-gray-900 hover:bg-gray-200 border border-summit-800 hover:border-gray-300 rounded-xl transition-all duration-200 group"
+              className="flex flex-col items-center gap-2 p-3 bg-white hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-xl transition-all duration-200 group shadow-sm hover:shadow-md"
             >
               <span className="text-2xl group-hover:scale-110 transition-transform duration-200">
                 {cat.emoji}
               </span>
-              <span className="text-xs text-gray-600 group-hover:text-white text-center leading-tight font-medium transition-colors">
+              <span className="text-xs text-gray-700 group-hover:text-blue-600 text-center leading-tight font-medium transition-colors">
                 {cat.label}
               </span>
             </Link>
@@ -196,15 +235,15 @@ export default function HomePage() {
       </section>
 
       {/* ─── FEATURED TRIPS ──────────────────────────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-6 pb-20">
-        <div className="flex items-center justify-between mb-8">
+      <section className="max-w-7xl mx-auto px-6 py-20">
+        <div className="flex items-center justify-between mb-10">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">Featured Adventures</h2>
+            <h2 className="text-3xl font-bold text-gray-900">Featured Adventures</h2>
             <p className="text-gray-600 mt-1">Top-rated trips from certified guides</p>
           </div>
           <Link
             href="/trips"
-            className="hidden sm:flex items-center gap-1 text-blue-400 hover:text-blue-300 font-medium text-sm transition"
+            className="hidden sm:flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium text-sm transition"
           >
             View all {allTrips.length} trips
             <ChevronRight className="w-4 h-4" />
@@ -216,7 +255,7 @@ export default function HomePage() {
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
-                className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden animate-pulse"
+                className="bg-white border border-gray-200 rounded-2xl overflow-hidden animate-pulse shadow-sm"
               >
                 <div className="h-52 bg-gray-200" />
                 <div className="p-5 space-y-3">
@@ -238,25 +277,56 @@ export default function HomePage() {
         <div className="mt-10 text-center sm:hidden">
           <Link
             href="/trips"
-            className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 font-medium"
+            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
           >
             View all {allTrips.length} trips <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
 
+      {/* ─── POPULAR DESTINATIONS ──────────────────────────────────────────── */}
+      <section className="bg-gray-50 py-20 border-y border-gray-200">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Popular Destinations</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Explore world-class adventures across the most sought-after mountain regions
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: 'Alps', description: 'Mont Blanc, Matterhorn, and classic multi-day traverses', count: '12+ trips' },
+              { name: 'Colorado Rockies', description: 'Fourteeners, ice climbing, and alpine expeditions', count: '18+ trips' },
+              { name: 'Pacific Northwest', description: 'Mt. Rainier, ski touring, and glacier travel', count: '8+ trips' },
+              { name: 'South America', description: 'Aconcagua, Patagonia, and tropical expeditions', count: '6+ trips' },
+              { name: 'Asia', description: 'Kilimanjaro, Denali, and high-altitude peaks', count: '7+ trips' },
+              { name: 'Europe Beyond Alps', description: 'Dolomites, Pyrenees, and remote crags', count: '9+ trips' },
+            ].map((dest, i) => (
+              <div
+                key={i}
+                className="bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-lg hover:border-blue-300 transition-all group cursor-pointer"
+              >
+                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition">{dest.name}</h3>
+                <p className="text-gray-600 text-sm mb-4">{dest.description}</p>
+                <p className="text-blue-600 text-sm font-semibold">{dest.count}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ─── HOW IT WORKS ─────────────────────────────────────────────────────── */}
-      <section className="bg-gray-900 border-y border-summit-800 py-20">
+      <section className="bg-white py-20 border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
-            <h2 className="text-3xl font-bold text-white mb-3">How Summit Works</h2>
-            <p className="text-gray-600 max-w-xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">How Summit Works</h2>
+            <p className="text-gray-600 max-w-xl mx-auto text-lg">
               Book your dream adventure in minutes — verified guides, secure payments, instant confirmation.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             {/* Connector line */}
-            <div className="hidden md:block absolute top-10 left-1/3 right-1/3 h-px bg-gradient-to-r from-transparent via-summit-700 to-transparent" />
+            <div className="hidden md:block absolute top-10 left-1/3 right-1/3 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
             {[
               {
                 num: '01',
@@ -268,23 +338,23 @@ export default function HomePage() {
                 num: '02',
                 icon: <Shield className="w-7 h-7" />,
                 title: 'Book Securely',
-                desc: 'Select your dates, confirm participants, and pay securely via Stripe. Instant booking confirmation.',
+                desc: 'Select your dates, confirm participants, and pay securely via Stripe. Instant confirmation.',
               },
               {
                 num: '03',
                 icon: <Award className="w-7 h-7" />,
                 title: 'Summit Together',
-                desc: 'Your guide handles the logistics. You focus on the experience. Leave a review when you return.',
+                desc: 'Your guide handles logistics. You focus on the experience. Leave a review when you return.',
               },
             ].map((step) => (
               <div key={step.num} className="relative flex flex-col items-center text-center">
-                <div className="w-20 h-20 bg-gray-200 border border-gray-200 rounded-2xl flex items-center justify-center text-blue-400 mb-6 shadow-xl">
+                <div className="w-20 h-20 bg-blue-50 border border-blue-200 rounded-2xl flex items-center justify-center text-blue-600 mb-6 shadow-sm">
                   {step.icon}
                 </div>
-                <div className="absolute -top-2 -right-2 w-7 h-7 bg-blue-500 rounded-lg flex items-center justify-center">
+                <div className="absolute -top-2 -right-2 w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
                   <span className="text-white text-xs font-bold">{step.num}</span>
                 </div>
-                <h3 className="text-lg font-bold text-white mb-3">{step.title}</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">{step.title}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed max-w-xs">{step.desc}</p>
               </div>
             ))}
@@ -297,12 +367,12 @@ export default function HomePage() {
         <section className="max-w-7xl mx-auto px-6 py-20">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h2 className="text-3xl font-bold text-white mb-2">Meet Our Guides</h2>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">Meet Our Guides</h2>
               <p className="text-gray-600">Certified professionals with decades of combined experience</p>
             </div>
             <Link
               href="/guides"
-              className="hidden sm:flex items-center gap-1 text-blue-400 hover:text-blue-300 font-medium text-sm transition"
+              className="hidden sm:flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium text-sm transition"
             >
               All guides <ChevronRight className="w-4 h-4" />
             </Link>
@@ -312,19 +382,19 @@ export default function HomePage() {
             {guides.map((guide: any) => (
               <div
                 key={guide.id}
-                className="bg-gray-900 border border-summit-800 rounded-2xl p-6 hover:border-gray-300 transition-all duration-200 group"
+                className="bg-white border border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-lg transition-all duration-200 group"
               >
                 {/* Avatar */}
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-summit-700 flex items-center justify-center text-2xl font-black text-white mb-4 shadow-lg">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-2xl font-black text-white mb-4 shadow-lg">
                   {guide.display_name.charAt(0)}
                 </div>
 
                 <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-white font-bold text-base leading-tight group-hover:text-blue-300 transition-colors">
+                  <h3 className="text-gray-900 font-bold text-base leading-tight group-hover:text-blue-600 transition-colors">
                     {guide.display_name}
                   </h3>
                   {guide.is_verified && (
-                    <span className="ml-2 shrink-0 text-blue-400" title="Verified Guide">✓</span>
+                    <span className="ml-2 shrink-0 text-blue-500" title="Verified Guide">✓</span>
                   )}
                 </div>
 
@@ -332,14 +402,14 @@ export default function HomePage() {
                   {guide.tagline}
                 </p>
 
-                <div className="flex items-center gap-1 text-amber-400 text-sm mb-2">
+                <div className="flex items-center gap-1 text-amber-500 text-sm mb-2">
                   <Star className="w-3.5 h-3.5 fill-current" />
                   <span className="font-bold">{guide.rating > 0 ? guide.rating.toFixed(1) : '—'}</span>
-                  <span className="text-summit-500 text-xs">({guide.review_count})</span>
+                  <span className="text-gray-500 text-xs">({guide.review_count})</span>
                 </div>
 
                 {guide.base_location && (
-                  <div className="flex items-center gap-1 text-summit-500 text-xs">
+                  <div className="flex items-center gap-1 text-gray-600 text-xs">
                     <MapPin className="w-3 h-3" />
                     {guide.base_location}
                   </div>
@@ -348,7 +418,7 @@ export default function HomePage() {
                 {guide.specialties?.length > 0 && (
                   <div className="flex flex-wrap gap-1 mt-3">
                     {guide.specialties.slice(0, 2).map((s: string) => (
-                      <span key={s} className="bg-gray-200 text-gray-600 text-xs px-2 py-0.5 rounded-full">
+                      <span key={s} className="bg-blue-50 text-blue-700 text-xs px-2 py-0.5 rounded-full">
                         {s.replace(/_/g, ' ')}
                       </span>
                     ))}
@@ -361,56 +431,56 @@ export default function HomePage() {
       )}
 
       {/* ─── FOR GUIDES CTA ──────────────────────────────────────────────────── */}
-      <section className="px-6 pb-24">
-        <div className="max-w-5xl mx-auto bg-gradient-to-r from-blue-900/40 to-summit-800/40 border border-blue-800/40 rounded-3xl p-10 sm:p-14 text-center relative overflow-hidden">
+      <section className="px-6 py-20">
+        <div className="max-w-5xl mx-auto bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-3xl p-10 sm:p-16 text-center relative overflow-hidden">
           {/* Background decoration */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(59,130,246,0.15),transparent_60%)]" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200/20 rounded-full -mr-48 -mt-48" />
           <div className="relative z-10">
-            <div className="inline-block bg-blue-500/20 text-blue-300 border border-blue-500/30 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
+            <div className="inline-block bg-blue-600 text-white border border-blue-600 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
               For Mountain Guides
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
               Grow Your Guiding Business
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-10">
+            <p className="text-gray-700 text-lg max-w-2xl mx-auto mb-12">
               Join Summit and reach thousands of adventurers looking for expert guidance.
               Zero upfront cost — we only earn when you do.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10 text-left">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 text-left">
               {[
-                { icon: '💰', title: 'Keep 88%', desc: 'Lowest platform fee in the industry. You earn more on every booking.' },
+                { icon: '💰', title: 'Keep 88%', desc: 'Highest guide payout in the industry. You earn more on every booking.' },
                 { icon: '🏦', title: 'Auto Payouts', desc: 'Stripe Connect deposits your earnings directly to your bank account.' },
                 { icon: '📊', title: 'Full Dashboard', desc: 'Manage bookings, trips, availability, and earnings in one place.' },
               ].map((item) => (
-                <div key={item.title} className="bg-white/5 border border-white/10 rounded-xl p-5">
+                <div key={item.title} className="bg-white rounded-xl p-6 shadow-sm">
                   <div className="text-2xl mb-3">{item.icon}</div>
-                  <h3 className="text-white font-bold mb-2">{item.title}</h3>
+                  <h3 className="text-gray-900 font-bold mb-2">{item.title}</h3>
                   <p className="text-gray-600 text-sm">{item.desc}</p>
                 </div>
               ))}
             </div>
             <Link
               href="/auth/signup"
-              className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-400 text-white font-bold px-10 py-4 rounded-xl text-lg transition-all duration-200 shadow-xl shadow-blue-500/30"
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-10 py-4 rounded-xl text-lg transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
             >
               Start Guiding Free
               <ArrowRight className="w-5 h-5" />
             </Link>
-            <p className="text-summit-500 text-sm mt-4">No credit card · 5-minute setup · Free forever until you earn</p>
+            <p className="text-gray-700 text-sm mt-6">No credit card · 5-minute setup · Free forever until you earn</p>
           </div>
         </div>
       </section>
 
       {/* ─── FOOTER ──────────────────────────────────────────────────────────── */}
-      <footer className="bg-white border-t border-summit-900 py-14">
+      <footer className="bg-gray-900 border-t border-gray-800 py-16">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
             <div className="col-span-2">
               <div className="flex items-center gap-2 mb-4">
                 <span className="text-blue-400 text-2xl">⛰️</span>
                 <span className="text-2xl font-black text-white">Summit</span>
               </div>
-              <p className="text-summit-500 text-sm leading-relaxed max-w-xs">
+              <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
                 The adventure marketplace connecting expert mountain guides with passionate adventurers worldwide.
               </p>
             </div>
@@ -423,7 +493,7 @@ export default function HomePage() {
                   { href: '/auth/signup-customer', label: 'Sign Up' },
                 ].map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="text-summit-500 hover:text-white text-sm transition">
+                    <Link href={l.href} className="text-gray-400 hover:text-white text-sm transition">
                       {l.label}
                     </Link>
                   </li>
@@ -439,7 +509,7 @@ export default function HomePage() {
                   { href: '/dashboard', label: 'Dashboard' },
                 ].map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="text-summit-500 hover:text-white text-sm transition">
+                    <Link href={l.href} className="text-gray-400 hover:text-white text-sm transition">
                       {l.label}
                     </Link>
                   </li>
@@ -447,9 +517,9 @@ export default function HomePage() {
               </ul>
             </div>
           </div>
-          <div className="border-t border-summit-900 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-summit-600 text-sm">© 2026 Summit. All rights reserved.</p>
-            <p className="text-summit-600 text-sm">Secure payments by Stripe · Built for adventurers</p>
+          <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="text-gray-500 text-sm">© 2026 Summit. All rights reserved.</p>
+            <p className="text-gray-500 text-sm">Secure payments by Stripe · Built for adventurers</p>
           </div>
         </div>
       </footer>
@@ -462,7 +532,7 @@ function TripCard({ trip, imgSrc }: { trip: any; imgSrc: string }) {
 
   return (
     <Link href={`/trips/${trip.id}`} className="group block">
-      <div className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden hover:border-gray-300 hover:-translate-y-1 transition-all duration-300 shadow-xl hover:shadow-2xl">
+      <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-blue-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
         {/* Image */}
         <div className="relative h-52 overflow-hidden">
           <img
@@ -472,11 +542,11 @@ function TripCard({ trip, imgSrc }: { trip: any; imgSrc: string }) {
             onError={() => setImgError(true)}
           />
           {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-summit-900/80 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
           {/* Badges */}
           <div className="absolute top-3 left-3 flex gap-2">
-            <span className="bg-white/80 backdrop-blur-sm text-gray-700 text-xs px-2.5 py-1 rounded-lg capitalize font-medium">
+            <span className="bg-white/90 backdrop-blur-sm text-gray-800 text-xs px-2.5 py-1 rounded-lg capitalize font-semibold">
               {trip.activity?.replace(/_/g, ' ')}
             </span>
           </div>
@@ -502,11 +572,11 @@ function TripCard({ trip, imgSrc }: { trip: any; imgSrc: string }) {
 
         {/* Content */}
         <div className="p-5">
-          <h3 className="text-white font-bold text-base mb-1 leading-tight group-hover:text-blue-300 transition-colors line-clamp-2">
+          <h3 className="text-gray-900 font-bold text-base mb-1 leading-tight group-hover:text-blue-600 transition-colors line-clamp-2">
             {trip.title}
           </h3>
 
-          <p className="text-summit-500 text-xs mb-4 line-clamp-2 leading-relaxed">
+          <p className="text-gray-600 text-xs mb-4 line-clamp-2 leading-relaxed">
             {trip.description}
           </p>
 
@@ -527,17 +597,17 @@ function TripCard({ trip, imgSrc }: { trip: any; imgSrc: string }) {
           </div>
 
           {/* Price + Guide */}
-          <div className="flex items-center justify-between pt-4 border-t border-summit-800">
+          <div className="flex items-center justify-between pt-4 border-t border-gray-200">
             <div>
-              <span className="text-xl font-black text-white">
+              <span className="text-xl font-black text-gray-900">
                 ${trip.price_per_person}
               </span>
-              <span className="text-summit-500 text-xs"> /person</span>
+              <span className="text-gray-600 text-xs"> /person</span>
             </div>
             <div className="text-right">
               <p className="text-gray-600 text-xs">{trip.guides?.display_name}</p>
               {trip.guides?.rating > 0 && (
-                <div className="flex items-center gap-1 text-amber-400 text-xs justify-end">
+                <div className="flex items-center gap-1 text-amber-500 text-xs justify-end">
                   <Star className="w-3 h-3 fill-current" />
                   {trip.guides.rating.toFixed(1)}
                 </div>

@@ -68,7 +68,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-white/95 backdrop-blur-md border-b border-summit-800 shadow-xl'
+          ? 'bg-white/98 backdrop-blur-md border-b border-gray-200 shadow-lg'
           : 'bg-transparent'
       }`}
     >
@@ -77,9 +77,11 @@ export default function Navbar() {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-2 text-white hover:text-gray-700 transition"
+            className={`flex items-center gap-2 transition ${
+              scrolled ? 'text-gray-900' : 'text-white hover:text-gray-200'
+            }`}
           >
-            <Mountain className="w-7 h-7 text-blue-400" />
+            <Mountain className="w-7 h-7 text-blue-500" />
             <span className="text-xl font-black tracking-tight">Summit</span>
           </Link>
 
@@ -94,8 +96,12 @@ export default function Navbar() {
                 href={link.href}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
                   isActive(link.href)
-                    ? 'text-white bg-gray-100'
-                    : 'text-gray-700 hover:text-white hover:bg-gray-100'
+                    ? scrolled
+                      ? 'text-blue-600 bg-blue-50'
+                      : 'text-white bg-white/20'
+                    : scrolled
+                    ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                    : 'text-white/80 hover:text-white hover:bg-white/20'
                 }`}
               >
                 {link.label}
@@ -109,14 +115,22 @@ export default function Navbar() {
               <>
                 <Link
                   href={isGuide ? "/dashboard" : "/customer-dashboard"}
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:text-white hover:bg-gray-100 rounded-lg transition"
+                  className={`flex items-center gap-2 px-4 py-2 text-sm rounded-lg transition ${
+                    scrolled
+                      ? 'text-gray-700 hover:text-blue-600 hover:bg-blue-50'
+                      : 'text-white/80 hover:text-white hover:bg-white/20'
+                  }`}
                 >
                   <LayoutDashboard className="w-4 h-4" />
                   Dashboard
                 </Link>
                 <button
                   onClick={handleSignOut}
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-gray-600 hover:text-white transition"
+                  className={`flex items-center gap-2 px-4 py-2 text-sm transition ${
+                    scrolled
+                      ? 'text-gray-600 hover:text-red-600'
+                      : 'text-white/70 hover:text-white'
+                  }`}
                 >
                   <LogOut className="w-4 h-4" />
                   Sign Out
@@ -126,13 +140,17 @@ export default function Navbar() {
               <>
                 <Link
                   href="/auth/login"
-                  className="px-4 py-2 text-sm text-gray-700 hover:text-white transition font-medium"
+                  className={`px-4 py-2 text-sm transition font-medium ${
+                    scrolled
+                      ? 'text-gray-700 hover:text-blue-600'
+                      : 'text-white/80 hover:text-white'
+                  }`}
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/auth/signup-customer"
-                  className="px-5 py-2 text-sm bg-blue-500 hover:bg-blue-400 text-white rounded-lg font-semibold transition shadow-lg"
+                  className="px-5 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition shadow-lg"
                 >
                   Get Started
                 </Link>
@@ -142,7 +160,7 @@ export default function Navbar() {
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden text-white p-2"
+            className={`md:hidden p-2 ${scrolled ? 'text-gray-900' : 'text-white'}`}
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -152,18 +170,18 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white/98 backdrop-blur-md border-b border-summit-800 px-4 py-4 space-y-1">
+        <div className="md:hidden bg-white/98 backdrop-blur-md border-b border-gray-200 px-4 py-4 space-y-1">
           <Link
             href="/trips"
             onClick={() => setMenuOpen(false)}
-            className="block px-4 py-3 text-gray-700 hover:text-white hover:bg-gray-100 rounded-lg transition"
+            className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
           >
             Browse Trips
           </Link>
           <Link
             href="/guides"
             onClick={() => setMenuOpen(false)}
-            className="block px-4 py-3 text-gray-700 hover:text-white hover:bg-gray-100 rounded-lg transition"
+            className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
           >
             Guides
           </Link>
@@ -172,13 +190,13 @@ export default function Navbar() {
               <Link
                 href={isGuide ? "/dashboard" : "/customer-dashboard"}
                 onClick={() => setMenuOpen(false)}
-                className="block px-4 py-3 text-gray-700 hover:text-white hover:bg-gray-100 rounded-lg transition"
+                className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
               >
                 Dashboard
               </Link>
               <button
                 onClick={handleSignOut}
-                className="block w-full text-left px-4 py-3 text-gray-600 hover:text-white transition"
+                className="block w-full text-left px-4 py-3 text-gray-600 hover:text-red-600 transition"
               >
                 Sign Out
               </button>
@@ -188,14 +206,14 @@ export default function Navbar() {
               <Link
                 href="/auth/login"
                 onClick={() => setMenuOpen(false)}
-                className="block px-4 py-3 text-gray-700 hover:text-white transition"
+                className="block px-4 py-3 text-gray-700 hover:text-blue-600 transition"
               >
                 Sign In
               </Link>
               <Link
                 href="/auth/signup-customer"
                 onClick={() => setMenuOpen(false)}
-                className="block px-4 py-3 bg-blue-500 text-white rounded-lg text-center font-semibold"
+                className="block px-4 py-3 bg-blue-600 text-white rounded-lg text-center font-semibold hover:bg-blue-700 transition"
               >
                 Get Started
               </Link>
