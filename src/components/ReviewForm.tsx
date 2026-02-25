@@ -25,7 +25,6 @@ export default function ReviewForm({
   const [hoverRating, setHoverRating] = useState(0);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  const [tiktokUrl, setTiktokUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -61,37 +60,6 @@ export default function ReviewForm({
       });
 
       if (reviewError) throw reviewError;
-
-      // If TikTok URL provided, submit as UGC
-      if (tiktokUrl.trim()) {
-        try {
-          // Extract video ID from TikTok URL
-          const videoIdMatch = tiktokUrl.match(/\/video\/(\d+)/);
-          const videoId = videoIdMatch ? videoIdMatch[1] : '';
-
-          if (!videoId) {
-            console.warn('Invalid TikTok URL format');
-          } else {
-            const { error: ugcError } = await supabase.from('ugc_videos').insert({
-              trip_id: tripId,
-              guide_id: guideId,
-              creator_user_id: profileId,
-              tiktok_url: tiktokUrl,
-              tiktok_video_id: videoId,
-              video_status: 'pending',
-              payment_status: 'unpaid',
-            });
-
-            if (ugcError) {
-              console.warn('UGC submission warning:', ugcError);
-              // Don't fail the whole review if UGC fails
-            }
-          }
-        } catch (ugcErr) {
-          console.warn('UGC submission error:', ugcErr);
-          // Don't fail the whole review if UGC fails
-        }
-      }
 
       onSuccess();
       onClose();
@@ -184,28 +152,6 @@ export default function ReviewForm({
             <p className="text-gray-600 text-xs mt-1">Minimum 10 characters</p>
           </div>
 
-          {/* TikTok UGC Upload */}
-          <div className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4">
-            <div className="flex items-start justify-between mb-3">
-              <label className="block text-gray-900 font-semibold">
-                🎬 Share Your TikTok Video (Optional)
-              </label>
-              <span className="bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded">
-                EARN MONEY
-              </span>
-            </div>
-            <input
-              type="url"
-              value={tiktokUrl}
-              onChange={(e) => setTiktokUrl(e.target.value)}
-              placeholder="https://www.tiktok.com/@username/video/123456789"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-purple-500 focus:ring-1 focus:ring-purple-500 text-gray-900"
-            />
-            <p className="text-gray-700 text-xs mt-2">
-              ✨ Paste your TikTok video link from this trip. If selected, you'll earn referral commissions when people book through your content!
-            </p>
-          </div>
-
           {/* Submit Button */}
           <div className="flex gap-3">
             <button
@@ -223,17 +169,6 @@ export default function ReviewForm({
               {loading ? 'Submitting...' : 'Post Review'}
             </button>
           </div>
-
-          {tiktokUrl && (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-              <p className="text-green-800 text-sm font-medium mb-1">
-                ✅ TikTok video ready to submit!
-              </p>
-              <p className="text-green-700 text-xs">
-                Your video will be submitted with your review. Once approved, you'll earn a referral commission each time someone books through your content.
-              </p>
-            </div>
-          )}
         </form>
       </div>
     </div>
