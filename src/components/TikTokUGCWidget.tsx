@@ -2,6 +2,19 @@
 
 import { useEffect, useState } from 'react';
 
+// Declare TikTok window type
+declare global {
+  interface Window {
+    tiktok?: {
+      embed?: {
+        lib?: {
+          render: (element: HTMLElement) => void;
+        };
+      };
+    };
+  }
+}
+
 interface TikTokVideo {
   id: string;
   tiktok_url: string;
@@ -33,7 +46,7 @@ export default function TikTokUGCWidget({ tripId }: { tripId: string }) {
           setVideos(data.videos || []);
           
           // Reload TikTok's embed script to process new embeds
-          if (window.tiktok && window.tiktok.embed) {
+          if (typeof window !== 'undefined' && window.tiktok?.embed?.lib?.render) {
             window.tiktok.embed.lib.render(document.body);
           }
         }
@@ -47,8 +60,14 @@ export default function TikTokUGCWidget({ tripId }: { tripId: string }) {
     fetchUGC();
   }, [tripId]);
 
-  // Load TikTok embed script
+  // Load TikTok embed script (only once per component)
   useEffect(() => {
+    // Check if script is already loaded
+    const existingScript = document.querySelector('script[src="https://www.tiktok.com/embed.js"]');
+    if (existingScript) {
+      return;
+    }
+
     const script = document.createElement('script');
     script.src = 'https://www.tiktok.com/embed.js';
     script.async = true;
