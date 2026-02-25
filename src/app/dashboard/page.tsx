@@ -125,10 +125,16 @@ export default function DashboardPage() {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">{guide.display_name}</h1>
-            <p className="text-gray-600">{guide.tagline || 'Guide'}</p>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">{guide.display_name}</h1>
+            <p className="text-gray-700 font-medium">{guide.tagline || 'Guide'}</p>
           </div>
           <div className="flex gap-3">
+            <Link
+              href="/dashboard/ugc"
+              className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2 rounded-lg transition font-medium"
+            >
+              🎬 UGC
+            </Link>
             <Link
               href="/dashboard/analytics"
               className="bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-lg transition font-medium"

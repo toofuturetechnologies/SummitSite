@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase';
 import Link from 'next/link';
 import { Star, Users, MapPin, Calendar, MessageSquare } from 'lucide-react';
 import ReviewsSection from '@/components/ReviewsSection';
+import TikTokUGCWidget from '@/components/TikTokUGCWidget';
 import MessageGuideModal from '@/components/MessageGuideModal';
 
 const supabase = createClient();
@@ -302,6 +303,9 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
                 </div>
               )}
             </div>
+
+            {/* TikTok UGC Section */}
+            <TikTokUGCWidget tripId={trip.id} />
 
             {/* Reviews Section */}
             <ReviewsSection tripId={trip.id} guideId={trip.guide_id} />

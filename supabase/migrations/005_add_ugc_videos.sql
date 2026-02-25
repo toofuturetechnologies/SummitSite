@@ -1,31 +1,40 @@
--- UGC Videos table for TikTok integration
+-- UGC Videos table for TikTok integration (Simplified: Link-only storage)
 CREATE TABLE ugc_videos (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  
+  -- Content (minimal - just store the link)
+  tiktok_url TEXT NOT NULL UNIQUE,
+  tiktok_video_id TEXT NOT NULL,
+  
+  -- Relationships
   trip_id UUID NOT NULL REFERENCES trips(id) ON DELETE CASCADE,
   guide_id UUID NOT NULL REFERENCES guides(id) ON DELETE CASCADE,
-  creator_id TEXT NOT NULL, -- External creator ID (TikTok username or email)
+  
+  -- Creator info (for display)
   creator_name TEXT NOT NULL,
   creator_handle TEXT NOT NULL,
   creator_followers INTEGER DEFAULT 0,
-  tiktok_url TEXT NOT NULL UNIQUE,
-  tiktok_video_id TEXT NOT NULL UNIQUE,
-  embed_code TEXT, -- HTML embed code from EmbedSocial
-  thumbnail_url TEXT,
+  
+  -- Approval workflow
   video_status TEXT DEFAULT 'pending' CHECK (video_status IN ('pending', 'approved', 'published', 'rejected')),
-  engagement_likes INTEGER DEFAULT 0,
-  engagement_views INTEGER DEFAULT 0,
-  engagement_shares INTEGER DEFAULT 0,
-  engagement_comments INTEGER DEFAULT 0,
-  engagement_rate DECIMAL(5,2) DEFAULT 0, -- Calculated percentage
+  guide_approval_at TIMESTAMP WITH TIME ZONE,
+  rejected_reason TEXT,
+  
+  -- Payment tracking
   payment_amount DECIMAL(10,2) NOT NULL DEFAULT 150,
   payment_status TEXT DEFAULT 'pending' CHECK (payment_status IN ('pending', 'paid', 'failed')),
   stripe_charge_id TEXT,
-  rejected_reason TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-  published_at TIMESTAMP WITH TIME ZONE,
+  paid_at TIMESTAMP WITH TIME ZONE,
+  
+  -- Engagement metrics (optional - can be fetched from TikTok API later)
+  engagement_likes INTEGER DEFAULT 0,
+  engagement_views INTEGER DEFAULT 0,
+  engagement_shares INTEGER DEFAULT 0,
   last_engagement_update TIMESTAMP WITH TIME ZONE,
-  metadata JSONB DEFAULT '{}', -- Store additional data (campaign, season, etc)
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  
+  -- Timestamps
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  published_at TIMESTAMP WITH TIME ZONE
 );
 
 -- Indexes for performance
