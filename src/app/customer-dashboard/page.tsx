@@ -283,21 +283,21 @@ export default function CustomerDashboard() {
         </div>
 
         {/* Referral Earnings Widget */}
-        {referralEarnings.referralCount > 0 && (
-          <div className="mb-8 bg-gradient-to-br from-amber-50 to-orange-50 border border-orange-200 rounded-lg p-4 lg:p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-1">🎬 Referral Earnings</h2>
-                <p className="text-gray-700 text-sm">From your UGC content</p>
-              </div>
-              <Link
-                href="/dashboard/referral-earnings"
-                className="text-orange-600 hover:text-orange-700 font-medium text-sm whitespace-nowrap flex-shrink-0"
-              >
-                View Details →
-              </Link>
+        <div className="mb-8 bg-gradient-to-br from-amber-50 to-orange-50 border border-orange-200 rounded-lg p-4 lg:p-6">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-1">🎬 Referral Earnings</h2>
+              <p className="text-gray-700 text-sm">From your UGC content</p>
             </div>
+            <Link
+              href="/dashboard/referral-earnings"
+              className="text-orange-600 hover:text-orange-700 font-medium text-sm whitespace-nowrap flex-shrink-0"
+            >
+              View Details →
+            </Link>
+          </div>
 
+          {referralEarnings.referralCount > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4">
               <div>
                 <p className="text-gray-600 text-xs mb-1">Total Earned</p>
@@ -316,8 +316,21 @@ export default function CustomerDashboard() {
                 <p className="text-xl lg:text-2xl font-bold text-gray-900">{referralEarnings.referralCount}</p>
               </div>
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="text-center py-6">
+              <p className="text-gray-700 mb-4">No referral earnings yet</p>
+              <p className="text-gray-600 text-sm mb-4">
+                Post TikTok content from your past trips and earn commissions when people book through your referral!
+              </p>
+              <Link
+                href="/creators/ugc"
+                className="inline-block bg-orange-600 hover:bg-orange-700 text-white font-medium px-4 py-2 rounded-lg transition text-sm"
+              >
+                Create Your First UGC
+              </Link>
+            </div>
+          )}
+        </div>
 
         {/* Past Trips */}
         {pastTrips.length > 0 && (
