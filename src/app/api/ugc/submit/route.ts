@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     const { data: booking, error: bookingError } = await supabase
       .from('bookings')
       .select('id, user_id, trip_id, status')
-      .eq('ugc_code', ugcCode)
+      .eq('ugc_code', ugc_code)
       .eq('trip_id', trip_id)
       .single();
 
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
     const { data: existingUGC, error: checkError } = await supabase
       .from('ugc_videos')
       .select('id')
-      .eq('ugc_code', ugcCode)
+      .eq('ugc_code', ugc_code)
       .eq('trip_id', trip_id)
       .single();
 
@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
         guide_id: trip.guide_id,
         creator_user_id: user.id,
         booking_id: booking.id,
-        ugc_code: ugcCode,
+        ugc_code: ugc_code,
         tiktok_url,
         tiktok_video_id,
         video_status: 'pending', // Awaiting guide approval
