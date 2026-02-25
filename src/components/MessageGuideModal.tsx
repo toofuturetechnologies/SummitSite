@@ -48,15 +48,26 @@ export default function MessageGuideModal({
         // Get current user
         const { data: { user: authUser }, error: userError } = await supabase.auth.getUser();
 
-        if (userError || !authUser) {
+        if (userError) {
+          console.error('❌ Auth error:', userError.message);
           setError('Please sign in to message this guide');
           setLoading(false);
           return;
         }
 
+        if (!authUser) {
+          console.log('⚠️  No authenticated user');
+          setError('Please sign in to message this guide');
+          setLoading(false);
+          return;
+        }
+
+        console.log('✅ User authenticated:', authUser.id);
         setUser(authUser);
 
         // Load existing conversation
+        console.log('📥 Loading messages for conversation:', { guideId, authUserId: authUser.id, tripId });
+        
         const { data: conversationMessages, error: messagesError } = await supabase
           .from('messages')
           .select('*, sender:sender_id(full_name)')
@@ -66,18 +77,28 @@ export default function MessageGuideModal({
           .eq('trip_id', tripId)
           .order('created_at', { ascending: true });
 
-        if (!messagesError && conversationMessages) {
+        if (messagesError) {
+          console.error('❌ Message fetch error:', messagesError);
+        } else {
+          console.log('✅ Messages loaded:', conversationMessages?.length || 0);
           setMessages(conversationMessages as any[]);
 
           // Mark messages as read
-          await supabase
-            .from('messages')
-            .update({ read_at: new Date().toISOString() })
-            .eq('trip_id', tripId)
-            .eq('recipient_id', authUser.id)
-            .is('read_at', true);
+          if (conversationMessages && conversationMessages.length > 0) {
+            const { error: updateError } = await supabase
+              .from('messages')
+              .update({ read_at: new Date().toISOString() })
+              .eq('trip_id', tripId)
+              .eq('recipient_id', authUser.id)
+              .is('read_at', true);
+
+            if (updateError) {
+              console.error('⚠️  Error marking messages as read:', updateError);
+            }
+          }
         }
       } catch (err) {
+        console.error('💥 Modal load error:', err);
         setError(err instanceof Error ? err.message : 'Error loading messages');
       } finally {
         setLoading(false);
@@ -95,23 +116,37 @@ export default function MessageGuideModal({
       setSending(true);
       setError(null);
 
+      // Validate required fields
+      if (!guideId || !user.id) {
+        throw new Error('Missing guide or user ID');
+      }
+
       // Send message via API
+      const payload = {
+        senderId: user.id,
+        recipientId: guideId,
+        content: messageText,
+        tripId: tripId,
+      };
+
+      console.log('📤 Sending message:', payload);
+
       const response = await fetch('/api/messages/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          senderId: user.id,
-          recipientId: guideId,
-          content: messageText,
-          tripId: tripId,
-        }),
+        body: JSON.stringify(payload),
       });
 
+      console.log('📥 Response status:', response.status);
+
       if (!response.ok) {
-        throw new Error('Failed to send message');
+        const errorData = await response.json().catch(() => ({}));
+        console.error('❌ API Error:', errorData);
+        throw new Error(errorData.error || `Failed to send message (${response.status})`);
       }
 
       const data = await response.json();
+      console.log('✅ Message sent:', data);
 
       // Add message to local state
       if (data.message) {
@@ -132,7 +167,9 @@ export default function MessageGuideModal({
 
       setMessageText('');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to send message');
+      const errorMsg = err instanceof Error ? err.message : 'Failed to send message';
+      console.error('💥 Error:', errorMsg);
+      setError(errorMsg);
     } finally {
       setSending(false);
     }
