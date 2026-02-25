@@ -64,21 +64,31 @@ export default function ReviewForm({
 
       // If TikTok URL provided, submit as UGC
       if (tiktokUrl.trim()) {
-        const { error: ugcError } = await supabase.from('ugc_videos').insert({
-          trip_id: tripId,
-          guide_id: guideId,
-          tiktok_url: tiktokUrl,
-          tiktok_video_id: tiktokUrl.match(/\/video\/(\d+)/)?.[1] || '',
-          creator_name: authData.user.user_metadata?.full_name || 'Reviewer',
-          creator_handle: authData.user.email?.split('@')[0] || 'reviewer',
-          creator_followers: 0,
-          video_status: 'pending',
-          payment_amount: 0,
-          payment_status: 'demo',
-        });
+        try {
+          // Extract video ID from TikTok URL
+          const videoIdMatch = tiktokUrl.match(/\/video\/(\d+)/);
+          const videoId = videoIdMatch ? videoIdMatch[1] : '';
 
-        if (ugcError) {
-          console.warn('UGC submission warning:', ugcError);
+          if (!videoId) {
+            console.warn('Invalid TikTok URL format');
+          } else {
+            const { error: ugcError } = await supabase.from('ugc_videos').insert({
+              trip_id: tripId,
+              guide_id: guideId,
+              creator_user_id: profileId,
+              tiktok_url: tiktokUrl,
+              tiktok_video_id: videoId,
+              video_status: 'pending',
+              payment_status: 'unpaid',
+            });
+
+            if (ugcError) {
+              console.warn('UGC submission warning:', ugcError);
+              // Don't fail the whole review if UGC fails
+            }
+          }
+        } catch (ugcErr) {
+          console.warn('UGC submission error:', ugcErr);
           // Don't fail the whole review if UGC fails
         }
       }
@@ -175,19 +185,24 @@ export default function ReviewForm({
           </div>
 
           {/* TikTok UGC Upload */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <label className="block text-gray-900 font-semibold mb-2">
-              🎬 Share Your TikTok Video (Optional)
-            </label>
+          <div className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-4">
+            <div className="flex items-start justify-between mb-3">
+              <label className="block text-gray-900 font-semibold">
+                🎬 Share Your TikTok Video (Optional)
+              </label>
+              <span className="bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded">
+                EARN MONEY
+              </span>
+            </div>
             <input
               type="url"
               value={tiktokUrl}
               onChange={(e) => setTiktokUrl(e.target.value)}
               placeholder="https://www.tiktok.com/@username/video/123456789"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-purple-500 focus:ring-1 focus:ring-purple-500 text-gray-900"
             />
-            <p className="text-gray-600 text-xs mt-2">
-              Paste your TikTok video link to feature your experience. Earn $100-500 if featured!
+            <p className="text-gray-700 text-xs mt-2">
+              ✨ Paste your TikTok video link from this trip. If selected, you'll earn referral commissions when people book through your content!
             </p>
           </div>
 
@@ -211,8 +226,11 @@ export default function ReviewForm({
 
           {tiktokUrl && (
             <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-              <p className="text-green-800 text-sm font-medium">
-                ✅ TikTok video will be submitted for approval. You could earn money!
+              <p className="text-green-800 text-sm font-medium mb-1">
+                ✅ TikTok video ready to submit!
+              </p>
+              <p className="text-green-700 text-xs">
+                Your video will be submitted with your review. Once approved, you'll earn a referral commission each time someone books through your content.
               </p>
             </div>
           )}
