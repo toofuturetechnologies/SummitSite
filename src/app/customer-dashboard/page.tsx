@@ -39,6 +39,12 @@ export default function CustomerDashboard() {
   const [upcomingTrips, setUpcomingTrips] = useState<Booking[]>([]);
   const [pastTrips, setPastTrips] = useState<Booking[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [referralEarnings, setReferralEarnings] = useState({
+    totalEarnings: 0,
+    pendingEarnings: 0,
+    paidEarnings: 0,
+    referralCount: 0,
+  });
 
   useEffect(() => {
     const loadData = async () => {
@@ -71,6 +77,29 @@ export default function CustomerDashboard() {
           const past = bookingsData.filter((b: any) => new Date(b.tripDate.start_date) < now);
           setUpcomingTrips(upcoming as Booking[]);
           setPastTrips(past as Booking[]);
+        }
+
+        // Load referral earnings
+        const { data: earningsData } = await supabase
+          .from('referral_earnings')
+          .select('earnings_amount, status')
+          .eq('referrer_user_id', authData.user.id);
+
+        if (earningsData) {
+          const total = earningsData.reduce((sum: number, e: any) => sum + e.earnings_amount, 0);
+          const pending = earningsData
+            .filter((e: any) => e.status === 'pending')
+            .reduce((sum: number, e: any) => sum + e.earnings_amount, 0);
+          const paid = earningsData
+            .filter((e: any) => e.status === 'paid')
+            .reduce((sum: number, e: any) => sum + e.earnings_amount, 0);
+
+          setReferralEarnings({
+            totalEarnings: total,
+            pendingEarnings: pending,
+            paidEarnings: paid,
+            referralCount: earningsData.length,
+          });
         }
       } catch (err) {
         console.error('Dashboard load error:', err);
@@ -252,6 +281,43 @@ export default function CustomerDashboard() {
             )}
           </div>
         </div>
+
+        {/* Referral Earnings Widget */}
+        {referralEarnings.referralCount > 0 && (
+          <div className="mb-8 bg-gradient-to-br from-amber-50 to-orange-50 border border-orange-200 rounded-lg p-4 lg:p-6">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-1">🎬 Referral Earnings</h2>
+                <p className="text-gray-700 text-sm">From your UGC content</p>
+              </div>
+              <Link
+                href="/dashboard/referral-earnings"
+                className="text-orange-600 hover:text-orange-700 font-medium text-sm whitespace-nowrap flex-shrink-0"
+              >
+                View Details →
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4">
+              <div>
+                <p className="text-gray-600 text-xs mb-1">Total Earned</p>
+                <p className="text-xl lg:text-2xl font-bold text-green-600">${referralEarnings.totalEarnings.toFixed(2)}</p>
+              </div>
+              <div>
+                <p className="text-gray-600 text-xs mb-1">Pending</p>
+                <p className="text-xl lg:text-2xl font-bold text-orange-600">${referralEarnings.pendingEarnings.toFixed(2)}</p>
+              </div>
+              <div>
+                <p className="text-gray-600 text-xs mb-1">Paid</p>
+                <p className="text-xl lg:text-2xl font-bold text-green-500">${referralEarnings.paidEarnings.toFixed(2)}</p>
+              </div>
+              <div>
+                <p className="text-gray-600 text-xs mb-1">Referrals</p>
+                <p className="text-xl lg:text-2xl font-bold text-gray-900">{referralEarnings.referralCount}</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Past Trips */}
         {pastTrips.length > 0 && (

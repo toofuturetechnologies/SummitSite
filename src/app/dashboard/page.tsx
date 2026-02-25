@@ -19,13 +19,6 @@ interface Trip {
   title: string;
 }
 
-interface ReferralMetrics {
-  totalEarnings: number;
-  pendingEarnings: number;
-  paidEarnings: number;
-  referralCount: number;
-}
-
 export default function DashboardPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -33,12 +26,6 @@ export default function DashboardPage() {
   const [guide, setGuide] = useState<Guide | null>(null);
   const [trips, setTrips] = useState<Trip[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [referralMetrics, setReferralMetrics] = useState<ReferralMetrics>({
-    totalEarnings: 0,
-    pendingEarnings: 0,
-    paidEarnings: 0,
-    referralCount: 0,
-  });
 
   useEffect(() => {
     const loadDashboard = async () => {
@@ -90,31 +77,6 @@ export default function DashboardPage() {
           .eq('guide_id', guideData.id);
 
         setTrips(tripData || []);
-
-        // Get referral earnings metrics
-        console.log('💰 Dashboard: Fetching referral earnings...');
-        const { data: earningsData, error: earningsError } = await (supabase as any)
-          .from('referral_earnings')
-          .select('earnings_amount, status')
-          .eq('referrer_user_id', user.id);
-
-        if (!earningsError && earningsData) {
-          const total = earningsData.reduce((sum: number, e: any) => sum + e.earnings_amount, 0);
-          const pending = earningsData
-            .filter((e: any) => e.status === 'pending')
-            .reduce((sum: number, e: any) => sum + e.earnings_amount, 0);
-          const paid = earningsData
-            .filter((e: any) => e.status === 'paid')
-            .reduce((sum: number, e: any) => sum + e.earnings_amount, 0);
-
-          setReferralMetrics({
-            totalEarnings: total,
-            pendingEarnings: pending,
-            paidEarnings: paid,
-            referralCount: earningsData.length,
-          });
-        }
-
         setLoading(false);
       } catch (err) {
         console.error('❌ Dashboard error:', err);
@@ -241,79 +203,37 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* UGC Referral Earnings Widget */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Referral Earnings Summary */}
-          <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-orange-200 rounded-lg p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h2 className="text-xl font-bold text-gray-900 mb-1">🎬 Referral Earnings</h2>
-                <p className="text-gray-700 text-sm">From UGC referrals</p>
-              </div>
-              <Link
-                href="/dashboard/referral-earnings"
-                className="text-orange-600 hover:text-orange-700 font-medium text-sm underline"
-              >
-                View Details →
-              </Link>
+        {/* UGC Settings - For Guides to Set Referral Rates */}
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6 mb-8">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h2 className="text-xl font-bold text-gray-900 mb-1">⚙️ UGC Settings</h2>
+              <p className="text-gray-700 text-sm">Manage referral rates for your trips</p>
             </div>
-
-            <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-700 font-medium">Total Earned:</span>
-                <span className="text-2xl font-bold text-green-600">${referralMetrics.totalEarnings.toFixed(2)}</span>
-              </div>
-              <div className="h-px bg-orange-200"></div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-gray-600 text-xs mb-1">Pending</p>
-                  <p className="text-lg font-bold text-orange-600">${referralMetrics.pendingEarnings.toFixed(2)}</p>
-                </div>
-                <div>
-                  <p className="text-gray-600 text-xs mb-1">Paid</p>
-                  <p className="text-lg font-bold text-green-600">${referralMetrics.paidEarnings.toFixed(2)}</p>
-                </div>
-              </div>
-              <div className="h-px bg-orange-200"></div>
-              <div>
-                <p className="text-gray-600 text-xs mb-1">Total Referrals</p>
-                <p className="text-lg font-bold text-gray-900">{referralMetrics.referralCount}</p>
-              </div>
-            </div>
+            <Link
+              href="/dashboard/ugc"
+              className="text-blue-600 hover:text-blue-700 font-medium text-sm underline"
+            >
+              Configure →
+            </Link>
           </div>
 
-          {/* UGC Settings */}
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h2 className="text-xl font-bold text-gray-900 mb-1">⚙️ UGC Settings</h2>
-                <p className="text-gray-700 text-sm">Manage referral rates</p>
-              </div>
-              <Link
-                href="/dashboard/ugc"
-                className="text-blue-600 hover:text-blue-700 font-medium text-sm underline"
-              >
-                Configure →
-              </Link>
-            </div>
-
-            <div className="space-y-3">
-              <p className="text-gray-700 text-sm leading-relaxed">
-                Set custom referral commission rates (0-2%) for each of your trips. Higher rates attract more creators!
+          <div className="space-y-3">
+            <p className="text-gray-700 text-sm leading-relaxed">
+              Set custom referral commission rates (0-2%) for each of your trips. Higher rates attract more creators and drive bookings!
+            </p>
+            <div className="bg-blue-100 rounded p-3">
+              <p className="text-blue-900 text-xs font-medium">💡 Pro Tip</p>
+              <p className="text-blue-800 text-xs mt-1">
+                Set 1-2% commission to incentivize quality content. Most trips use 1.5%.
               </p>
-              <div className="bg-blue-100 rounded p-3">
-                <p className="text-blue-900 text-xs font-medium">💡 Pro Tip</p>
-                <p className="text-blue-800 text-xs mt-1">
-                  Set 1-2% commission to incentivize quality content. Most trips use 1.5%.
-                </p>
-              </div>
-              <Link
-                href="/dashboard/ugc"
-                className="inline-block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition text-center"
-              >
-                Set Rates Per Trip
-              </Link>
             </div>
+            <Link
+              href="/dashboard/ugc"
+              className="inline-block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition text-center"
+            >
+              Set Rates Per Trip
+            </Link>
           </div>
         </div>
 
