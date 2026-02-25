@@ -106,12 +106,12 @@ export default function CustomerDashboard() {
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-6">
-        <div className="bg-gray-100 border border-gray-200 rounded-lg p-8 max-w-md text-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Sign In Required</h1>
+        <div className="bg-white border border-gray-200 rounded-lg p-8 max-w-md text-center shadow-lg">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Sign In Required</h1>
           <p className="text-gray-600 mb-6">Please sign in to view your dashboard</p>
           <Link
             href="/auth/login"
-            className="inline-block bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition font-semibold"
+            className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition font-semibold"
           >
             Sign In
           </Link>
@@ -133,7 +133,7 @@ export default function CustomerDashboard() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-6 lg:mb-8">
-          <h1 className="text-2xl lg:text-4xl font-bold text-white mb-2">
+          <h1 className="text-2xl lg:text-4xl font-bold text-gray-900 mb-2">
             Welcome back, {user?.user_metadata?.full_name?.split(' ')[0]}!
           </h1>
           <p className="text-sm lg:text-base text-gray-600">
@@ -146,12 +146,12 @@ export default function CustomerDashboard() {
           {/* Recent Chats */}
           <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 lg:p-6">
             <div className="flex items-center justify-between mb-4 gap-2">
-              <h2 className="text-base lg:text-lg font-semibold text-white flex items-center gap-2 min-w-0">
+              <h2 className="text-base lg:text-lg font-semibold text-gray-900 flex items-center gap-2 min-w-0">
                 <MessageSquare className="w-4 lg:w-5 h-4 lg:h-5 flex-shrink-0" />
                 <span className="truncate">Chats</span>
               </h2>
               {chats.length > 0 && (
-                <Link href="/dashboard/messages" className="text-gray-600 hover:text-gray-600 text-xs lg:text-sm whitespace-nowrap flex-shrink-0">
+                <Link href="/dashboard/messages" className="text-blue-600 hover:text-blue-700 text-xs lg:text-sm whitespace-nowrap flex-shrink-0 font-medium">
                   View all
                 </Link>
               )}
@@ -165,11 +165,11 @@ export default function CustomerDashboard() {
                   <Link
                     key={chat.otherUserId}
                     href="/dashboard/messages"
-                    className="block p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition border border-gray-300"
+                    className="block p-3 bg-white hover:bg-blue-50 rounded-lg transition border border-gray-300 hover:border-blue-300"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-white text-sm lg:text-base truncate">{chat.otherUserName}</p>
+                        <p className="font-semibold text-gray-900 text-sm lg:text-base truncate">{chat.otherUserName}</p>
                         <p className="text-gray-600 text-xs lg:text-sm truncate mt-1">{chat.lastMessage}</p>
                       </div>
                       {chat.unreadCount > 0 && (
@@ -187,11 +187,11 @@ export default function CustomerDashboard() {
           {/* Upcoming Trips */}
           <div className="lg:col-span-2 bg-gray-100 border border-gray-200 rounded-lg p-4 lg:p-6">
             <div className="flex items-center justify-between mb-4 gap-2">
-              <h2 className="text-base lg:text-lg font-semibold text-white flex items-center gap-2 min-w-0">
+              <h2 className="text-base lg:text-lg font-semibold text-gray-900 flex items-center gap-2 min-w-0">
                 <Calendar className="w-4 lg:w-5 h-4 lg:h-5 flex-shrink-0" />
                 <span className="truncate">Upcoming</span>
               </h2>
-              <Link href="/trips" className="text-gray-600 hover:text-gray-600 text-xs lg:text-sm whitespace-nowrap flex-shrink-0">
+              <Link href="/trips" className="text-blue-600 hover:text-blue-700 text-xs lg:text-sm whitespace-nowrap flex-shrink-0 font-medium">
                 Browse more
               </Link>
             </div>
@@ -201,7 +201,7 @@ export default function CustomerDashboard() {
                 <p className="text-gray-600 mb-4">No upcoming trips</p>
                 <Link
                   href="/trips"
-                  className="inline-block bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-sm transition"
+                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition"
                 >
                   Book a trip
                 </Link>
@@ -214,11 +214,11 @@ export default function CustomerDashboard() {
                     <Link
                       key={booking.id}
                       href={`/trips/${booking.trip_id}`}
-                      className="block p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition border border-gray-300"
+                      className="block p-4 bg-white hover:bg-blue-50 rounded-lg transition border border-gray-300 hover:border-blue-300"
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex-1">
-                          <h3 className="font-semibold text-white">{booking.trip.title}</h3>
+                          <h3 className="font-semibold text-gray-900">{booking.trip.title}</h3>
                           <p className="text-gray-600 text-sm flex items-center gap-1 mt-1">
                             <MapPin className="w-4 h-4" />
                             {booking.trip.region}, {booking.trip.country}
@@ -243,7 +243,7 @@ export default function CustomerDashboard() {
                 {upcomingTrips.length > 3 && (
                   <Link
                     href="#trips"
-                    className="block p-3 text-center text-gray-600 hover:text-gray-600 border border-gray-300 rounded-lg transition"
+                    className="block p-3 text-center text-gray-700 hover:text-blue-600 border border-gray-300 hover:border-blue-300 rounded-lg transition font-medium"
                   >
                     View {upcomingTrips.length - 3} more trip{upcomingTrips.length - 3 !== 1 ? 's' : ''}
                   </Link>
@@ -256,15 +256,15 @@ export default function CustomerDashboard() {
         {/* Past Trips */}
         {pastTrips.length > 0 && (
           <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 lg:p-6">
-            <h2 className="text-base lg:text-lg font-semibold text-white mb-4">Past Trips</h2>
+            <h2 className="text-base lg:text-lg font-semibold text-gray-900 mb-4">Past Trips</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
               {pastTrips.map((booking) => (
                 <Link
                   key={booking.id}
                   href={`/trips/${booking.trip_id}`}
-                  className="p-4 bg-gray-50 hover:bg-gray-100 rounded-lg transition border border-gray-300"
+                  className="p-4 bg-white hover:bg-blue-50 rounded-lg transition border border-gray-300 hover:border-blue-300"
                 >
-                  <h3 className="font-semibold text-white mb-2">{booking.trip.title}</h3>
+                  <h3 className="font-semibold text-gray-900 mb-2">{booking.trip.title}</h3>
                   <p className="text-gray-600 text-sm mb-2">
                     {new Date(booking.tripDate.start_date).toLocaleDateString()}
                   </p>
@@ -272,7 +272,7 @@ export default function CustomerDashboard() {
                   {booking.status === 'completed' && !booking.id.includes('reviewed') && (
                     <Link
                       href={`/bookings/review?booking=${booking.id}`}
-                      className="text-blue-400 hover:text-blue-300 text-sm mt-2 inline-block"
+                      className="text-blue-600 hover:text-blue-700 text-sm mt-2 inline-block font-medium"
                     >
                       Leave review →
                     </Link>
