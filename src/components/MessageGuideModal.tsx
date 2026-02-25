@@ -1,11 +1,15 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { createClient } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 import { X, Send, Loader } from 'lucide-react';
 import Link from 'next/link';
 
-const supabase = createClient();
+// Use anon key for RLS to work with authenticated user
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+);
 
 interface MessageGuideModalProps {
   guideId: string;
