@@ -84,25 +84,40 @@ function CheckoutContent() {
     setupPayment();
   }, [tripId, dateId, participants]);
 
-  // Search for referrer by username
+  // Search for referrer by username - only show users with ugc_code for this trip
   const handleReferrerSearch = async (searchTerm: string) => {
     setReferrerSearch(searchTerm);
 
-    if (!searchTerm.trim()) {
+    if (!searchTerm.trim() || !tripId) {
       setReferrerSearchResults([]);
       return;
     }
 
     try {
+      // Find users who have booked this trip and have a ugc_code (completed booking)
       const { data, error } = await supabase
-        .from('profiles')
-        .select('id, full_name')
-        .ilike('full_name', `%${searchTerm}%`)
-        .neq('id', currentUser?.id) // Exclude current user
-        .limit(5);
+        .from('bookings')
+        .select('user_id, profiles(id, full_name)')
+        .eq('trip_id', tripId)
+        .not('ugc_code', 'is', null) // Must have ugc_code (proof of booking)
+        .neq('user_id', currentUser?.id); // Exclude current user
 
-      if (!error && data) {
-        setReferrerSearchResults(data);
+      if (error) {
+        console.error('Search error:', error);
+        return;
+      }
+
+      // Filter by search term and extract unique profiles
+      if (data) {
+        const uniqueUsers = new Map();
+        data.forEach((booking: any) => {
+          if (booking.profiles?.full_name?.toLowerCase().includes(searchTerm.toLowerCase())) {
+            if (!uniqueUsers.has(booking.profiles.id)) {
+              uniqueUsers.set(booking.profiles.id, booking.profiles);
+            }
+          }
+        });
+        setReferrerSearchResults(Array.from(uniqueUsers.values()).slice(0, 5));
       }
     } catch (err) {
       console.error('Search error:', err);

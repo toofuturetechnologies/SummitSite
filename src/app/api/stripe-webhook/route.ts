@@ -187,26 +187,26 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
     if (referralUserId) {
       console.log('🎬 Processing referral earnings for user:', referralUserId);
       try {
-        // Check if referrer has UGC for this trip
-        const { data: ugcExists, error: ugcError } = await supabase
-          .from('ugc_videos')
+        // Check if referrer has a ugc_code for this trip (proof they completed it)
+        const { data: referrerBooking, error: referrerError } = await supabase
+          .from('bookings')
           .select('id')
+          .eq('user_id', referralUserId)
           .eq('trip_id', tripId)
-          .eq('creator_user_id', referralUserId)
-          .eq('video_status', 'published')
+          .not('ugc_code', 'is', null) // Must have ugc_code (booking completed)
           .limit(1);
 
-        if (!ugcError && ugcExists && ugcExists.length > 0) {
-          console.log('✅ UGC found for referrer, calculating payout...');
+        if (!referrerError && referrerBooking && referrerBooking.length > 0) {
+          console.log('✅ Referrer has completed this trip (has ugc_code), calculating payout...');
 
           // Get referral payout percent from trip
-          const { data: tripData, error: tripPecentError } = await supabase
+          const { data: tripData, error: tripPercentError } = await supabase
             .from('trips')
             .select('referral_payout_percent')
             .eq('id', tripId)
             .single();
 
-          if (!tripPecentError && tripData) {
+          if (!tripPercentError && tripData) {
             const referralPercent = tripData.referral_payout_percent || 1.0;
             const referralPayout = amount * (referralPercent / 100);
 
@@ -222,7 +222,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
               console.warn('⚠️ Failed to update booking with referral amount:', updateError);
             }
 
-            // Create referral earnings record
+            // Create referral earnings record with pending status
             const { error: earningsError } = await supabase
               .from('referral_earnings')
               .insert({
@@ -230,17 +230,17 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
                 booking_id: bookingData?.[0]?.id,
                 trip_id: tripId,
                 earnings_amount: referralPayout,
-                status: 'pending',
+                status: 'pending', // Stays pending until the booked trip is completed
               });
 
             if (earningsError) {
               console.error('❌ Failed to create referral earnings:', earningsError);
             } else {
-              console.log('✅ Referral earnings record created');
+              console.log('✅ Referral earnings record created with pending status');
             }
           }
         } else {
-          console.log('ℹ️ Referrer has no published UGC for this trip - no referral payout');
+          console.log('ℹ️ Referrer has not completed this trip (no ugc_code) - cannot be referral');
         }
       } catch (referralError) {
         console.error('❌ Referral processing error:', referralError);
