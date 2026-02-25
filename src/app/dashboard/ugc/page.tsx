@@ -24,10 +24,6 @@ export default function UGCReferralSettingsPage() {
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState<any>(null);
 
-  useEffect(() => {
-    loadTrips();
-  }, []);
-
   const loadTrips = async () => {
     try {
       // Get current user
@@ -68,7 +64,7 @@ export default function UGCReferralSettingsPage() {
 
       // Initialize percentage state
       const percentagesMap: { [key: string]: string } = {};
-      tripData?.forEach((trip) => {
+      tripData?.forEach((trip: Trip) => {
         percentagesMap[trip.id] = (trip.referral_payout_percent || 1.0).toString();
       });
       setPercentages(percentagesMap);
@@ -80,6 +76,10 @@ export default function UGCReferralSettingsPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    loadTrips();
+  }, [router]);
 
   const toggleTrip = (tripId: string) => {
     const newExpanded = new Set(expandedTrips);
