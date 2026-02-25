@@ -23,6 +23,7 @@ interface MessageGuideModalProps {
 
 export default function MessageGuideModal({
   guideId,
+  guideUserId,
   guideName,
   tripId,
   tripTitle,
