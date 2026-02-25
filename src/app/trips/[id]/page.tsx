@@ -32,6 +32,7 @@ interface Trip {
 
 interface Guide {
   id: string;
+  user_id: string;  // Needed for messaging
   display_name: string;
   tagline?: string;
   bio?: string;
@@ -403,7 +404,7 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
         </div>
 
         {/* Message Guide Modal */}
-        {trip && guide && (
+        {trip && guide && guide.user_id && (
           <MessageGuideModal
             guideId={guide.id}
             guideUserId={guide.user_id}
