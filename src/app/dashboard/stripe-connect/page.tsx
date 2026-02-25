@@ -95,7 +95,7 @@ export default function StripeConnectPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex pt-20 lg:pt-24 items-center justify-center">
         <p className="text-white">Loading...</p>
       </div>
     );
@@ -103,7 +103,7 @@ export default function StripeConnectPage() {
 
   if (!guide) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8 pt-20 lg:pt-24">
         <div className="max-w-4xl mx-auto">
           <p className="text-white">Not a guide</p>
         </div>
@@ -112,7 +112,7 @@ export default function StripeConnectPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8 pt-20 lg:pt-24">
       <div className="max-w-2xl mx-auto">
         <Link href="/dashboard" className="text-gray-600 hover:text-gray-600 mb-8 inline-block">
           ← Back to Dashboard

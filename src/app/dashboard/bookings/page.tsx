@@ -144,7 +144,7 @@ export default function BookingsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex pt-20 lg:pt-24 items-center justify-center">
         <p className="text-white text-lg">Loading...</p>
       </div>
     );
@@ -164,7 +164,7 @@ export default function BookingsPage() {
     : bookings.filter(b => b.status === filterStatus);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 pt-20 lg:pt-24">
       <div className="max-w-6xl mx-auto p-8">
         {/* Header */}
         <div className="mb-8">

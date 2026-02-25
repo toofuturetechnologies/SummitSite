@@ -101,8 +101,8 @@ export default function EarningsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-        <p className="text-white text-lg">Loading earnings...</p>
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center pt-20 lg:pt-24">
+        <p className="text-gray-900 text-lg">Loading earnings...</p>
       </div>
     );
   }
@@ -111,7 +111,7 @@ export default function EarningsPage() {
   const refundedBookings = bookings.filter((b: any) => b.payment_status === 'refunded');
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 pt-20 lg:pt-24">
       <div className="max-w-6xl mx-auto p-8">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">

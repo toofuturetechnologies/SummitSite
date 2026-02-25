@@ -98,7 +98,7 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8 pt-20 lg:pt-24">
         <div className="max-w-4xl mx-auto bg-red-900/50 text-red-100 p-6 rounded-lg">
           <h2 className="font-bold mb-2">Error</h2>
           <p className="mb-4">{error}</p>
@@ -112,7 +112,7 @@ export default function DashboardPage() {
 
   if (!guide) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
+      <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8 pt-20 lg:pt-24">
         <div className="max-w-4xl mx-auto">
           <p className="text-white">Loading guide...</p>
         </div>
@@ -121,7 +121,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8 pt-20 lg:pt-24">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
