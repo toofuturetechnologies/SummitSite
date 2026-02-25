@@ -121,49 +121,63 @@ export default function MessageGuideModal({
         throw new Error('Missing guide or user ID');
       }
 
-      // Send message via API
+      const messageContent = messageText.trim();
       const payload = {
         senderId: user.id,
         recipientId: guideId,
-        content: messageText,
+        content: messageContent,
         tripId: tripId,
       };
 
-      console.log('📤 Sending message:', payload);
+      console.log('📤 Sending message via Supabase direct:', payload);
 
-      const response = await fetch('/api/messages/send', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      // Send directly via Supabase (no API needed)
+      const { data: newMessage, error: dbError } = await supabase
+        .from('messages')
+        .insert({
+          sender_id: user.id,
+          recipient_id: guideId,
+          content: messageContent,
+          trip_id: tripId || null,
+        })
+        .select()
+        .single();
 
-      console.log('📥 Response status:', response.status);
-
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('❌ API Error:', errorData);
-        throw new Error(errorData.error || `Failed to send message (${response.status})`);
+      if (dbError) {
+        console.error('❌ Database Error:', dbError);
+        
+        // Better error messages
+        if (dbError.code === '23502') {
+          throw new Error('Invalid recipient. Make sure the guide exists.');
+        } else if (dbError.code === '23505') {
+          throw new Error('This message was already sent.');
+        } else if (dbError.message?.includes('RLS')) {
+          throw new Error('Permission denied. You may need to sign in again.');
+        } else {
+          throw new Error(dbError.message || 'Failed to send message');
+        }
       }
 
-      const data = await response.json();
-      console.log('✅ Message sent:', data);
+      if (!newMessage) {
+        throw new Error('Message was not saved (no data returned)');
+      }
+
+      console.log('✅ Message sent successfully:', newMessage.id);
 
       // Add message to local state
-      if (data.message) {
-        setMessages([
-          ...messages,
-          {
-            id: data.message.id,
-            sender_id: user.id,
-            content: messageText,
-            created_at: data.message.created_at,
-            read_at: null,
-            sender: {
-              full_name: user.user_metadata?.full_name || 'You',
-            },
+      setMessages([
+        ...messages,
+        {
+          id: newMessage.id,
+          sender_id: user.id,
+          content: messageContent,
+          created_at: newMessage.created_at,
+          read_at: null,
+          sender: {
+            full_name: user.user_metadata?.full_name || 'You',
           },
-        ]);
-      }
+        },
+      ]);
 
       setMessageText('');
     } catch (err) {
