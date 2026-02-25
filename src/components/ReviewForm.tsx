@@ -40,10 +40,20 @@ export default function ReviewForm({
         throw new Error('You must be logged in to leave a review');
       }
 
+      // Get or create profile for this user
+      const { data: profileData } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('user_id', authData.user.id)
+        .single();
+
+      const profileId = profileData?.id || authData.user.id;
+
       // Create review
       const { error: reviewError } = await supabase.from('reviews').insert({
         trip_id: tripId,
-        reviewer_id: authData.user.id,
+        guide_id: guideId,
+        reviewer_id: profileId,
         rating,
         title,
         body,
