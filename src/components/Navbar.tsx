@@ -170,18 +170,18 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden bg-white/98 backdrop-blur-md border-b border-gray-200 px-4 py-4 space-y-1">
+        <div className="md:hidden bg-white border-b border-gray-200 px-4 py-4 space-y-1 shadow-lg">
           <Link
             href="/trips"
             onClick={() => setMenuOpen(false)}
-            className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
+            className="block px-4 py-3 text-gray-900 font-medium hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
           >
             Browse Trips
           </Link>
           <Link
             href="/guides"
             onClick={() => setMenuOpen(false)}
-            className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
+            className="block px-4 py-3 text-gray-900 font-medium hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
           >
             Guides
           </Link>
@@ -190,13 +190,13 @@ export default function Navbar() {
               <Link
                 href={isGuide ? "/dashboard" : "/customer-dashboard"}
                 onClick={() => setMenuOpen(false)}
-                className="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                className="block px-4 py-3 text-gray-900 font-medium hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
               >
                 Dashboard
               </Link>
               <button
                 onClick={handleSignOut}
-                className="block w-full text-left px-4 py-3 text-gray-600 hover:text-red-600 transition"
+                className="block w-full text-left px-4 py-3 text-gray-900 font-medium hover:text-red-600 hover:bg-red-50 transition rounded-lg"
               >
                 Sign Out
               </button>
@@ -206,7 +206,7 @@ export default function Navbar() {
               <Link
                 href="/auth/login"
                 onClick={() => setMenuOpen(false)}
-                className="block px-4 py-3 text-gray-700 hover:text-blue-600 transition"
+                className="block px-4 py-3 text-gray-900 font-medium hover:text-blue-600 hover:bg-blue-50 transition rounded-lg"
               >
                 Sign In
               </Link>
