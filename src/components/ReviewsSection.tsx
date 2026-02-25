@@ -107,16 +107,16 @@ export default function ReviewsSection({ tripId, guideId }: { tripId: string; gu
 
   if (reviews.length === 0) {
     return (
-      <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-        <h2 className="text-xl font-semibold text-white mb-4">Reviews</h2>
+      <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">Reviews</h2>
         <p className="text-gray-600">No reviews yet. Be the first to review this trip!</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-      <h2 className="text-xl font-semibold text-white mb-6">Reviews ({reviews.length})</h2>
+    <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+      <h2 className="text-xl font-semibold text-gray-900 mb-6">Reviews ({reviews.length})</h2>
 
       <div className="space-y-6">
         {reviews.map((review) => (
@@ -131,34 +131,34 @@ export default function ReviewsSection({ tripId, guideId }: { tripId: string; gu
                         key={i}
                         className={`w-4 h-4 ${
                           i < review.rating
-                            ? 'fill-yellow-400 text-yellow-400'
-                            : 'text-summit-700'
+                            ? 'fill-amber-500 text-amber-500'
+                            : 'text-gray-300'
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-sm text-gray-700 font-medium">
                     {new Date(review.created_at).toLocaleDateString()}
                   </span>
                 </div>
-                <h3 className="font-semibold text-white">
+                <h3 className="font-bold text-gray-900 text-base">
                   {review.title}
                 </h3>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-700 text-sm">
                   by {review.profiles?.full_name}
                 </p>
               </div>
             </div>
 
             {/* Review Body */}
-            <p className="text-gray-600 mb-4">{review.body}</p>
+            <p className="text-gray-700 mb-4 leading-relaxed">{review.body}</p>
 
             {/* Guide Response */}
             {review.guide_response && (
-              <div className="bg-gray-50 rounded-lg p-4 mb-4 border-l-2 border-gray-300">
-                <p className="text-sm font-semibold text-white mb-2">Guide's Response</p>
-                <p className="text-gray-600 text-sm mb-1">{review.guide_response}</p>
-                <p className="text-gray-600 text-xs">
+              <div className="bg-blue-50 rounded-lg p-4 mb-4 border-l-4 border-blue-500">
+                <p className="text-sm font-bold text-blue-900 mb-2">Guide's Response</p>
+                <p className="text-gray-800 text-sm mb-2 leading-relaxed">{review.guide_response}</p>
+                <p className="text-gray-700 text-xs">
                   {review.guide_responded_at &&
                     new Date(review.guide_responded_at).toLocaleDateString()}
                 </p>
@@ -167,19 +167,19 @@ export default function ReviewsSection({ tripId, guideId }: { tripId: string; gu
 
             {/* Guide Response Form */}
             {isGuide && !review.guide_response && respondingId === review.id && (
-              <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+              <div className="bg-blue-50 rounded-lg p-4 space-y-3">
                 <textarea
                   value={responseText}
                   onChange={(e) => setResponseText(e.target.value)}
                   placeholder="Write your response..."
                   rows={3}
-                  className="w-full bg-gray-900 border border-gray-300 text-white px-3 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
+                  className="w-full bg-white border border-gray-300 text-gray-900 px-3 py-2 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
                 />
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleSubmitResponse(review.id)}
                     disabled={!responseText.trim() || submitting}
-                    className="bg-summit-600 hover:bg-summit-500 disabled:opacity-50 text-white px-4 py-2 rounded-lg transition text-sm"
+                    className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg transition text-sm font-medium"
                   >
                     {submitting ? 'Submitting...' : 'Submit Response'}
                   </button>
@@ -188,7 +188,7 @@ export default function ReviewsSection({ tripId, guideId }: { tripId: string; gu
                       setRespondingId(null);
                       setResponseText('');
                     }}
-                    className="text-gray-600 hover:text-gray-600 px-4 py-2 text-sm"
+                    className="text-gray-700 hover:text-gray-900 px-4 py-2 text-sm font-medium transition"
                   >
                     Cancel
                   </button>
@@ -200,7 +200,7 @@ export default function ReviewsSection({ tripId, guideId }: { tripId: string; gu
             {isGuide && !review.guide_response && respondingId !== review.id && (
               <button
                 onClick={() => setRespondingId(review.id)}
-                className="text-gray-600 hover:text-gray-600 text-sm flex items-center gap-1"
+                className="text-blue-600 hover:text-blue-700 text-sm flex items-center gap-1 font-medium transition"
               >
                 <MessageCircle className="w-4 h-4" />
                 Respond to Review

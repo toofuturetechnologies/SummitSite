@@ -204,19 +204,19 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
 
         {/* Guide Info */}
         {guide && (
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-8">
+          <div className="bg-white border border-gray-200 rounded-lg p-6 mb-8 shadow-sm">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h2 className="text-xl font-semibold text-white mb-4">About Your Guide</h2>
-                <h3 className="text-lg font-semibold text-white">{guide.display_name}</h3>
-                <p className="text-gray-600 text-sm mb-2">{guide.tagline}</p>
-                <div className="flex items-center gap-2 text-gray-600 mb-3">
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <span>{guide.rating.toFixed(1)}</span>
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">About Your Guide</h2>
+                <h3 className="text-lg font-bold text-gray-900">{guide.display_name}</h3>
+                <p className="text-gray-700 text-sm mb-2">{guide.tagline}</p>
+                <div className="flex items-center gap-2 text-gray-800 mb-3">
+                  <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+                  <span className="font-medium">{guide.rating.toFixed(1)}</span>
                   <span className="text-gray-600">({guide.review_count} reviews)</span>
                 </div>
                 {guide.bio && (
-                  <p className="text-gray-600 text-sm line-clamp-3">{guide.bio}</p>
+                  <p className="text-gray-700 text-sm line-clamp-3">{guide.bio}</p>
                 )}
               </div>
               <button
@@ -235,19 +235,19 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
           {/* Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Description */}
-            <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-semibold text-white mb-4">About This Trip</h2>
-              <p className="text-gray-600 whitespace-pre-line">{trip.description}</p>
+            <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">About This Trip</h2>
+              <p className="text-gray-700 whitespace-pre-line leading-relaxed">{trip.description}</p>
             </div>
 
             {/* Highlights */}
             {trip.highlights && trip.highlights.length > 0 && (
-              <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-white mb-4">Highlights</h2>
+              <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">Highlights</h2>
                 <ul className="space-y-2">
                   {trip.highlights.map((highlight, idx) => (
-                    <li key={idx} className="text-gray-600 flex items-start gap-2">
-                      <span className="text-summit-600 mt-1">✓</span>
+                    <li key={idx} className="text-gray-700 flex items-start gap-2">
+                      <span className="text-green-600 font-bold mt-1">✓</span>
                       {highlight}
                     </li>
                   ))}
@@ -257,15 +257,15 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
 
             {/* Itinerary */}
             {trip.itinerary && trip.itinerary.length > 0 && (
-              <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-white mb-4">Itinerary</h2>
+              <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                <h2 className="text-xl font-semibold text-gray-900 mb-4">Itinerary</h2>
                 <div className="space-y-4">
                   {trip.itinerary.map((day: any, idx: number) => (
-                    <div key={idx} className="border-l-2 border-gray-300 pl-4">
-                      <h3 className="font-semibold text-white mb-2">
+                    <div key={idx} className="border-l-4 border-blue-500 pl-4">
+                      <h3 className="font-bold text-gray-900 mb-2">
                         Day {day.day}: {day.title}
                       </h3>
-                      <p className="text-gray-600 text-sm">{day.description}</p>
+                      <p className="text-gray-700 text-sm leading-relaxed">{day.description}</p>
                     </div>
                   ))}
                 </div>
@@ -275,12 +275,12 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
             {/* Inclusions & Exclusions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {trip.inclusions && trip.inclusions.length > 0 && (
-                <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-                  <h3 className="font-semibold text-white mb-3">What&apos;s Included</h3>
+                <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                  <h3 className="font-semibold text-gray-900 mb-3">What&apos;s Included</h3>
                   <ul className="space-y-2">
                     {trip.inclusions.map((inc, idx) => (
-                      <li key={idx} className="text-gray-600 text-sm flex items-start gap-2">
-                        <span className="text-green-400">+</span>
+                      <li key={idx} className="text-gray-700 text-sm flex items-start gap-2">
+                        <span className="text-green-600 font-bold">✓</span>
                         {inc}
                       </li>
                     ))}
@@ -289,12 +289,12 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
               )}
 
               {trip.exclusions && trip.exclusions.length > 0 && (
-                <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-                  <h3 className="font-semibold text-white mb-3">What&apos;s Not Included</h3>
+                <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+                  <h3 className="font-semibold text-gray-900 mb-3">What&apos;s Not Included</h3>
                   <ul className="space-y-2">
                     {trip.exclusions.map((exc, idx) => (
-                      <li key={idx} className="text-gray-600 text-sm flex items-start gap-2">
-                        <span className="text-red-400">-</span>
+                      <li key={idx} className="text-gray-700 text-sm flex items-start gap-2">
+                        <span className="text-gray-400">—</span>
                         {exc}
                       </li>
                     ))}
@@ -309,15 +309,15 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
 
           {/* Booking Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-gray-100 border border-gray-200 rounded-lg p-6 sticky top-8">
-              <h2 className="text-xl font-semibold text-white mb-6">Book This Trip</h2>
+            <div className="bg-white border border-gray-200 rounded-lg p-6 sticky top-24 shadow-sm">
+              <h2 className="text-xl font-semibold text-gray-900 mb-6">Book This Trip</h2>
 
               {availableDates.length === 0 ? (
                 <div className="text-center py-8">
                   <p className="text-gray-600 mb-4">No dates available</p>
                   <Link
                     href="/trips"
-                    className="text-gray-600 hover:text-gray-600 underline"
+                    className="text-blue-600 hover:text-blue-700 underline font-medium transition"
                   >
                     Browse other trips
                   </Link>
@@ -326,13 +326,13 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
                 <div className="space-y-4">
                   {/* Date Selection */}
                   <div>
-                    <label className="block text-gray-700 text-sm font-medium mb-2">
+                    <label className="block text-gray-900 text-sm font-semibold mb-2">
                       Select Date
                     </label>
                     <select
                       value={selectedDate || ''}
                       onChange={(e) => setSelectedDate(e.target.value)}
-                      className="w-full bg-gray-900 border border-gray-300 text-white px-3 py-2 rounded-lg focus:border-summit-500 focus:outline-none text-sm"
+                      className="w-full bg-white border border-gray-300 text-gray-900 px-3 py-2 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm font-medium"
                     >
                       {availableDates.map(date => (
                         <option key={date.id} value={date.id}>
@@ -344,13 +344,13 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
 
                   {/* Participant Count */}
                   <div>
-                    <label className="block text-gray-700 text-sm font-medium mb-2">
+                    <label className="block text-gray-900 text-sm font-semibold mb-2">
                       Number of Participants
                     </label>
                     <div className="flex items-center gap-2">
                       <button
                         onClick={() => setParticipantCount(Math.max(trip.min_group_size, participantCount - 1))}
-                        className="bg-gray-200 hover:bg-summit-600 text-white w-10 h-10 rounded flex items-center justify-center"
+                        className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold w-10 h-10 rounded flex items-center justify-center transition"
                       >
                         −
                       </button>
@@ -360,41 +360,41 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
                         onChange={(e) => setParticipantCount(Math.min(trip.max_group_size, Math.max(trip.min_group_size, parseInt(e.target.value) || 1)))}
                         min={trip.min_group_size}
                         max={trip.max_group_size}
-                        className="flex-1 bg-gray-900 border border-gray-300 text-white px-3 py-2 rounded-lg text-center"
+                        className="flex-1 bg-white border border-gray-300 text-gray-900 px-3 py-2 rounded-lg text-center font-semibold"
                       />
                       <button
                         onClick={() => setParticipantCount(Math.min(trip.max_group_size, participantCount + 1))}
-                        className="bg-gray-200 hover:bg-summit-600 text-white w-10 h-10 rounded flex items-center justify-center"
+                        className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold w-10 h-10 rounded flex items-center justify-center transition"
                       >
                         +
                       </button>
                     </div>
-                    <p className="text-gray-600 text-xs mt-1">
+                    <p className="text-gray-700 text-xs mt-1 font-medium">
                       {trip.min_group_size}-{trip.max_group_size} people per group
                     </p>
                   </div>
 
                   {/* Price Breakdown */}
-                  <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+                  <div className="bg-blue-50 rounded-lg p-4 space-y-2 border border-blue-200">
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">${trip.price_per_person} × {participantCount}</span>
-                      <span className="text-white">${totalPrice}</span>
+                      <span className="text-gray-700 font-medium">${trip.price_per_person} × {participantCount}</span>
+                      <span className="text-gray-900 font-semibold">${totalPrice}</span>
                     </div>
-                    <div className="border-t border-gray-200 pt-2 flex justify-between font-semibold">
-                      <span className="text-white">Total</span>
-                      <span className="text-gray-600">${totalPrice}</span>
+                    <div className="border-t border-blue-200 pt-2 flex justify-between font-bold">
+                      <span className="text-gray-900">Total</span>
+                      <span className="text-blue-600 text-lg">${totalPrice}</span>
                     </div>
                   </div>
 
                   {/* Book Button */}
                   <button
                     onClick={handleBooking}
-                    className="w-full bg-summit-600 hover:bg-summit-500 text-white font-semibold py-3 rounded-lg transition"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition"
                   >
                     Book Now
                   </button>
 
-                  <p className="text-gray-600 text-xs text-center">
+                  <p className="text-gray-700 text-xs text-center font-medium">
                     {trip.is_instant_book ? '✓ Instant confirmation' : 'Guide will confirm your booking'}
                   </p>
                 </div>
