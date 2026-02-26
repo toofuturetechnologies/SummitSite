@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
+import Sidebar from '@/components/Sidebar'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
@@ -55,7 +56,10 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className="min-h-screen bg-white font-sans antialiased">
         <Navbar />
-        {children}
+        <Sidebar />
+        <main className="md:ml-64">
+          {children}
+        </main>
       </body>
     </html>
   )
