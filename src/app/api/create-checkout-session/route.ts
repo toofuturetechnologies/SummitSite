@@ -32,9 +32,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Calculate fees
-    const commission = Math.round(amount * 0.12 + 100); // 12% + $1
-    const guidePayout = Math.round(amount * 100) - commission;
+    // Calculate fees (in cents for Stripe)
+    // Commission: 12% of amount + $1 hosting fee
+    const commissionInCents = Math.round(amount * 100 * 0.12 + 100); // 12% + $1 in cents
+    const guidePayoutInCents = Math.round(amount * 100) - commissionInCents;
+    const guidePayout = guidePayoutInCents; // Keep in cents for metadata
+    const commission = commissionInCents; // Keep in cents for metadata
 
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({

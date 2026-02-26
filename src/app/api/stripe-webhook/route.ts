@@ -135,9 +135,9 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
       .single();
 
     const amount = (session.amount_total || 0) / 100; // Convert cents to dollars
-    const platformCommission = parseInt(commission || '0') / 100;
-    const hostingFee = amount - parseFloat(guidePayout || '0');
-    const guidePayoutAmount = parseFloat(guidePayout || '0');
+    const platformCommission = parseInt(commission || '0') / 100; // Convert cents to dollars
+    const guidePayoutAmount = parseInt(guidePayout || '0') / 100; // Convert cents to dollars
+    const hostingFee = amount - guidePayoutAmount;
 
     // Generate unique UGC code for this booking
     const ugcCode = generateUGCCode(tripId);

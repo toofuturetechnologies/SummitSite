@@ -116,115 +116,113 @@ export default function EarningsPage() {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">Earnings Dashboard</h1>
-            <p className="text-gray-600">Track your payouts and booking history</p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Earnings Dashboard</h1>
+            <p className="text-gray-700">Track your payouts and booking history</p>
           </div>
           <Link
             href="/dashboard"
-            className="text-gray-600 hover:text-gray-600"
+            className="text-blue-600 hover:text-blue-700 font-medium"
           >
             ← Back to Dashboard
           </Link>
         </div>
 
         {error && (
-          <div className="bg-red-900/50 text-red-100 p-4 rounded-lg mb-8">
+          <div className="bg-red-50 text-red-900 border border-red-200 p-4 rounded-lg mb-8">
             {error}
           </div>
         )}
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm mb-1">Total Earnings</p>
-                <p className="text-3xl font-bold text-green-400">
+                <p className="text-gray-600 text-sm mb-2">Total Earnings</p>
+                <p className="text-3xl font-bold text-green-600">
                   ${stats.totalEarnings.toFixed(2)}
                 </p>
               </div>
-              <DollarSign className="w-8 h-8 text-summit-600" />
+              <DollarSign className="w-8 h-8 text-green-600" />
             </div>
           </div>
 
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm mb-1">Paid Bookings</p>
-                <p className="text-3xl font-bold text-white">{stats.totalBookings}</p>
+                <p className="text-gray-600 text-sm mb-2">Paid Bookings</p>
+                <p className="text-3xl font-bold text-gray-900">{stats.totalBookings}</p>
               </div>
-              <TrendingUp className="w-8 h-8 text-summit-600" />
+              <TrendingUp className="w-8 h-8 text-blue-600" />
             </div>
           </div>
 
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm mb-1">Avg Per Booking</p>
-                <p className="text-3xl font-bold text-white">
-                  ${stats.averageBookingValue.toFixed(0)}
+                <p className="text-gray-600 text-sm mb-2">Avg Per Booking</p>
+                <p className="text-3xl font-bold text-gray-900">
+                  ${stats.averageBookingValue.toFixed(2)}
                 </p>
               </div>
-              <Calendar className="w-8 h-8 text-summit-600" />
+              <Calendar className="w-8 h-8 text-orange-600" />
             </div>
           </div>
 
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm mb-1">Pending Payouts</p>
-                <p className="text-3xl font-bold text-gray-600">2-3 days</p>
+                <p className="text-gray-600 text-sm mb-2">Pending Payouts</p>
+                <p className="text-3xl font-bold text-gray-900">{stats.pendingPayouts}</p>
               </div>
-              <TrendingUp className="w-8 h-8 text-summit-600" />
+              <TrendingUp className="w-8 h-8 text-purple-600" />
             </div>
           </div>
         </div>
 
         {/* Booking History */}
-        <div className="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-white mb-6">Booking History</h2>
+        <div className="bg-white border border-gray-200 rounded-lg p-6 mb-8 shadow-sm">
+          <h2 className="text-xl font-semibold text-gray-900 mb-6">Booking History</h2>
 
           {paidBookings.length === 0 ? (
             <p className="text-gray-600 text-center py-8">
               No paid bookings yet. Your first payout will appear here once a customer books your trip.
             </p>
           ) : (
-            <div className="space-y-2 overflow-x-auto">
+            <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 text-gray-600 font-medium">Trip</th>
-                    <th className="text-left py-3 px-4 text-gray-600 font-medium">Date</th>
-                    <th className="text-right py-3 px-4 text-gray-600 font-medium">Amount</th>
-                    <th className="text-right py-3 px-4 text-gray-600 font-medium">
-                      Commission (12%)
-                    </th>
-                    <th className="text-right py-3 px-4 text-gray-600 font-medium">Hosting Fee</th>
-                    <th className="text-right py-3 px-4 text-gray-600 font-medium">Your Payout</th>
-                    <th className="text-center py-3 px-4 text-gray-600 font-medium">Status</th>
+                  <tr className="border-b border-gray-200 bg-gray-50">
+                    <th className="text-left py-3 px-4 text-gray-900 font-semibold">Trip</th>
+                    <th className="text-left py-3 px-4 text-gray-900 font-semibold">Date</th>
+                    <th className="text-right py-3 px-4 text-gray-900 font-semibold">Amount</th>
+                    <th className="text-right py-3 px-4 text-gray-900 font-semibold">Commission (12%)</th>
+                    <th className="text-right py-3 px-4 text-gray-900 font-semibold">Hosting Fee</th>
+                    <th className="text-right py-3 px-4 text-gray-900 font-semibold">Your Payout</th>
+                    <th className="text-center py-3 px-4 text-gray-900 font-semibold">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {paidBookings.map((booking) => (
-                    <tr key={booking.id} className="border-b border-gray-200/50 hover:bg-gray-200/20 transition">
-                      <td className="py-4 px-4 text-white">{booking.trips.title}</td>
-                      <td className="py-4 px-4 text-gray-600">
+                    <tr key={booking.id} className="border-b border-gray-200 hover:bg-gray-50 transition">
+                      <td className="py-4 px-4 text-gray-900 font-medium">{booking.trips.title}</td>
+                      <td className="py-4 px-4 text-gray-700">
                         {new Date(booking.created_at).toLocaleDateString()}
                       </td>
-                      <td className="py-4 px-4 text-right text-white font-semibold">
+                      <td className="py-4 px-4 text-right text-gray-900 font-semibold">
                         ${booking.total_price.toFixed(2)}
                       </td>
-                      <td className="py-4 px-4 text-right text-gray-600">
+                      <td className="py-4 px-4 text-right text-gray-700">
                         -${booking.commission_amount.toFixed(2)}
                       </td>
-                      <td className="py-4 px-4 text-right text-gray-600">
+                      <td className="py-4 px-4 text-right text-gray-700">
                         -${booking.hosting_fee.toFixed(2)}
                       </td>
-                      <td className="py-4 px-4 text-right text-green-400 font-semibold">
+                      <td className="py-4 px-4 text-right text-green-600 font-semibold">
                         ${booking.guide_payout.toFixed(2)}
                       </td>
                       <td className="py-4 px-4 text-center">
-                        <span className="px-3 py-1 bg-green-900/50 text-green-100 rounded-full text-xs font-medium">
+                        <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
                           Paid
                         </span>
                       </td>
@@ -238,31 +236,31 @@ export default function EarningsPage() {
 
         {/* Refund History */}
         {refundedBookings.length > 0 && (
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-white mb-6">Refunded Bookings</h2>
+          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">Refunded Bookings</h2>
 
-            <div className="space-y-2 overflow-x-auto">
+            <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-3 px-4 text-gray-600 font-medium">Trip</th>
-                    <th className="text-left py-3 px-4 text-gray-600 font-medium">Date</th>
-                    <th className="text-right py-3 px-4 text-gray-600 font-medium">Original Amount</th>
-                    <th className="text-center py-3 px-4 text-gray-600 font-medium">Status</th>
+                  <tr className="border-b border-gray-200 bg-gray-50">
+                    <th className="text-left py-3 px-4 text-gray-900 font-semibold">Trip</th>
+                    <th className="text-left py-3 px-4 text-gray-900 font-semibold">Date</th>
+                    <th className="text-right py-3 px-4 text-gray-900 font-semibold">Original Amount</th>
+                    <th className="text-center py-3 px-4 text-gray-900 font-semibold">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {refundedBookings.map((booking) => (
-                    <tr key={booking.id} className="border-b border-gray-200/50 hover:bg-gray-200/20 transition">
-                      <td className="py-4 px-4 text-white">{booking.trips.title}</td>
-                      <td className="py-4 px-4 text-gray-600">
+                    <tr key={booking.id} className="border-b border-gray-200 hover:bg-gray-50 transition">
+                      <td className="py-4 px-4 text-gray-900 font-medium">{booking.trips.title}</td>
+                      <td className="py-4 px-4 text-gray-700">
                         {new Date(booking.created_at).toLocaleDateString()}
                       </td>
-                      <td className="py-4 px-4 text-right text-gray-600">
+                      <td className="py-4 px-4 text-right text-gray-700">
                         ${booking.total_price.toFixed(2)}
                       </td>
                       <td className="py-4 px-4 text-center">
-                        <span className="px-3 py-1 bg-red-900/50 text-red-100 rounded-full text-xs font-medium">
+                        <span className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-semibold">
                           Refunded
                         </span>
                       </td>
