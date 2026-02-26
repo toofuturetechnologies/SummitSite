@@ -142,7 +142,7 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-        <p className="text-white text-lg">Loading...</p>
+        <p className="text-gray-900 text-lg">Loading...</p>
       </div>
     );
   }
@@ -151,7 +151,7 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8">
         <div className="max-w-4xl mx-auto">
-          <Link href="/trips" className="text-gray-600 hover:text-gray-600 mb-8 inline-block">
+          <Link href="/trips" className="text-gray-600 hover:text-blue-600 transition mb-8 inline-block">
             ← Back to Trips
           </Link>
           <div className="bg-red-900/50 text-red-100 p-4 rounded-lg">
@@ -169,13 +169,13 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
       <div className="max-w-4xl mx-auto p-8">
         {/* Header */}
-        <Link href="/trips" className="text-gray-600 hover:text-gray-600 mb-8 inline-block">
+        <Link href="/trips" className="text-gray-600 hover:text-blue-600 transition mb-8 inline-block">
           ← Back to Trips
         </Link>
 
         {/* Trip Title & Basic Info */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-white mb-4">{trip.title}</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">{trip.title}</h1>
           
           <div className="flex flex-wrap gap-4 text-gray-700 mb-4">
             <div className="flex items-center gap-2">
@@ -193,7 +193,7 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
           </div>
 
           <div className="flex items-baseline gap-2 mb-4">
-            <span className="text-3xl font-bold text-white">${trip.price_per_person}</span>
+            <span className="text-3xl font-bold text-gray-900">${trip.price_per_person}</span>
             <span className="text-gray-600">per person</span>
           </div>
 
@@ -201,7 +201,7 @@ export default function TripDetailPage({ params }: { params: { id: string } }) {
             <span className="bg-summit-600 text-white px-3 py-1 rounded-full text-sm">
               {trip.activity.replace(/_/g, ' ').toUpperCase()}
             </span>
-            <span className="bg-gray-200 text-white px-3 py-1 rounded-full text-sm">
+            <span className="bg-gray-300 text-gray-900 px-3 py-1 rounded-full text-sm">
               {trip.difficulty.charAt(0).toUpperCase() + trip.difficulty.slice(1)}
             </span>
           </div>
