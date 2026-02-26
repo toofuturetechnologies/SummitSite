@@ -25,6 +25,11 @@ export default function ReviewForm({
   const [hoverRating, setHoverRating] = useState(0);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [socialLinks, setSocialLinks] = useState({
+    youtube: '',
+    instagram: '',
+    tiktok: '',
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -48,7 +53,7 @@ export default function ReviewForm({
 
       const profileId = profileData?.id || authData.user.id;
 
-      // Create review
+      // Create review with social media links
       const { error: reviewError } = await supabase.from('reviews').insert({
         trip_id: tripId,
         guide_id: guideId,
@@ -57,6 +62,9 @@ export default function ReviewForm({
         title,
         body,
         review_type: reviewType,
+        youtube_url: socialLinks.youtube || null,
+        instagram_url: socialLinks.instagram || null,
+        tiktok_url: socialLinks.tiktok || null,
       });
 
       if (reviewError) throw reviewError;
@@ -150,6 +158,39 @@ export default function ReviewForm({
               required
             />
             <p className="text-gray-600 text-xs mt-1">Minimum 10 characters</p>
+          </div>
+
+          {/* Social Media Links */}
+          <div>
+            <label className="block text-gray-900 font-semibold mb-3">
+              📱 Share Your Content (Optional)
+            </label>
+            <p className="text-gray-600 text-sm mb-3">
+              Link your YouTube, Instagram, or TikTok content from this trip. Help showcase the adventure!
+            </p>
+            <div className="space-y-2">
+              <input
+                type="url"
+                value={socialLinks.youtube}
+                onChange={(e) => setSocialLinks({ ...socialLinks, youtube: e.target.value })}
+                placeholder="YouTube video URL (optional)"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 text-sm"
+              />
+              <input
+                type="url"
+                value={socialLinks.instagram}
+                onChange={(e) => setSocialLinks({ ...socialLinks, instagram: e.target.value })}
+                placeholder="Instagram post URL (optional)"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 text-sm"
+              />
+              <input
+                type="url"
+                value={socialLinks.tiktok}
+                onChange={(e) => setSocialLinks({ ...socialLinks, tiktok: e.target.value })}
+                placeholder="TikTok video URL (optional)"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 text-sm"
+              />
+            </div>
           </div>
 
           {/* Submit Button */}
