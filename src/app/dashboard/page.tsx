@@ -121,73 +121,81 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8 pt-20 lg:pt-24">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-6 sm:p-8 pt-24 lg:pt-28">
+      <div className="max-w-5xl mx-auto">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">{guide.display_name}</h1>
-            <p className="text-gray-700 font-medium">{guide.tagline || 'Guide'}</p>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">{guide.display_name}</h1>
+            <p className="text-gray-600 font-medium">{guide.tagline || 'Adventure Guide'}</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3 w-full sm:w-auto">
             <Link
               href="/dashboard/ugc"
-              className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2 rounded-lg transition font-medium"
+              className="flex-1 sm:flex-none bg-pink-600 hover:bg-pink-700 text-white px-4 sm:px-6 py-2 rounded-lg transition font-medium text-center text-sm sm:text-base"
             >
               🎬 UGC
             </Link>
             <Link
-              href="/dashboard/analytics"
-              className="bg-purple-600 hover:bg-purple-500 text-white px-6 py-2 rounded-lg transition font-medium"
+              href="/dashboard/earnings"
+              className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-2 rounded-lg transition font-medium text-center text-sm sm:text-base"
             >
-              📊 Analytics
+              💰 Earnings
             </Link>
             <button
               onClick={async () => {
                 await supabase.auth.signOut();
                 router.push('/');
               }}
-              className="bg-red-600 hover:bg-red-500 text-white px-6 py-2 rounded-lg transition"
+              className="flex-1 sm:flex-none bg-red-600 hover:bg-red-700 text-white px-4 sm:px-6 py-2 rounded-lg transition font-medium text-center text-sm sm:text-base"
             >
-              Logout
+              Sign Out
             </button>
           </div>
         </div>
 
+        {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 text-sm mb-2">Your Trips</p>
-            <p className="text-3xl font-bold text-white">{trips.length}</p>
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <p className="text-gray-600 text-sm font-medium mb-2">Active Trips</p>
+            <p className="text-4xl font-bold text-gray-900">{trips.length}</p>
+            <p className="text-gray-500 text-xs mt-2">Click to manage</p>
           </div>
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 text-sm mb-2">Email</p>
-            <p className="text-sm text-white">{user?.email}</p>
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <p className="text-gray-600 text-sm font-medium mb-2">Account Email</p>
+            <p className="text-base text-gray-900 break-all font-mono">{user?.email}</p>
+            <p className="text-gray-500 text-xs mt-2">Verified guide</p>
           </div>
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 text-sm mb-2">Quick Links</p>
+          <div className="bg-white border border-gray-200 rounded-lg p-6">
+            <p className="text-gray-600 text-sm font-medium mb-3">Quick Links</p>
             <div className="space-y-2">
-              <Link href="/dashboard/bookings" className="text-gray-600 hover:text-gray-600 block">
-                View Bookings →
+              <Link href="/dashboard/bookings" className="text-blue-600 hover:text-blue-700 text-sm font-medium block">
+                → View Bookings
               </Link>
-              <Link href="/dashboard/messages" className="text-gray-600 hover:text-gray-600 block">
-                Messages →
+              <Link href="/dashboard/messages" className="text-blue-600 hover:text-blue-700 text-sm font-medium block">
+                → Messages
               </Link>
-              <Link href="/dashboard/earnings" className="text-gray-600 hover:text-gray-600 block">
-                Earnings →
+              <Link href="/dashboard/referral-earnings" className="text-blue-600 hover:text-blue-700 text-sm font-medium block">
+                → Referral Earnings
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Stripe Connect CTA */}
+        {/* Payout Status */}
         {!guide?.stripe_account_id && (
-          <div className="bg-blue-900/50 border border-blue-700 rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-bold text-white mb-2">💰 Ready to Get Paid?</h2>
-            <p className="text-blue-200 mb-4">
-              Connect your bank account to receive automatic payouts from bookings. You'll get 88% of each booking price.
-            </p>
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+            <div className="flex items-start justify-between">
+              <div>
+                <h2 className="text-lg font-bold text-blue-900 mb-2">💰 Ready to Get Paid?</h2>
+                <p className="text-blue-800 mb-4">
+                  Connect your bank account to receive automatic payouts from bookings. You'll receive 88% of each booking price.
+                </p>
+              </div>
+            </div>
             <Link
               href="/dashboard/stripe-connect"
-              className="inline-block bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition font-medium"
+              className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition font-medium"
             >
               Set Up Payouts →
             </Link>
@@ -195,24 +203,24 @@ export default function DashboardPage() {
         )}
 
         {guide?.stripe_account_id && (
-          <div className="bg-green-900/50 border border-green-700 rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-bold text-white mb-2">✅ Payouts Connected</h2>
-            <p className="text-green-200">
-              Your Stripe account is connected. You'll receive automatic payouts for each booking!
+          <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-8">
+            <h2 className="text-lg font-bold text-green-900 mb-2">✅ Payouts Connected</h2>
+            <p className="text-green-800">
+              Your Stripe account is connected. Automatic payouts are ready for each booking!
             </p>
           </div>
         )}
 
-        {/* UGC Settings - For Guides to Set Referral Rates */}
+        {/* UGC & Referral Settings */}
         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6 mb-8">
-          <div className="flex items-start justify-between mb-4">
+          <div className="flex items-start justify-between mb-4 gap-4">
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-1">⚙️ UGC Settings</h2>
-              <p className="text-gray-700 text-sm">Manage referral rates for your trips</p>
+              <h2 className="text-xl font-bold text-gray-900 mb-1">🎬 UGC & Referral System</h2>
+              <p className="text-gray-700 text-sm">Manage referral commission rates for your trips</p>
             </div>
             <Link
               href="/dashboard/ugc"
-              className="text-blue-600 hover:text-blue-700 font-medium text-sm underline"
+              className="whitespace-nowrap bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition font-medium text-sm"
             >
               Configure →
             </Link>
@@ -220,39 +228,53 @@ export default function DashboardPage() {
 
           <div className="space-y-3">
             <p className="text-gray-700 text-sm leading-relaxed">
-              Set custom referral commission rates (0-2%) for each of your trips. Higher rates attract more creators and drive bookings!
+              Set custom referral commission rates (0-2%) for each trip. Higher rates attract content creators and drive more bookings through user-generated content.
             </p>
-            <div className="bg-blue-100 rounded p-3">
-              <p className="text-blue-900 text-xs font-medium">💡 Pro Tip</p>
-              <p className="text-blue-800 text-xs mt-1">
-                Set 1-2% commission to incentivize quality content. Most trips use 1.5%.
+            <div className="bg-blue-100 border border-blue-200 rounded p-3">
+              <p className="text-blue-900 text-xs font-semibold">💡 Pro Tip</p>
+              <p className="text-blue-900 text-xs mt-1">
+                Most guides use 1.0-1.5% commission. Higher rates (1.5-2%) attract more creators for competitive trips.
               </p>
             </div>
-            <Link
-              href="/dashboard/ugc"
-              className="inline-block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition text-center"
-            >
-              Set Rates Per Trip
-            </Link>
           </div>
         </div>
 
-        <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-          <h2 className="text-2xl font-bold text-white mb-4">Your Trips</h2>
+        {/* Your Trips */}
+        <div className="bg-white border border-gray-200 rounded-lg p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">Your Adventures</h2>
+            <Link 
+              href="/dashboard/create-trip" 
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition font-medium text-sm"
+            >
+              + New Trip
+            </Link>
+          </div>
+
           {trips.length === 0 ? (
-            <p className="text-gray-600 mb-4">No trips yet</p>
+            <div className="text-center py-12">
+              <p className="text-gray-500 mb-4">No trips yet</p>
+              <Link 
+                href="/dashboard/create-trip" 
+                className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition font-medium"
+              >
+                Create Your First Adventure
+              </Link>
+            </div>
           ) : (
-            <ul className="space-y-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {trips.map((trip) => (
-                <li key={trip.id} className="text-gray-600">
-                  • {trip.title}
-                </li>
+                <Link
+                  key={trip.id}
+                  href={`/dashboard/trip/${trip.id}`}
+                  className="p-4 bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-lg transition"
+                >
+                  <h3 className="font-semibold text-gray-900 hover:text-blue-600 transition">{trip.title}</h3>
+                  <p className="text-gray-600 text-sm mt-1">Click to manage details, bookings, and availability</p>
+                </Link>
               ))}
-            </ul>
+            </div>
           )}
-          <Link href="/dashboard/create-trip" className="inline-block bg-summit-600 hover:bg-summit-500 text-white px-6 py-2 rounded-lg transition mt-4">
-            Create New Trip
-          </Link>
         </div>
       </div>
     </div>
