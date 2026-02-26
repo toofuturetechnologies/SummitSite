@@ -96,7 +96,7 @@ export default function StripeConnectPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex pt-20 lg:pt-24 items-center justify-center">
-        <p className="text-white">Loading...</p>
+        <p className="text-gray-900">Loading...</p>
       </div>
     );
   }
@@ -105,7 +105,7 @@ export default function StripeConnectPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8 pt-20 lg:pt-24">
         <div className="max-w-4xl mx-auto">
-          <p className="text-white">Not a guide</p>
+          <p className="text-gray-900">Not a guide</p>
         </div>
       </div>
     );
@@ -114,12 +114,12 @@ export default function StripeConnectPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8 pt-20 lg:pt-24">
       <div className="max-w-2xl mx-auto">
-        <Link href="/dashboard" className="text-gray-600 hover:text-gray-600 mb-8 inline-block">
+        <Link href="/dashboard" className="text-gray-600 hover:text-blue-600 transition mb-8 inline-block">
           ← Back to Dashboard
         </Link>
 
         <div className="bg-gray-100 border border-gray-200 rounded-lg p-8">
-          <h1 className="text-3xl font-bold text-white mb-2">💰 Stripe Payouts</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">💰 Stripe Payouts</h1>
           <p className="text-gray-600 mb-8">
             Connect your bank account to receive automatic payouts from bookings
           </p>
@@ -139,7 +139,7 @@ export default function StripeConnectPage() {
           )}
 
           <div className="bg-gray-50 rounded-lg p-6 mb-8">
-            <h2 className="text-xl font-bold text-white mb-4">How It Works</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">How It Works</h2>
             <ol className="text-gray-600 space-y-3 text-sm">
               <li className="flex gap-3">
                 <span className="text-summit-500 font-bold flex-shrink-0">1.</span>

@@ -327,7 +327,7 @@ export default function CheckoutPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-          <p className="text-white text-lg">Loading...</p>
+          <p className="text-gray-900 text-lg">Loading...</p>
         </div>
       }
     >

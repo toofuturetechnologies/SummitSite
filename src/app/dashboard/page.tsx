@@ -165,13 +165,13 @@ export default function DashboardPage() {
           <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
             <p className="text-gray-600 text-sm mb-2">Quick Links</p>
             <div className="space-y-2">
-              <Link href="/dashboard/bookings" className="text-gray-600 hover:text-gray-600 block">
+              <Link href="/dashboard/bookings" className="text-gray-600 hover:text-blue-600 block transition">
                 View Bookings →
               </Link>
-              <Link href="/dashboard/messages" className="text-gray-600 hover:text-gray-600 block">
+              <Link href="/dashboard/messages" className="text-gray-600 hover:text-blue-600 block transition">
                 Messages →
               </Link>
-              <Link href="/dashboard/earnings" className="text-gray-600 hover:text-gray-600 block">
+              <Link href="/dashboard/earnings" className="text-gray-600 hover:text-blue-600 block transition">
                 Earnings →
               </Link>
             </div>

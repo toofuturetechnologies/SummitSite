@@ -192,7 +192,7 @@ export default function CreateTripPage() {
           </Link>
         </div>
 
-        <h1 className="text-3xl font-bold text-white mb-2">Create New Trip</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Create New Trip</h1>
         <p className="text-gray-600 mb-8">List your next adventure on Summit</p>
 
         {error && (

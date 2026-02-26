@@ -137,7 +137,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex pt-20 lg:pt-24 items-center justify-center">
-        <p className="text-white text-lg">Loading...</p>
+        <p className="text-gray-900 text-lg">Loading...</p>
       </div>
     );
   }
@@ -149,13 +149,13 @@ export default function ProfilePage() {
         <div className="flex items-center gap-4 mb-8">
           <Link
             href="/dashboard"
-            className="text-gray-600 hover:text-gray-600"
+            className="text-gray-600 hover:text-blue-600 transition"
           >
             ← Back to Dashboard
           </Link>
         </div>
 
-        <h1 className="text-3xl font-bold text-white mb-2">Edit Profile</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Edit Profile</h1>
         <p className="text-gray-600 mb-8">Update your guide information</p>
 
         {error && (

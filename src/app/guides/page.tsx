@@ -55,7 +55,7 @@ export default function GuidesPage() {
     return (
       <div className="min-h-screen bg-white pt-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-white mb-4">Our Guides</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Guides</h1>
           <div className="bg-red-900/30 border border-red-800 text-red-200 p-6 rounded-xl">
             Error loading guides: {error}
           </div>
@@ -70,7 +70,7 @@ export default function GuidesPage() {
       <section className="relative pt-24 pb-12 px-6 border-b border-summit-800">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-4xl sm:text-5xl font-black text-white mb-3">
+            <h1 className="text-4xl sm:text-5xl font-black text-gray-900 mb-3">
               Expert Mountain Guides
             </h1>
             <p className="text-gray-600 text-lg">

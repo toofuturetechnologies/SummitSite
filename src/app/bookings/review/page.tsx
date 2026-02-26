@@ -134,7 +134,7 @@ function LeaveReviewPageInner() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-        <p className="text-white">Loading...</p>
+        <p className="text-gray-900">Loading...</p>
       </div>
     );
   }

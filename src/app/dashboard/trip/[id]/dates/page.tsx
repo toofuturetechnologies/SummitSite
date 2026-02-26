@@ -174,7 +174,7 @@ export default function TripDatesPage({ params }: { params: { id: string } }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-        <p className="text-white text-lg">Loading...</p>
+        <p className="text-gray-900 text-lg">Loading...</p>
       </div>
     );
   }
@@ -186,13 +186,13 @@ export default function TripDatesPage({ params }: { params: { id: string } }) {
         <div className="flex items-center gap-4 mb-8">
           <Link
             href={`/dashboard/trip/${params.id}`}
-            className="text-gray-600 hover:text-gray-600"
+            className="text-gray-600 hover:text-blue-600 transition"
           >
             ← Back to Trip
           </Link>
         </div>
 
-        <h1 className="text-3xl font-bold text-white mb-2">{tripTitle}</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{tripTitle}</h1>
         <p className="text-gray-600 mb-8">Add dates when this trip is available</p>
 
         {error && (
@@ -203,7 +203,7 @@ export default function TripDatesPage({ params }: { params: { id: string } }) {
 
         {/* Add Date Form */}
         <div className="bg-gray-100 border border-gray-200 rounded-lg p-6 mb-8">
-          <h2 className="text-xl font-semibold text-white mb-4">Add Availability Date</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">Add Availability Date</h2>
 
           <form onSubmit={handleAddDate} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -286,7 +286,7 @@ export default function TripDatesPage({ params }: { params: { id: string } }) {
 
         {/* Existing Dates */}
         <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-          <h2 className="text-xl font-semibold text-white mb-4">
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Your Availability Dates ({dates.length})
           </h2>
 

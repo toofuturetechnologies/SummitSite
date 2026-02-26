@@ -301,7 +301,7 @@ export default function EditTripPage({ params }: { params: { id: string } }) {
           </Link>
         </div>
 
-        <h1 className="text-3xl font-bold text-white mb-2">Edit Trip</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Edit Trip</h1>
         <p className="text-gray-600 mb-8">Update your trip details</p>
 
         {error && (
@@ -685,7 +685,7 @@ export default function EditTripPage({ params }: { params: { id: string } }) {
         {showDeleteConfirm && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
             <div className="bg-gray-200 border border-gray-200 rounded-lg p-6 max-w-sm">
-              <h2 className="text-2xl font-bold text-white mb-4">Delete Trip?</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Delete Trip?</h2>
               <p className="text-gray-600 mb-6">
                 This action cannot be undone. All bookings and data associated with this trip will be deleted.
               </p>

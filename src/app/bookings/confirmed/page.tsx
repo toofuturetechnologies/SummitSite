@@ -126,7 +126,7 @@ export default function BookingConfirmedPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
       <Suspense fallback={
-        <div className="text-white text-lg">Loading...</div>
+        <div className="text-gray-900 text-lg">Loading...</div>
       }>
         <BookingConfirmedContent />
       </Suspense>

@@ -16,7 +16,7 @@ function ErrorContent() {
           <AlertCircle className="w-16 h-16 text-red-400" />
         </div>
 
-        <h1 className="text-3xl font-bold text-white mb-4">Booking Failed</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">Booking Failed</h1>
 
         <p className="text-gray-600 mb-6">
           {decodeURIComponent(error)}
@@ -37,7 +37,7 @@ function ErrorContent() {
           </Link>
           <Link
             href="/"
-            className="block w-full bg-gray-200 hover:bg-summit-600 text-white font-medium py-3 rounded-lg transition"
+            className="block w-full bg-gray-200 hover:bg-gray-300 text-gray-900 font-medium py-3 rounded-lg transition"
           >
             Back to Home
           </Link>
@@ -52,7 +52,7 @@ export default function ErrorPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-          <p className="text-white text-lg">Loading...</p>
+          <p className="text-gray-900 text-lg">Loading...</p>
         </div>
       }
     >
