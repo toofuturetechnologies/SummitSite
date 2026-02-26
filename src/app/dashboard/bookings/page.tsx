@@ -170,7 +170,7 @@ export default function BookingsPage() {
         <div className="mb-8">
           <Link
             href="/dashboard"
-            className="text-gray-600 hover:text-gray-600 mb-4 inline-block"
+            className="text-gray-600 hover:text-blue-600 transition mb-4 inline-block"
           >
             ← Back to Dashboard
           </Link>

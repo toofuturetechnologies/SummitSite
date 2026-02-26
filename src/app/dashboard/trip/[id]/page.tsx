@@ -283,7 +283,7 @@ export default function EditTripPage({ params }: { params: { id: string } }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-        <p className="text-white text-lg">Loading...</p>
+        <p className="text-gray-900 text-lg">Loading...</p>
       </div>
     );
   }
@@ -295,7 +295,7 @@ export default function EditTripPage({ params }: { params: { id: string } }) {
         <div className="flex items-center gap-4 mb-8">
           <Link
             href="/dashboard"
-            className="text-gray-600 hover:text-gray-600"
+            className="text-gray-600 hover:text-blue-600 transition"
           >
             ← Back to Dashboard
           </Link>

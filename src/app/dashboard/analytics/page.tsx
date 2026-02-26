@@ -159,7 +159,7 @@ export default function AnalyticsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8 pt-20 lg:pt-24">
       <div className="max-w-6xl mx-auto">
-        <Link href="/dashboard" className="text-gray-600 hover:text-gray-600 mb-8 inline-block">
+        <Link href="/dashboard" className="text-gray-600 hover:text-blue-600 transition mb-8 inline-block">
           ← Back to Dashboard
         </Link>
 

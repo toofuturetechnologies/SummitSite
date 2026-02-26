@@ -186,7 +186,7 @@ export default function CreateTripPage() {
         <div className="flex items-center gap-4 mb-8">
           <Link
             href="/dashboard"
-            className="text-gray-600 hover:text-gray-600"
+            className="text-gray-600 hover:text-blue-600 transition"
           >
             ← Back to Dashboard
           </Link>
