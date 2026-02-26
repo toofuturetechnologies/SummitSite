@@ -111,7 +111,10 @@ export default function GuideReviewCustomerModal({
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || 'Failed to submit review');
+        // Show detailed error message from API
+        const errorMsg = data.error || 'Failed to submit review';
+        setError(errorMsg);
+        console.error('Review submission error:', errorMsg);
         return;
       }
 

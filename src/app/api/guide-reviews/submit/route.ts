@@ -42,7 +42,10 @@ export async function POST(request: NextRequest) {
 
     // Verify booking is completed
     if (booking.status !== 'completed') {
-      return NextResponse.json({ error: 'Can only review completed trips' }, { status: 400 });
+      const statusMessage = booking.status === 'confirmed' 
+        ? 'Please mark this trip as completed on your bookings page before reviewing the customer.'
+        : `This trip is currently ${booking.status}. You can only review customers from completed trips.`;
+      return NextResponse.json({ error: statusMessage }, { status: 400 });
     }
 
     // Check if review already exists for this booking

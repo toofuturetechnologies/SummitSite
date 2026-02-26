@@ -129,12 +129,27 @@ export default function BookingsPage() {
 
   const handleStatusChange = async (bookingId: string, newStatus: string) => {
     try {
-      const { error: updateError } = await supabase
-        .from('bookings')
-        .update({ status: newStatus })
-        .eq('id', bookingId);
+      // For completed status, use the API endpoint to also handle referral earnings
+      if (newStatus === 'completed') {
+        const res = await fetch('/api/bookings/complete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ bookingId }),
+        });
 
-      if (updateError) throw updateError;
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Failed to complete booking');
+        }
+      } else {
+        // For other status changes (pending → confirmed, etc.), update directly
+        const { error: updateError } = await supabase
+          .from('bookings')
+          .update({ status: newStatus })
+          .eq('id', bookingId);
+
+        if (updateError) throw updateError;
+      }
 
       // Update local state
       setBookings(bookings.map(b => 
