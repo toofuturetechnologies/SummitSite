@@ -168,6 +168,9 @@ export default function DashboardPage() {
               <Link href="/dashboard/bookings" className="text-gray-600 hover:text-blue-600 block transition">
                 View Bookings →
               </Link>
+              <Link href="/dashboard/guide-reviews" className="text-gray-600 hover:text-blue-600 block transition">
+                Customer Reviews →
+              </Link>
               <Link href="/dashboard/messages" className="text-gray-600 hover:text-blue-600 block transition">
                 Messages →
               </Link>

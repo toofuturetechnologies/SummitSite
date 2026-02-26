@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Calendar, Users, DollarSign } from 'lucide-react';
+import GuideReviewCustomerModal from '@/components/GuideReviewCustomerModal';
 
 const supabase = createClient();
 
@@ -38,6 +39,8 @@ export default function BookingsPage() {
   const [guideId, setGuideId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [reviewModalOpen, setReviewModalOpen] = useState(false);
+  const [selectedBookingForReview, setSelectedBookingForReview] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -315,18 +318,43 @@ export default function BookingsPage() {
                 )}
 
                 {booking.status === 'completed' && (
-                  <div className="pt-4 border-t border-gray-200">
+                  <div className="grid grid-cols-2 gap-2 pt-4 border-t border-gray-200">
+                    <button
+                      onClick={() => {
+                        setSelectedBookingForReview(booking.id);
+                        setReviewModalOpen(true);
+                      }}
+                      className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
+                    >
+                      📝 Review Customer
+                    </button>
                     <Link
                       href={`/bookings/review?booking=${booking.id}`}
-                      className="block w-full bg-summit-600 hover:bg-summit-500 text-white font-medium py-2 rounded-lg transition text-center"
+                      className="bg-summit-600 hover:bg-summit-500 text-white font-medium py-2 rounded-lg transition text-center"
                     >
-                      ⭐ Leave a Review
+                      ⭐ Your Review
                     </Link>
                   </div>
                 )}
               </div>
             ))}
           </div>
+        )}
+
+        {/* Guide Review Modal */}
+        {selectedBookingForReview && (
+          <GuideReviewCustomerModal
+            bookingId={selectedBookingForReview}
+            isOpen={reviewModalOpen}
+            onClose={() => {
+              setReviewModalOpen(false);
+              setSelectedBookingForReview(null);
+            }}
+            onSuccess={() => {
+              // Refresh bookings to show updated review status
+              window.location.reload();
+            }}
+          />
         )}
       </div>
     </div>
