@@ -222,7 +222,7 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
               console.warn('⚠️ Failed to update booking with referral amount:', updateError);
             }
 
-            // Create referral earnings record with pending status
+            // Create referral earnings record - mark as paid immediately since payment is processed
             const { error: earningsError } = await supabase
               .from('referral_earnings')
               .insert({
@@ -230,13 +230,13 @@ async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) 
                 booking_id: bookingData?.[0]?.id,
                 trip_id: tripId,
                 earnings_amount: referralPayout,
-                status: 'pending', // Stays pending until the booked trip is completed
+                status: 'paid', // Marked as paid immediately when payment is confirmed
               });
 
             if (earningsError) {
               console.error('❌ Failed to create referral earnings:', earningsError);
             } else {
-              console.log('✅ Referral earnings record created with pending status');
+              console.log('✅ Referral earnings record created and marked as paid');
             }
           }
         } else {
