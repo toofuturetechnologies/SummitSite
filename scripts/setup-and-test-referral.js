@@ -204,8 +204,8 @@ async function setupAndTest() {
 
     console.log(`✅ Booking created\n`);
 
-    // Step 6: Create referral earnings
-    console.log('📋 Step 6: Creating referral earnings...');
+    // Step 6: Create referral earnings (PENDING until trip completion)
+    console.log('📋 Step 6: Creating referral earnings (PENDING)...');
     
     const { error: earningsError } = await supabase
       .from('referral_earnings')
@@ -214,7 +214,7 @@ async function setupAndTest() {
         booking_id: booking[0].id,
         trip_id: trip.id,
         earnings_amount: 7.50,
-        status: 'paid',
+        status: 'pending', // Will be marked 'paid' when trip is completed
       }]);
 
     if (earningsError) {
@@ -237,7 +237,7 @@ async function setupAndTest() {
     console.log('💰 Referral Data:');
     console.log(`  Booking Amount: $500.00`);
     console.log(`  Commission Rate: 1.5%`);
-    console.log(`  Referrer Earning: $7.50\n`);
+    console.log(`  Referrer Earning: $7.50 (PENDING)\n`);
 
     console.log('🧪 Next Steps:');
     console.log(`  1. Sign in as: ${GUIDE_EMAIL}`);
