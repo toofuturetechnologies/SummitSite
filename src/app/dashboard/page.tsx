@@ -91,7 +91,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-        <p className="text-white text-lg">Loading your dashboard...</p>
+        <p className="text-gray-900 text-lg">Loading your dashboard...</p>
       </div>
     );
   }
@@ -114,7 +114,7 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8 pt-20 lg:pt-24">
         <div className="max-w-4xl mx-auto">
-          <p className="text-white">Loading guide...</p>
+          <p className="text-gray-900">Loading guide...</p>
         </div>
       </div>
     );
@@ -156,11 +156,11 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
             <p className="text-gray-600 text-sm mb-2">Your Trips</p>
-            <p className="text-3xl font-bold text-white">{trips.length}</p>
+            <p className="text-3xl font-bold text-gray-900">{trips.length}</p>
           </div>
           <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
             <p className="text-gray-600 text-sm mb-2">Email</p>
-            <p className="text-sm text-white">{user?.email}</p>
+            <p className="text-sm text-gray-900">{user?.email}</p>
           </div>
           <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
             <p className="text-gray-600 text-sm mb-2">Quick Links</p>
@@ -238,7 +238,7 @@ export default function DashboardPage() {
         </div>
 
         <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-          <h2 className="text-2xl font-bold text-white mb-4">Your Trips</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Your Trips</h2>
           {trips.length === 0 ? (
             <p className="text-gray-600 mb-4">No trips yet</p>
           ) : (

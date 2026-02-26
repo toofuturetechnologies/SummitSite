@@ -152,7 +152,7 @@ export default function CustomerDashboard() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-        <Loader className="w-8 h-8 text-gray-600 animate-spin" />
+        <Loader className="w-8 h-8 text-blue-600 animate-spin" />
       </div>
     );
   }

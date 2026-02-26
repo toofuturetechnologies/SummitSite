@@ -208,7 +208,7 @@ function TripsPageInner() {
     return (
       <div className="min-h-screen bg-white pt-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-white mb-4">Browse Adventures</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Browse Adventures</h1>
           <div className="bg-red-900/30 border border-red-800 text-red-200 p-6 rounded-xl">
             Error loading trips: {error}
           </div>
@@ -222,7 +222,7 @@ function TripsPageInner() {
       {/* Page Header */}
       <section className="pt-24 pb-12 px-6 border-b border-summit-800">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl font-black text-white mb-3">
+          <h1 className="text-4xl sm:text-5xl font-black text-gray-900 mb-3">
             Browse All Adventures
           </h1>
           <p className="text-gray-600 text-lg mb-8">
@@ -259,11 +259,11 @@ function TripsPageInner() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {/* Activity */}
                 <div>
-                  <label className="block text-white text-sm font-semibold mb-3">Activity</label>
+                  <label className="block text-gray-900 text-sm font-semibold mb-3">Activity</label>
                   <div className="space-y-1 max-h-48 overflow-y-auto">
                     <button
                       onClick={() => setSelectedActivity('')}
-                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === '' ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-200'}`}
+                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === '' ? 'bg-blue-500 text-white' : 'text-gray-900 hover:bg-gray-200'}`}
                     >
                       All Activities
                     </button>
@@ -271,7 +271,7 @@ function TripsPageInner() {
                       <button
                         key={act.id}
                         onClick={() => setSelectedActivity(act.id)}
-                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === act.id ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-200'}`}
+                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === act.id ? 'bg-blue-500 text-white' : 'text-gray-900 hover:bg-gray-200'}`}
                       >
                         {act.emoji} {act.label}
                       </button>
@@ -281,11 +281,11 @@ function TripsPageInner() {
 
                 {/* Difficulty */}
                 <div>
-                  <label className="block text-white text-sm font-semibold mb-3">Difficulty</label>
+                  <label className="block text-gray-900 text-sm font-semibold mb-3">Difficulty</label>
                   <div className="space-y-1">
                     <button
                       onClick={() => setSelectedDifficulty('')}
-                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === '' ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-200'}`}
+                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === '' ? 'bg-blue-500 text-white' : 'text-gray-900 hover:bg-gray-200'}`}
                     >
                       All Levels
                     </button>
@@ -293,7 +293,7 @@ function TripsPageInner() {
                       <button
                         key={diff.id}
                         onClick={() => setSelectedDifficulty(diff.id)}
-                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === diff.id ? 'bg-blue-500 text-white' : 'text-gray-600 hover:bg-gray-200'}`}
+                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === diff.id ? 'bg-blue-500 text-white' : 'text-gray-900 hover:bg-gray-200'}`}
                       >
                         {diff.emoji} {diff.label}
                       </button>
@@ -303,7 +303,7 @@ function TripsPageInner() {
 
                 {/* Price */}
                 <div>
-                  <label className="block text-white text-sm font-semibold mb-3">
+                  <label className="block text-gray-900 text-sm font-semibold mb-3">
                     Max Price: ${maxPrice.toLocaleString()}
                   </label>
                   <input
@@ -325,7 +325,7 @@ function TripsPageInner() {
                 <div className="flex items-end">
                   <button
                     onClick={clearFilters}
-                    className="w-full px-4 py-2.5 bg-gray-200 hover:bg-gray-200 text-white rounded-lg transition text-sm font-medium"
+                    className="w-full px-4 py-2.5 bg-gray-300 hover:bg-gray-400 text-gray-900 rounded-lg transition text-sm font-medium"
                   >
                     Reset All Filters
                   </button>
