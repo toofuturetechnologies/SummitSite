@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 import { Menu, X, Mountain, User, LogOut, LayoutDashboard } from 'lucide-react';
+import { ThemeToggle } from './ThemeToggle';
 
 const supabase = createClient();
 
@@ -108,6 +109,9 @@ export default function Navbar() {
               </Link>
             ))}
           </div>
+
+          {/* Theme Toggle */}
+          <ThemeToggle />
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center gap-3">

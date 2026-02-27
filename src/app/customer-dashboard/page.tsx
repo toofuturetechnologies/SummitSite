@@ -135,7 +135,7 @@ export default function CustomerDashboard() {
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-6">
-        <div className="bg-white border border-sky-200 rounded-lg p-8 max-w-md text-center shadow-lg">
+        <div className="bg-white dark:bg-slate-900 border border-sky-200 dark:border-slate-700 rounded-lg p-8 max-w-md text-center shadow-lg">
           <h1 className="text-2xl font-bold text-sky-900 mb-4">Sign In Required</h1>
           <p className="text-sky-600 mb-6">Please sign in to view your dashboard</p>
           <Link
