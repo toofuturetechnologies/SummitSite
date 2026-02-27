@@ -68,7 +68,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen bg-white dark:bg-slate-950 font-sans antialiased text-sky-900 dark:text-sky-100">
+      <body className="min-h-screen bg-white dark:bg-slate-900 dark:bg-slate-950 font-sans antialiased text-sky-900 dark:text-sky-100 dark:text-sky-100">
         <Navbar />
         <main>
           {children}

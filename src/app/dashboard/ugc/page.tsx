@@ -146,7 +146,7 @@ export default function UGCReferralSettingsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center pt-20 lg:pt-24">
-        <p className="text-gray-900 text-lg">Loading your trips...</p>
+        <p className="text-gray-900 dark:text-gray-100 text-lg">Loading your trips...</p>
       </div>
     );
   }
@@ -159,10 +159,10 @@ export default function UGCReferralSettingsPage() {
         </Link>
 
         <div className="mb-8">
-          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             🎬 UGC Referral Settings
           </h1>
-          <p className="text-gray-700">
+          <p className="text-gray-700 dark:text-gray-300">
             Set the referral commission percentage (0.0% - 2.0%) for each of your trips. Users who book your trips and post TikTok content will earn this percentage when referred by someone.
           </p>
         </div>
@@ -178,8 +178,8 @@ export default function UGCReferralSettingsPage() {
         )}
 
         {trips.length === 0 ? (
-          <div className="bg-white border border-gray-200 rounded-lg p-8 text-center">
-            <p className="text-gray-600 mb-4">You haven't created any trips yet.</p>
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-8 text-center">
+            <p className="text-gray-600 dark:text-gray-400 mb-4">You haven't created any trips yet.</p>
             <Link
               href="/dashboard/create-trip"
               className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition"
@@ -192,35 +192,35 @@ export default function UGCReferralSettingsPage() {
             {trips.map((trip) => (
               <div
                 key={trip.id}
-                className="bg-white border border-gray-200 rounded-lg overflow-hidden"
+                className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg overflow-hidden"
               >
                 <button
                   onClick={() => toggleTrip(trip.id)}
-                  className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition"
+                  className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:bg-slate-900 transition"
                 >
                   <div className="text-left">
-                    <h3 className="font-semibold text-gray-900">{trip.title}</h3>
-                    <p className="text-sm text-gray-600">
+                    <h3 className="font-semibold text-gray-900 dark:text-gray-100">{trip.title}</h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
                       Current commission: {trip.referral_payout_percent}%
                     </p>
                   </div>
                   {expandedTrips.has(trip.id) ? (
-                    <ChevronUp className="w-5 h-5 text-gray-600" />
+                    <ChevronUp className="w-5 h-5 text-gray-600 dark:text-gray-400" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-600" />
+                    <ChevronDown className="w-5 h-5 text-gray-600 dark:text-gray-400" />
                   )}
                 </button>
 
                 {expandedTrips.has(trip.id) && (
-                  <div className="border-t border-gray-200 px-6 py-4 bg-gray-50">
+                  <div className="border-t border-gray-200 dark:border-slate-700 px-6 py-4 bg-gray-50 dark:bg-slate-900">
                     <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-900 mb-2">
+                      <label className="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
                         Referral Commission Rate
                       </label>
 
                       <div className="flex gap-2 items-end">
                         <div className="flex-1">
-                          <div className="flex items-center gap-2 bg-white border border-gray-300 rounded-lg px-4 py-2">
+                          <div className="flex items-center gap-2 bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg px-4 py-2">
                             <input
                               type="number"
                               min="0"
@@ -228,10 +228,10 @@ export default function UGCReferralSettingsPage() {
                               step="0.1"
                               value={percentages[trip.id] || ''}
                               onChange={(e) => updatePercentage(trip.id, e.target.value)}
-                              className="flex-1 outline-none text-gray-900 font-semibold text-lg"
+                              className="flex-1 outline-none text-gray-900 dark:text-gray-100 font-semibold text-lg"
                               disabled={saving[trip.id]}
                             />
-                            <span className="text-gray-600 font-medium">%</span>
+                            <span className="text-gray-600 dark:text-gray-400 font-medium">%</span>
                           </div>
                         </div>
                         <button
@@ -244,7 +244,7 @@ export default function UGCReferralSettingsPage() {
                         </button>
                       </div>
 
-                      <p className="text-xs text-gray-600 mt-2">
+                      <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">
                         Range: 0.0% (no commission) to 2.0% (max commission)
                       </p>
                     </div>

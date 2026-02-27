@@ -115,9 +115,9 @@ function SignUpContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h1>
-        <p className="text-gray-600 mb-6">Book your next adventure</p>
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-8 w-full max-w-md shadow-lg">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Create Account</h1>
+        <p className="text-gray-600 dark:text-gray-400 mb-6">Book your next adventure</p>
 
         {error && (
           <div className="bg-red-900/50 text-red-100 p-4 rounded-lg mb-6">
@@ -128,7 +128,7 @@ function SignUpContent() {
         <form onSubmit={handleSignUp} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-gray-700 text-sm font-medium mb-2">
+              <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                 First Name
               </label>
               <input
@@ -137,12 +137,12 @@ function SignUpContent() {
                 value={formData.firstName}
                 onChange={handleChange}
                 required
-                className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                 placeholder="John"
               />
             </div>
             <div>
-              <label className="block text-gray-700 text-sm font-medium mb-2">
+              <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                 Last Name
               </label>
               <input
@@ -151,14 +151,14 @@ function SignUpContent() {
                 value={formData.lastName}
                 onChange={handleChange}
                 required
-                className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                 placeholder="Doe"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
               Email
             </label>
             <input
@@ -167,13 +167,13 @@ function SignUpContent() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="your@email.com"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
               Password
             </label>
             <input
@@ -182,7 +182,7 @@ function SignUpContent() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="Create a password"
             />
           </div>
@@ -196,14 +196,14 @@ function SignUpContent() {
           </button>
         </form>
 
-        <p className="text-gray-700 text-sm text-center mt-6">
+        <p className="text-gray-700 dark:text-gray-300 text-sm text-center mt-6">
           Already have an account?{' '}
           <Link href="/auth/login" className="text-blue-600 hover:text-blue-700 font-medium transition">
             Sign in
           </Link>
         </p>
 
-        <p className="text-gray-700 text-sm text-center mt-4">
+        <p className="text-gray-700 dark:text-gray-300 text-sm text-center mt-4">
           Want to become a guide?{' '}
           <Link href="/auth/signup" className="text-blue-600 hover:text-blue-700 font-medium transition">
             Create a guide account
@@ -219,7 +219,7 @@ export default function SignUpCustomerPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-          <p className="text-gray-900 text-lg font-medium">Loading...</p>
+          <p className="text-gray-900 dark:text-gray-100 text-lg font-medium">Loading...</p>
         </div>
       }
     >

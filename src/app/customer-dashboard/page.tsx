@@ -122,7 +122,7 @@ export default function CustomerDashboard() {
       case 'cancelled':
         return 'bg-red-900/50 text-red-200 border-red-700';
       default:
-        return 'bg-gray-200 text-sky-600';
+        return 'bg-gray-200 dark:bg-slate-700 text-sky-600';
     }
   };
 
@@ -135,8 +135,8 @@ export default function CustomerDashboard() {
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-6">
-        <div className="bg-white dark:bg-slate-900 border border-sky-200 dark:border-slate-700 rounded-lg p-8 max-w-md text-center shadow-lg">
-          <h1 className="text-2xl font-bold text-sky-900 mb-4">Sign In Required</h1>
+        <div className="bg-white dark:bg-slate-900 dark:bg-slate-900 border border-sky-200 dark:border-slate-700 dark:border-slate-700 rounded-lg p-8 max-w-md text-center shadow-lg">
+          <h1 className="text-2xl font-bold text-sky-900 dark:text-sky-100 mb-4">Sign In Required</h1>
           <p className="text-sky-600 mb-6">Please sign in to view your dashboard</p>
           <Link
             href="/auth/login"
@@ -162,7 +162,7 @@ export default function CustomerDashboard() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-6 lg:mb-8">
-          <h1 className="text-2xl lg:text-4xl font-bold text-sky-900 mb-2">
+          <h1 className="text-2xl lg:text-4xl font-bold text-sky-900 dark:text-sky-100 mb-2">
             Welcome back, {user?.user_metadata?.full_name?.split(' ')[0]}!
           </h1>
           <p className="text-sm lg:text-base text-sky-600">
@@ -173,9 +173,9 @@ export default function CustomerDashboard() {
         {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-8">
           {/* Recent Chats */}
-          <div className="bg-gray-100 border border-sky-200 rounded-lg p-4 lg:p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-sky-200 dark:border-slate-700 rounded-lg p-4 lg:p-6">
             <div className="flex items-center justify-between mb-4 gap-2">
-              <h2 className="text-base lg:text-lg font-semibold text-sky-900 flex items-center gap-2 min-w-0">
+              <h2 className="text-base lg:text-lg font-semibold text-sky-900 dark:text-sky-100 flex items-center gap-2 min-w-0">
                 <MessageSquare className="w-4 lg:w-5 h-4 lg:h-5 flex-shrink-0" />
                 <span className="truncate">Chats</span>
               </h2>
@@ -194,11 +194,11 @@ export default function CustomerDashboard() {
                   <Link
                     key={chat.otherUserId}
                     href="/dashboard/messages"
-                    className="block p-3 bg-white hover:bg-sky-50 rounded-lg transition border border-sky-300 hover:border-sky-300"
+                    className="block p-3 bg-white dark:bg-slate-900 hover:bg-sky-50 dark:bg-slate-800 rounded-lg transition border border-sky-300 hover:border-sky-300"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-sky-900 text-sm lg:text-base truncate">{chat.otherUserName}</p>
+                        <p className="font-semibold text-sky-900 dark:text-sky-100 text-sm lg:text-base truncate">{chat.otherUserName}</p>
                         <p className="text-sky-600 text-xs lg:text-sm truncate mt-1">{chat.lastMessage}</p>
                       </div>
                       {chat.unreadCount > 0 && (
@@ -214,9 +214,9 @@ export default function CustomerDashboard() {
           </div>
 
           {/* Upcoming Trips */}
-          <div className="lg:col-span-2 bg-gray-100 border border-sky-200 rounded-lg p-4 lg:p-6">
+          <div className="lg:col-span-2 bg-gray-100 dark:bg-slate-800 border border-sky-200 dark:border-slate-700 rounded-lg p-4 lg:p-6">
             <div className="flex items-center justify-between mb-4 gap-2">
-              <h2 className="text-base lg:text-lg font-semibold text-sky-900 flex items-center gap-2 min-w-0">
+              <h2 className="text-base lg:text-lg font-semibold text-sky-900 dark:text-sky-100 flex items-center gap-2 min-w-0">
                 <Calendar className="w-4 lg:w-5 h-4 lg:h-5 flex-shrink-0" />
                 <span className="truncate">Upcoming</span>
               </h2>
@@ -243,11 +243,11 @@ export default function CustomerDashboard() {
                     <Link
                       key={booking.id}
                       href={`/trips/${booking.trip_id}`}
-                      className="block p-4 bg-white hover:bg-sky-50 rounded-lg transition border border-sky-300 hover:border-sky-300"
+                      className="block p-4 bg-white dark:bg-slate-900 hover:bg-sky-50 dark:bg-slate-800 rounded-lg transition border border-sky-300 hover:border-sky-300"
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex-1">
-                          <h3 className="font-semibold text-sky-900">{booking.trip.title}</h3>
+                          <h3 className="font-semibold text-sky-900 dark:text-sky-100">{booking.trip.title}</h3>
                           <p className="text-sky-600 text-sm flex items-center gap-1 mt-1">
                             <MapPin className="w-4 h-4" />
                             {booking.trip.region}, {booking.trip.country}
@@ -286,7 +286,7 @@ export default function CustomerDashboard() {
         <div className="mb-8 bg-gradient-to-br from-amber-50 to-orange-50 border border-orange-200 rounded-lg p-4 lg:p-6">
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h2 className="text-lg lg:text-xl font-bold text-sky-900 mb-1">🎬 Referral Earnings</h2>
+              <h2 className="text-lg lg:text-xl font-bold text-sky-900 dark:text-sky-100 mb-1">🎬 Referral Earnings</h2>
               <p className="text-sky-700 text-sm">From your UGC content</p>
             </div>
             <Link
@@ -313,7 +313,7 @@ export default function CustomerDashboard() {
               </div>
               <div>
                 <p className="text-sky-600 text-xs mb-1">Referrals</p>
-                <p className="text-xl lg:text-2xl font-bold text-sky-900">{referralEarnings.referralCount}</p>
+                <p className="text-xl lg:text-2xl font-bold text-sky-900 dark:text-sky-100">{referralEarnings.referralCount}</p>
               </div>
             </div>
           ) : (
@@ -334,19 +334,19 @@ export default function CustomerDashboard() {
 
         {/* Past Trips */}
         {pastTrips.length > 0 && (
-          <div className="bg-gray-100 border border-sky-200 rounded-lg p-4 lg:p-6">
-            <h2 className="text-base lg:text-lg font-semibold text-sky-900 mb-4">Past Trips</h2>
+          <div className="bg-gray-100 dark:bg-slate-800 border border-sky-200 dark:border-slate-700 rounded-lg p-4 lg:p-6">
+            <h2 className="text-base lg:text-lg font-semibold text-sky-900 dark:text-sky-100 mb-4">Past Trips</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
               {pastTrips.map((booking) => (
                 <div
                   key={booking.id}
-                  className="p-4 bg-white hover:bg-sky-50 rounded-lg transition border border-sky-300"
+                  className="p-4 bg-white dark:bg-slate-900 hover:bg-sky-50 dark:bg-slate-800 rounded-lg transition border border-sky-300"
                 >
                   <Link
                     href={`/trips/${booking.trip_id}`}
                     className="block hover:text-sky-600"
                   >
-                    <h3 className="font-semibold text-sky-900 mb-2">{booking.trip.title}</h3>
+                    <h3 className="font-semibold text-sky-900 dark:text-sky-100 mb-2">{booking.trip.title}</h3>
                     <p className="text-sky-600 text-sm mb-2">
                       {new Date(booking.tripDate.start_date).toLocaleDateString()}
                     </p>

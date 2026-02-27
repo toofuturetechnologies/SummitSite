@@ -162,7 +162,7 @@ export default function CreatorUGCPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center pt-20">
-        <p className="text-gray-900 text-lg">Loading...</p>
+        <p className="text-gray-900 dark:text-gray-100 text-lg">Loading...</p>
       </div>
     );
   }
@@ -174,9 +174,9 @@ export default function CreatorUGCPage() {
           ← Back to Summit
         </Link>
 
-        <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">🎬 Post Your Adventure</h1>
-          <p className="text-gray-700 mb-6">
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-8 shadow-sm">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">🎬 Post Your Adventure</h1>
+          <p className="text-gray-700 dark:text-gray-300 mb-6">
             Share your TikTok content from your booked trip and earn referral commissions when others book!
           </p>
 
@@ -203,10 +203,10 @@ export default function CreatorUGCPage() {
           {!booking ? (
             <div className="space-y-6">
               <div>
-                <label className="block text-gray-900 font-semibold mb-2">
+                <label className="block text-gray-900 dark:text-gray-100 font-semibold mb-2">
                   Your UGC Code
                 </label>
-                <p className="text-gray-700 text-sm mb-3">
+                <p className="text-gray-700 dark:text-gray-300 text-sm mb-3">
                   Find this code in your booking confirmation email. It proves you booked this trip.
                 </p>
                 <div className="flex gap-2">
@@ -215,7 +215,7 @@ export default function CreatorUGCPage() {
                     value={ugcCode}
                     onChange={(e) => setUgcCode(e.target.value.toUpperCase())}
                     placeholder="e.g., TRIP-ABC123-XYZ456"
-                    className="flex-1 bg-white border border-gray-300 text-gray-900 px-4 py-2 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 font-mono text-sm"
+                    className="flex-1 bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 font-mono text-sm"
                     onKeyPress={(e) => e.key === 'Enter' && validateCode()}
                   />
                   <button
@@ -247,10 +247,10 @@ export default function CreatorUGCPage() {
 
               {/* TikTok URL Input */}
               <div>
-                <label className="block text-gray-900 font-semibold mb-2">
+                <label className="block text-gray-900 dark:text-gray-100 font-semibold mb-2">
                   TikTok Video URL
                 </label>
-                <p className="text-gray-700 text-sm mb-3">
+                <p className="text-gray-700 dark:text-gray-300 text-sm mb-3">
                   Paste the link to your TikTok video about this adventure.
                 </p>
                 <input
@@ -258,7 +258,7 @@ export default function CreatorUGCPage() {
                   value={tiktokUrl}
                   onChange={(e) => setTiktokUrl(e.target.value)}
                   placeholder="https://www.tiktok.com/@yourname/video/123456789"
-                  className="w-full bg-white border border-gray-300 text-gray-900 px-4 py-2 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
+                  className="w-full bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 text-sm"
                 />
               </div>
 
@@ -278,7 +278,7 @@ export default function CreatorUGCPage() {
                     setUgcCode('');
                     setError(null);
                   }}
-                  className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 px-6 py-3 rounded-lg transition font-medium"
+                  className="flex-1 bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 text-gray-900 dark:text-gray-100 px-6 py-3 rounded-lg transition font-medium"
                 >
                   Use Different Code
                 </button>
@@ -297,25 +297,25 @@ export default function CreatorUGCPage() {
 
         {/* FAQ Section */}
         <div className="mt-8 space-y-4">
-          <h2 className="text-xl font-bold text-gray-900">FAQ</h2>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">FAQ</h2>
 
-          <div className="bg-white border border-gray-200 rounded-lg p-4">
-            <p className="font-semibold text-gray-900 mb-2">What's a UGC code?</p>
-            <p className="text-gray-700 text-sm">
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-4">
+            <p className="font-semibold text-gray-900 dark:text-gray-100 mb-2">What's a UGC code?</p>
+            <p className="text-gray-700 dark:text-gray-300 text-sm">
               Your UGC code is a unique identifier generated when you book a trip. It proves you booked and paid for that adventure, allowing you to submit UGC (user-generated content) and earn referral commissions.
             </p>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg p-4">
-            <p className="font-semibold text-gray-900 mb-2">How much can I earn?</p>
-            <p className="text-gray-700 text-sm">
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-4">
+            <p className="font-semibold text-gray-900 dark:text-gray-100 mb-2">How much can I earn?</p>
+            <p className="text-gray-700 dark:text-gray-300 text-sm">
               Each guide sets a referral commission rate (0.0% - 2.0%) for their trips. When someone books using your referral link, you earn that percentage of the booking price.
             </p>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg p-4">
-            <p className="font-semibold text-gray-900 mb-2">What kind of content should I post?</p>
-            <p className="text-gray-700 text-sm">
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-4">
+            <p className="font-semibold text-gray-900 dark:text-gray-100 mb-2">What kind of content should I post?</p>
+            <p className="text-gray-700 dark:text-gray-300 text-sm">
               Post authentic TikTok content about your experience on the trip. Highlight the adventure, the guide, the scenery, and your experience. Authentic content performs best!
             </p>
           </div>

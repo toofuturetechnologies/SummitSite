@@ -84,9 +84,9 @@ function LoginContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Sign In</h1>
-        <p className="text-gray-600 mb-6">Welcome back to Summit</p>
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-8 w-full max-w-md shadow-lg">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Sign In</h1>
+        <p className="text-gray-600 dark:text-gray-400 mb-6">Welcome back to Summit</p>
 
         {error && (
           <div className="bg-red-900/50 text-red-100 p-4 rounded-lg mb-6">
@@ -97,7 +97,7 @@ function LoginContent() {
         <form onSubmit={handleLogin} className="space-y-4" onClick={() => console.log('Form clicked')}>
           {/* Debug: Form is mounted and ready */}
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
               Email
             </label>
             <input
@@ -106,13 +106,13 @@ function LoginContent() {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="your@email.com"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
               Password
             </label>
             <input
@@ -121,7 +121,7 @@ function LoginContent() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="Enter your password"
             />
             <div className="text-right mt-2">
@@ -144,7 +144,7 @@ function LoginContent() {
         </form>
 
         <div className="space-y-3 mt-6">
-          <p className="text-gray-700 text-sm text-center font-medium">
+          <p className="text-gray-700 dark:text-gray-300 text-sm text-center font-medium">
             Don&apos;t have an account?
           </p>
           <div className="grid grid-cols-2 gap-2">
@@ -172,7 +172,7 @@ export default function LoginPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-          <p className="text-gray-900 text-lg font-medium">Loading...</p>
+          <p className="text-gray-900 dark:text-gray-100 text-lg font-medium">Loading...</p>
         </div>
       }
     >

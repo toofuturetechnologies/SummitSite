@@ -81,20 +81,20 @@ export default function Sidebar() {
       {/* Mobile Toggle */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="md:hidden fixed top-20 left-4 z-50 text-gray-900"
+        className="md:hidden fixed top-20 left-4 z-50 text-gray-900 dark:text-gray-100"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
       {/* Sidebar */}
       <aside
-        className={`fixed left-0 top-20 w-64 h-screen bg-white border-r border-gray-200 p-6 overflow-y-auto transition-transform ${
+        className={`fixed left-0 top-20 w-64 h-screen bg-white dark:bg-slate-900 border-r border-gray-200 dark:border-slate-700 p-6 overflow-y-auto transition-transform ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         } md:translate-x-0 z-40`}
       >
         {/* Profile Section */}
         {profile && (
-          <div className="mb-8 pb-6 border-b border-gray-200">
+          <div className="mb-8 pb-6 border-b border-gray-200 dark:border-slate-700">
             <div className="flex items-center gap-3 mb-4">
               {profile.avatar_url ? (
                 <img
@@ -108,19 +108,19 @@ export default function Sidebar() {
                 </div>
               )}
               <div className="flex-1">
-                <p className="font-semibold text-gray-900 text-sm">{profile.full_name}</p>
-                <p className="text-xs text-gray-600">{isGuide ? 'Guide' : 'Adventurer'}</p>
+                <p className="font-semibold text-gray-900 dark:text-gray-100 text-sm">{profile.full_name}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400">{isGuide ? 'Guide' : 'Adventurer'}</p>
               </div>
             </div>
 
             {profile.bio && (
-              <p className="text-xs text-gray-700 mb-3">{profile.bio}</p>
+              <p className="text-xs text-gray-700 dark:text-gray-300 mb-3">{profile.bio}</p>
             )}
 
             {/* Certifications */}
             {profile.certifications && (
               <div className="mb-3">
-                <p className="text-xs font-semibold text-gray-900 mb-2">Certifications</p>
+                <p className="text-xs font-semibold text-gray-900 dark:text-gray-100 mb-2">Certifications</p>
                 <div className="flex flex-wrap gap-1">
                   {profile.certifications.split(',').map((cert) => (
                     <span
@@ -137,7 +137,7 @@ export default function Sidebar() {
             {/* Badges */}
             {profile.challenge_badges && profile.challenge_badges.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-gray-900 mb-2">Badges</p>
+                <p className="text-xs font-semibold text-gray-900 dark:text-gray-100 mb-2">Badges</p>
                 <div className="flex flex-wrap gap-2">
                   {profile.challenge_badges.map((badge) => (
                     <div
@@ -160,7 +160,7 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className="block px-4 py-2 text-gray-900 hover:bg-gray-100 rounded-lg transition text-sm font-medium"
+              className="block px-4 py-2 text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:bg-slate-800 rounded-lg transition text-sm font-medium"
               onClick={() => setIsOpen(false)}
             >
               {item.label}

@@ -174,7 +174,7 @@ export default function CreateTripPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center pt-20 lg:pt-24">
-        <p className="text-gray-900 text-lg">Loading...</p>
+        <p className="text-gray-900 dark:text-gray-100 text-lg">Loading...</p>
       </div>
     );
   }
@@ -186,14 +186,14 @@ export default function CreateTripPage() {
         <div className="flex items-center gap-4 mb-8">
           <Link
             href="/dashboard"
-            className="text-gray-600 hover:text-blue-600 transition"
+            className="text-gray-600 dark:text-gray-400 hover:text-blue-600 transition"
           >
             ← Back to Dashboard
           </Link>
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Create New Trip</h1>
-        <p className="text-gray-600 mb-8">List your next adventure on Summit</p>
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Create New Trip</h1>
+        <p className="text-gray-600 dark:text-gray-400 mb-8">List your next adventure on Summit</p>
 
         {error && (
           <div className="bg-red-900/50 text-red-100 p-4 rounded-lg mb-6">
@@ -203,12 +203,12 @@ export default function CreateTripPage() {
 
         <form onSubmit={handleCreate} className="space-y-6">
           {/* Basic Info */}
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
             <h2 className="text-xl font-semibold text-white mb-4">Basic Information</h2>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-gray-700 text-sm font-medium mb-2">
+                <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                   Trip Title *
                 </label>
                 <input
@@ -217,21 +217,21 @@ export default function CreateTripPage() {
                   value={formData.title}
                   onChange={handleChange}
                   required
-                  className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                  className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                   placeholder="e.g., Mount Elbert Summit Experience"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-700 text-sm font-medium mb-2">
+                  <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                     Activity Type *
                   </label>
                   <select
                     name="activity"
                     value={formData.activity}
                     onChange={handleChange}
-                    className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                    className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                   >
                     {ACTIVITIES.map(act => (
                       <option key={act} value={act}>
@@ -242,14 +242,14 @@ export default function CreateTripPage() {
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 text-sm font-medium mb-2">
+                  <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                     Difficulty Level *
                   </label>
                   <select
                     name="difficulty"
                     value={formData.difficulty}
                     onChange={handleChange}
-                    className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                    className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                   >
                     {DIFFICULTIES.map(diff => (
                       <option key={diff} value={diff}>
@@ -261,7 +261,7 @@ export default function CreateTripPage() {
               </div>
 
               <div>
-                <label className="block text-gray-700 text-sm font-medium mb-2">
+                <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                   Description *
                 </label>
                 <textarea
@@ -269,7 +269,7 @@ export default function CreateTripPage() {
                   value={formData.description}
                   onChange={handleChange}
                   required
-                  className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
+                  className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
                   rows={4}
                   placeholder="Describe your trip in detail. What will participants experience?"
                 />
@@ -278,12 +278,12 @@ export default function CreateTripPage() {
           </div>
 
           {/* Duration & Pricing */}
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
             <h2 className="text-xl font-semibold text-white mb-4">Duration & Pricing</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-gray-700 text-sm font-medium mb-2">
+                <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                   Duration (Days) *
                 </label>
                 <input
@@ -293,16 +293,16 @@ export default function CreateTripPage() {
                   onChange={handleChange}
                   min="1"
                   required
-                  className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                  className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 text-sm font-medium mb-2">
+                <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                   Price Per Person (USD) *
                 </label>
                 <div className="relative">
-                  <span className="absolute left-4 top-2 text-gray-600">$</span>
+                  <span className="absolute left-4 top-2 text-gray-600 dark:text-gray-400">$</span>
                   <input
                     type="number"
                     name="price_per_person"
@@ -311,13 +311,13 @@ export default function CreateTripPage() {
                     min="0"
                     step="50"
                     required
-                    className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 pl-8 rounded-lg focus:border-summit-500 focus:outline-none"
+                    className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 pl-8 rounded-lg focus:border-summit-500 focus:outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-gray-700 text-sm font-medium mb-2">
+                <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                   Min Group Size
                 </label>
                 <input
@@ -326,12 +326,12 @@ export default function CreateTripPage() {
                   value={formData.min_group_size}
                   onChange={handleChange}
                   min="1"
-                  className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                  className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-gray-700 text-sm font-medium mb-2">
+                <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                   Max Group Size
                 </label>
                 <input
@@ -340,20 +340,20 @@ export default function CreateTripPage() {
                   value={formData.max_group_size}
                   onChange={handleChange}
                   min="1"
-                  className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                  className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                 />
               </div>
             </div>
           </div>
 
           {/* Location */}
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
             <h2 className="text-xl font-semibold text-white mb-4">Location</h2>
 
             <div className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-700 text-sm font-medium mb-2">
+                  <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                     Country
                   </label>
                   <input
@@ -361,12 +361,12 @@ export default function CreateTripPage() {
                     name="country"
                     value={formData.country}
                     onChange={handleChange}
-                    className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                    className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 text-sm font-medium mb-2">
+                  <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                     Region/State
                   </label>
                   <input
@@ -374,7 +374,7 @@ export default function CreateTripPage() {
                     name="region"
                     value={formData.region}
                     onChange={handleChange}
-                    className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                    className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                     placeholder="e.g., Colorado"
                   />
                 </div>
@@ -382,7 +382,7 @@ export default function CreateTripPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-700 text-sm font-medium mb-2">
+                  <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                     Latitude
                   </label>
                   <input
@@ -391,12 +391,12 @@ export default function CreateTripPage() {
                     value={formData.latitude}
                     onChange={handleChange}
                     step="0.0001"
-                    className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                    className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-700 text-sm font-medium mb-2">
+                  <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
                     Longitude
                   </label>
                   <input
@@ -405,7 +405,7 @@ export default function CreateTripPage() {
                     value={formData.longitude}
                     onChange={handleChange}
                     step="0.0001"
-                    className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                    className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                   />
                 </div>
               </div>
@@ -413,46 +413,46 @@ export default function CreateTripPage() {
           </div>
 
           {/* Highlights */}
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
             <h2 className="text-xl font-semibold text-white mb-4">Highlights</h2>
 
-            <label className="block text-gray-700 text-sm font-medium mb-2">
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
               Key Highlights (one per line)
             </label>
             <textarea
               name="highlights"
               value={formData.highlights}
               onChange={handleChange}
-              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
+              className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
               rows={3}
               placeholder="Amazing views&#10;Professional guide&#10;Small groups&#10;Safety equipment included"
             />
-            <p className="text-gray-600 text-xs mt-2">
+            <p className="text-gray-600 dark:text-gray-400 text-xs mt-2">
               Enter each highlight on a new line
             </p>
           </div>
 
           {/* Itinerary */}
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
             <h2 className="text-xl font-semibold text-white mb-4">Itinerary (Day-by-Day)</h2>
 
             <div className="space-y-6">
               <div>
-                <h3 className="text-gray-700 font-medium mb-3">Day 1</h3>
+                <h3 className="text-gray-700 dark:text-gray-300 font-medium mb-3">Day 1</h3>
                 <div className="space-y-3">
                   <input
                     type="text"
                     name="day1_title"
                     value={formData.day1_title}
                     onChange={handleChange}
-                    className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                    className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                     placeholder="Day title (e.g., Trailhead to Base Camp)"
                   />
                   <textarea
                     name="day1_description"
                     value={formData.day1_description}
                     onChange={handleChange}
-                    className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
+                    className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
                     rows={2}
                     placeholder="Detailed description of Day 1"
                   />
@@ -461,21 +461,21 @@ export default function CreateTripPage() {
 
               {formData.duration_days >= 2 && (
                 <div>
-                  <h3 className="text-gray-700 font-medium mb-3">Day 2</h3>
+                  <h3 className="text-gray-700 dark:text-gray-300 font-medium mb-3">Day 2</h3>
                   <div className="space-y-3">
                     <input
                       type="text"
                       name="day2_title"
                       value={formData.day2_title}
                       onChange={handleChange}
-                      className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+                      className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
                       placeholder="Day title (e.g., Summit Day)"
                     />
                     <textarea
                       name="day2_description"
                       value={formData.day2_description}
                       onChange={handleChange}
-                      className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
+                      className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
                       rows={2}
                       placeholder="Detailed description of Day 2"
                     />
@@ -487,39 +487,39 @@ export default function CreateTripPage() {
 
           {/* Inclusions & Exclusions */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+            <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
               <h2 className="text-xl font-semibold text-white mb-4">Inclusions</h2>
               <textarea
                 name="inclusions"
                 value={formData.inclusions}
                 onChange={handleChange}
-                className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
+                className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
                 rows={4}
                 placeholder="Professional guide&#10;Safety equipment&#10;Route planning&#10;Meals (one per line)"
               />
-              <p className="text-gray-600 text-xs mt-2">
+              <p className="text-gray-600 dark:text-gray-400 text-xs mt-2">
                 One inclusion per line
               </p>
             </div>
 
-            <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+            <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
               <h2 className="text-xl font-semibold text-white mb-4">Exclusions</h2>
               <textarea
                 name="exclusions"
                 value={formData.exclusions}
                 onChange={handleChange}
-                className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
+                className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
                 rows={4}
                 placeholder="Travel to trailhead&#10;Meals not listed&#10;Personal gear (one per line)"
               />
-              <p className="text-gray-600 text-xs mt-2">
+              <p className="text-gray-600 dark:text-gray-400 text-xs mt-2">
                 One exclusion per line
               </p>
             </div>
           </div>
 
           {/* Options */}
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
             <h2 className="text-xl font-semibold text-white mb-4">Options</h2>
 
             <label className="flex items-center gap-3 cursor-pointer">
@@ -528,9 +528,9 @@ export default function CreateTripPage() {
                 name="is_instant_book"
                 checked={formData.is_instant_book}
                 onChange={handleChange}
-                className="w-4 h-4 rounded border-gray-300 bg-gray-900"
+                className="w-4 h-4 rounded border-gray-300 dark:border-slate-600 bg-gray-900"
               />
-              <span className="text-gray-700">
+              <span className="text-gray-700 dark:text-gray-300">
                 Enable Instant Book (customers can book without approval)
               </span>
             </label>
@@ -547,7 +547,7 @@ export default function CreateTripPage() {
             </button>
             <Link
               href="/dashboard"
-              className="bg-gray-200 hover:bg-summit-600 text-white font-medium px-6 py-3 rounded-lg transition"
+              className="bg-gray-200 dark:bg-slate-700 hover:bg-summit-600 text-white font-medium px-6 py-3 rounded-lg transition"
             >
               Cancel
             </Link>

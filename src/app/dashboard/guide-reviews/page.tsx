@@ -80,7 +80,7 @@ export default function GuideReviewsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center pt-20">
-        <p className="text-gray-900">Loading reviews...</p>
+        <p className="text-gray-900 dark:text-gray-100">Loading reviews...</p>
       </div>
     );
   }
@@ -91,7 +91,7 @@ export default function GuideReviewsPage() {
         <div className="max-w-4xl mx-auto">
           <Link
             href="/dashboard"
-            className="text-gray-600 hover:text-blue-600 transition mb-8 inline-block"
+            className="text-gray-600 dark:text-gray-400 hover:text-blue-600 transition mb-8 inline-block"
           >
             ← Back to Dashboard
           </Link>
@@ -111,32 +111,32 @@ export default function GuideReviewsPage() {
         <div className="mb-8">
           <Link
             href="/dashboard"
-            className="text-gray-600 hover:text-blue-600 transition mb-4 inline-block"
+            className="text-gray-600 dark:text-gray-400 hover:text-blue-600 transition mb-4 inline-block"
           >
             ← Back to Dashboard
           </Link>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">My Customer Reviews</h1>
-          <p className="text-gray-600">
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">My Customer Reviews</h1>
+          <p className="text-gray-600 dark:text-gray-400">
             Feedback you've provided about customers who've completed your trips
           </p>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-            <p className="text-gray-600 text-sm mb-2">Total Reviews Given</p>
-            <p className="text-4xl font-bold text-gray-900">{reviews.length}</p>
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Total Reviews Given</p>
+            <p className="text-4xl font-bold text-gray-900 dark:text-gray-100">{reviews.length}</p>
           </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-            <p className="text-gray-600 text-sm mb-2">Average Rating</p>
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Average Rating</p>
             <p className="text-4xl font-bold text-yellow-400">
               {reviews.length > 0
                 ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
                 : '—'}
             </p>
           </div>
-          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-            <p className="text-gray-600 text-sm mb-2">Avg Professionalism</p>
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Avg Professionalism</p>
             <p className="text-4xl font-bold text-blue-400">
               {reviews.length > 0
                 ? (reviews.reduce((sum, r) => sum + r.professionalism_rating, 0) / reviews.length).toFixed(1)
@@ -147,8 +147,8 @@ export default function GuideReviewsPage() {
 
         {/* Reviews List */}
         {reviews.length === 0 ? (
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-12 text-center">
-            <p className="text-gray-600 text-lg mb-4">
+          <div className="bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-12 text-center">
+            <p className="text-gray-600 dark:text-gray-400 text-lg mb-4">
               No customer reviews yet
             </p>
             <p className="text-gray-500 text-sm">
@@ -160,15 +160,15 @@ export default function GuideReviewsPage() {
             {reviews.map((review) => (
               <div
                 key={review.id}
-                className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md transition"
+                className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm hover:shadow-md transition"
               >
                 {/* Review Header */}
-                <div className="flex items-start justify-between mb-4 pb-4 border-b border-gray-200">
+                <div className="flex items-start justify-between mb-4 pb-4 border-b border-gray-200 dark:border-slate-700">
                   <div>
-                    <h3 className="text-xl font-bold text-gray-900">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
                       {review.profiles.full_name}
                     </h3>
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm">
                       Trip: {review.bookings.trip.title}
                     </p>
                     <p className="text-gray-500 text-xs mt-1">
@@ -180,7 +180,7 @@ export default function GuideReviewsPage() {
                 {/* Ratings */}
                 <div className="grid grid-cols-2 md:grid-cols-2 gap-6 mb-4">
                   <div>
-                    <p className="text-gray-600 font-semibold text-sm mb-2">Overall Rating</p>
+                    <p className="text-gray-600 dark:text-gray-400 font-semibold text-sm mb-2">Overall Rating</p>
                     <div className="flex items-center gap-2">
                       {[...Array(5)].map((_, i) => (
                         <Star
@@ -192,13 +192,13 @@ export default function GuideReviewsPage() {
                           }`}
                         />
                       ))}
-                      <span className="font-bold text-gray-900 ml-2">
+                      <span className="font-bold text-gray-900 dark:text-gray-100 ml-2">
                         {review.rating}/5
                       </span>
                     </div>
                   </div>
                   <div>
-                    <p className="text-gray-600 font-semibold text-sm mb-2">
+                    <p className="text-gray-600 dark:text-gray-400 font-semibold text-sm mb-2">
                       Professionalism
                     </p>
                     <div className="flex items-center gap-2">
@@ -212,7 +212,7 @@ export default function GuideReviewsPage() {
                           }`}
                         />
                       ))}
-                      <span className="font-bold text-gray-900 ml-2">
+                      <span className="font-bold text-gray-900 dark:text-gray-100 ml-2">
                         {review.professionalism_rating}/5
                       </span>
                     </div>
@@ -222,10 +222,10 @@ export default function GuideReviewsPage() {
                 {/* Behavior Notes */}
                 {review.behavior_notes && (
                   <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p className="text-gray-600 font-semibold text-sm mb-2">
+                    <p className="text-gray-600 dark:text-gray-400 font-semibold text-sm mb-2">
                       Behavior & Conduct Notes
                     </p>
-                    <p className="text-gray-900 text-sm leading-relaxed">
+                    <p className="text-gray-900 dark:text-gray-100 text-sm leading-relaxed">
                       {review.behavior_notes}
                     </p>
                   </div>
@@ -233,11 +233,11 @@ export default function GuideReviewsPage() {
 
                 {/* Comment */}
                 {review.comment && (
-                  <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg">
-                    <p className="text-gray-600 font-semibold text-sm mb-2">
+                  <div className="p-4 bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg">
+                    <p className="text-gray-600 dark:text-gray-400 font-semibold text-sm mb-2">
                       Additional Comments
                     </p>
-                    <p className="text-gray-900 text-sm leading-relaxed">
+                    <p className="text-gray-900 dark:text-gray-100 text-sm leading-relaxed">
                       {review.comment}
                     </p>
                   </div>

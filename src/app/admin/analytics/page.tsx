@@ -107,7 +107,7 @@ export default function AdminAnalyticsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-        <p className="text-gray-900 text-lg">Loading analytics...</p>
+        <p className="text-gray-900 dark:text-gray-100 text-lg">Loading analytics...</p>
       </div>
     );
   }
@@ -117,7 +117,7 @@ export default function AdminAnalyticsPage() {
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
         <div className="max-w-md text-center">
           <p className="text-red-700 mb-4">{error}</p>
-          <Link href="/" className="text-gray-600 hover:text-blue-600 transition">
+          <Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 transition">
             ← Back to Home
           </Link>
         </div>
@@ -128,7 +128,7 @@ export default function AdminAnalyticsPage() {
   if (!analytics) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-        <p className="text-gray-900 text-lg">No data available</p>
+        <p className="text-gray-900 dark:text-gray-100 text-lg">No data available</p>
       </div>
     );
   }
@@ -138,16 +138,16 @@ export default function AdminAnalyticsPage() {
       <div className="max-w-7xl mx-auto p-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Platform Analytics</h1>
-          <p className="text-gray-600">Real-time revenue and growth metrics</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Platform Analytics</h1>
+          <p className="text-gray-600 dark:text-gray-400">Real-time revenue and growth metrics</p>
         </div>
 
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm mb-1">Total Revenue</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Total Revenue</p>
                 <p className="text-3xl font-bold text-green-400">
                   ${analytics.totalRevenue.toFixed(0)}
                 </p>
@@ -156,12 +156,12 @@ export default function AdminAnalyticsPage() {
             </div>
           </div>
 
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm mb-1">Platform Revenue</p>
-                <p className="text-3xl font-bold text-gray-900">${analytics.platformRevenue.toFixed(0)}</p>
-                <p className="text-gray-600 text-xs mt-1">
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Platform Revenue</p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">${analytics.platformRevenue.toFixed(0)}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-xs mt-1">
                   {((analytics.platformRevenue / analytics.totalRevenue) * 100).toFixed(1)}% of total
                 </p>
               </div>
@@ -169,21 +169,21 @@ export default function AdminAnalyticsPage() {
             </div>
           </div>
 
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm mb-1">Bookings</p>
-                <p className="text-3xl font-bold text-gray-900">{analytics.totalBookings}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Bookings</p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{analytics.totalBookings}</p>
               </div>
               <Calendar className="w-8 h-8 text-summit-600" />
             </div>
           </div>
 
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm mb-1">Avg Booking Value</p>
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Avg Booking Value</p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                   ${analytics.averageBookingValue.toFixed(0)}
                 </p>
               </div>
@@ -194,40 +194,40 @@ export default function AdminAnalyticsPage() {
 
         {/* Growth Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 text-sm mb-2">Active Guides</p>
-            <p className="text-4xl font-bold text-gray-900">{analytics.totalGuides}</p>
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Active Guides</p>
+            <p className="text-4xl font-bold text-gray-900 dark:text-gray-100">{analytics.totalGuides}</p>
           </div>
 
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 text-sm mb-2">Listed Trips</p>
-            <p className="text-4xl font-bold text-gray-900">{analytics.totalTrips}</p>
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Listed Trips</p>
+            <p className="text-4xl font-bold text-gray-900 dark:text-gray-100">{analytics.totalTrips}</p>
           </div>
 
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 text-sm mb-2">Guide Payouts</p>
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Guide Payouts</p>
             <p className="text-4xl font-bold text-green-600">${analytics.guidePayouts.toFixed(0)}</p>
           </div>
         </div>
 
         {/* Top Guides */}
-        <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-          <h2 className="text-xl font-semibold text-gray-900 mb-6">Top Guides by Earnings</h2>
+        <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">Top Guides by Earnings</h2>
 
           {analytics.topGuides.length === 0 ? (
-            <p className="text-gray-600 text-center py-8">No earnings data yet</p>
+            <p className="text-gray-600 dark:text-gray-400 text-center py-8">No earnings data yet</p>
           ) : (
             <div className="space-y-2">
-              <div className="grid grid-cols-3 gap-4 pb-4 border-b border-gray-200">
-                <div className="text-gray-600 font-medium text-sm">Guide Name</div>
-                <div className="text-right text-gray-600 font-medium text-sm">Bookings</div>
-                <div className="text-right text-gray-600 font-medium text-sm">Earnings</div>
+              <div className="grid grid-cols-3 gap-4 pb-4 border-b border-gray-200 dark:border-slate-700">
+                <div className="text-gray-600 dark:text-gray-400 font-medium text-sm">Guide Name</div>
+                <div className="text-right text-gray-600 dark:text-gray-400 font-medium text-sm">Bookings</div>
+                <div className="text-right text-gray-600 dark:text-gray-400 font-medium text-sm">Earnings</div>
               </div>
 
               {analytics.topGuides.map((guide, idx) => (
-                <div key={idx} className="grid grid-cols-3 gap-4 py-3 hover:bg-gray-200/20 transition px-2 rounded">
-                  <div className="text-gray-900 font-medium">{guide.name}</div>
-                  <div className="text-right text-gray-600">{guide.bookings}</div>
+                <div key={idx} className="grid grid-cols-3 gap-4 py-3 hover:bg-gray-200 dark:bg-slate-700/20 transition px-2 rounded">
+                  <div className="text-gray-900 dark:text-gray-100 font-medium">{guide.name}</div>
+                  <div className="text-right text-gray-600 dark:text-gray-400">{guide.bookings}</div>
                   <div className="text-right text-green-400 font-semibold">
                     ${guide.earnings.toFixed(2)}
                   </div>
@@ -239,7 +239,7 @@ export default function AdminAnalyticsPage() {
 
         {/* Footer */}
         <div className="mt-8 text-center">
-          <Link href="/" className="text-gray-600 hover:text-blue-600 transition">
+          <Link href="/" className="text-gray-600 dark:text-gray-400 hover:text-blue-600 transition">
             ← Back to Home
           </Link>
         </div>

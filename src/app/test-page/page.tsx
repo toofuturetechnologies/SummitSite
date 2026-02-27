@@ -8,7 +8,7 @@ export default function TestPage() {
         <p className="text-white mb-8">If you can see this, routing is working fine.</p>
         <a
           href="/dashboard"
-          className="bg-white text-sky-600 px-6 py-3 rounded font-bold"
+          className="bg-white dark:bg-slate-900 text-sky-600 px-6 py-3 rounded font-bold"
         >
           Go to Dashboard
         </a>

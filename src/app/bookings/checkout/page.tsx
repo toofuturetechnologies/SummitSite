@@ -167,7 +167,7 @@ function CheckoutContent() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center pt-20">
-        <p className="text-gray-900 text-lg">Setting up payment...</p>
+        <p className="text-gray-900 dark:text-gray-100 text-lg">Setting up payment...</p>
       </div>
     );
   }
@@ -175,9 +175,9 @@ function CheckoutContent() {
   if (!tripId || !dateId || !participants) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4 pt-20">
-        <div className="max-w-md bg-white border border-gray-200 rounded-lg p-8 text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Start Your Booking</h1>
-          <p className="text-gray-700 mb-6">Please select a trip first</p>
+        <div className="max-w-md bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-8 text-center">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Start Your Booking</h1>
+          <p className="text-gray-700 dark:text-gray-300 mb-6">Please select a trip first</p>
           <Link
             href="/trips"
             className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition"
@@ -192,9 +192,9 @@ function CheckoutContent() {
   if (error) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4 pt-20">
-        <div className="max-w-md bg-white border border-gray-200 rounded-lg p-8 text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Payment Setup Error</h1>
-          <p className="text-gray-700 mb-6">{error}</p>
+        <div className="max-w-md bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-8 text-center">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Payment Setup Error</h1>
+          <p className="text-gray-700 dark:text-gray-300 mb-6">{error}</p>
           <Link
             href="/trips"
             className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition"
@@ -209,7 +209,7 @@ function CheckoutContent() {
   if (!bookingData) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center pt-20">
-        <p className="text-gray-900 text-lg">Loading booking details...</p>
+        <p className="text-gray-900 dark:text-gray-100 text-lg">Loading booking details...</p>
       </div>
     );
   }
@@ -224,45 +224,45 @@ function CheckoutContent() {
           ← Back to Trips
         </Link>
 
-        <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Complete Your Booking</h1>
-          <p className="text-gray-700 mb-8">
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-8 shadow-sm">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Complete Your Booking</h1>
+          <p className="text-gray-700 dark:text-gray-300 mb-8">
             {bookingData.trip?.title} • {bookingData.participantCount} {bookingData.participantCount === 1 ? 'person' : 'people'}
           </p>
 
           {/* Price Summary */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-8 border border-gray-200">
+          <div className="bg-gray-50 dark:bg-slate-900 rounded-lg p-4 mb-8 border border-gray-200 dark:border-slate-700">
             <div className="flex justify-between mb-2">
-              <span className="text-gray-900 font-medium">Price per person:</span>
-              <span className="text-gray-900 font-semibold">${bookingData.trip?.price_per_person}</span>
+              <span className="text-gray-900 dark:text-gray-100 font-medium">Price per person:</span>
+              <span className="text-gray-900 dark:text-gray-100 font-semibold">${bookingData.trip?.price_per_person}</span>
             </div>
             <div className="flex justify-between mb-2 text-sm">
-              <span className="text-gray-700">Subtotal ({bookingData.participantCount} {bookingData.participantCount === 1 ? 'person' : 'people'}):</span>
-              <span className="text-gray-700">${bookingData.totalPrice.toFixed(2)}</span>
+              <span className="text-gray-700 dark:text-gray-300">Subtotal ({bookingData.participantCount} {bookingData.participantCount === 1 ? 'person' : 'people'}):</span>
+              <span className="text-gray-700 dark:text-gray-300">${bookingData.totalPrice.toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-lg font-bold border-t border-gray-200 pt-2">
-              <span className="text-gray-900">You Pay:</span>
+            <div className="flex justify-between text-lg font-bold border-t border-gray-200 dark:border-slate-700 pt-2">
+              <span className="text-gray-900 dark:text-gray-100">You Pay:</span>
               <span className="text-blue-600">${bookingData.totalPrice.toFixed(2)}</span>
             </div>
-            <p className="text-gray-600 text-xs mt-3">
+            <p className="text-gray-600 dark:text-gray-400 text-xs mt-3">
               💡 Platform fee: 12% + $1 hosting. Your guide keeps 88% minus fees.
             </p>
           </div>
 
           {/* Referrer Lookup Section */}
           <div className="mb-8">
-            <label className="block text-gray-900 font-semibold mb-3">
+            <label className="block text-gray-900 dark:text-gray-100 font-semibold mb-3">
               Who Referred You? (Optional)
             </label>
-            <p className="text-gray-700 text-sm mb-3">
+            <p className="text-gray-700 dark:text-gray-300 text-sm mb-3">
               If a creator referred you with TikTok content for this trip, search for their name. They'll earn a commission from this booking.
             </p>
 
             {selectedReferrer ? (
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex justify-between items-center">
                 <div>
-                  <p className="text-gray-900 font-semibold">{selectedReferrer.full_name}</p>
-                  <p className="text-gray-600 text-sm">Referrer selected</p>
+                  <p className="text-gray-900 dark:text-gray-100 font-semibold">{selectedReferrer.full_name}</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">Referrer selected</p>
                 </div>
                 <button
                   onClick={() => setSelectedReferrer(null)}
@@ -273,7 +273,7 @@ function CheckoutContent() {
               </div>
             ) : (
               <div className="relative">
-                <div className="flex items-center bg-white border border-gray-300 rounded-lg px-4 py-2 focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500">
+                <div className="flex items-center bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg px-4 py-2 focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500">
                   <Search className="w-4 h-4 text-gray-400 mr-2" />
                   <input
                     type="text"
@@ -283,17 +283,17 @@ function CheckoutContent() {
                       setShowReferrerResults(true);
                     }}
                     placeholder="Search by name..."
-                    className="flex-1 outline-none text-gray-900 text-sm"
+                    className="flex-1 outline-none text-gray-900 dark:text-gray-100 text-sm"
                   />
                 </div>
 
                 {showReferrerResults && referrerSearchResults.length > 0 && (
-                  <div className="absolute top-full mt-1 w-full bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                  <div className="absolute top-full mt-1 w-full bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-600 rounded-lg shadow-lg z-10">
                     {referrerSearchResults.map((profile) => (
                       <button
                         key={profile.id}
                         onClick={() => selectReferrer(profile)}
-                        className="w-full text-left px-4 py-2 hover:bg-blue-50 border-b border-gray-200 last:border-b-0 text-gray-900 font-medium transition"
+                        className="w-full text-left px-4 py-2 hover:bg-blue-50 border-b border-gray-200 dark:border-slate-700 last:border-b-0 text-gray-900 dark:text-gray-100 font-medium transition"
                       >
                         {profile.full_name}
                       </button>
@@ -313,7 +313,7 @@ function CheckoutContent() {
             {processing ? 'Processing...' : 'Proceed to Payment'}
           </button>
 
-          <p className="text-gray-600 text-xs text-center mt-4">
+          <p className="text-gray-600 dark:text-gray-400 text-xs text-center mt-4">
             By booking, you agree to our terms and the guide's cancellation policy.
           </p>
         </div>
@@ -327,7 +327,7 @@ export default function CheckoutPage() {
     <Suspense
       fallback={
         <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-          <p className="text-gray-900 text-lg">Loading...</p>
+          <p className="text-gray-900 dark:text-gray-100 text-lg">Loading...</p>
         </div>
       }
     >

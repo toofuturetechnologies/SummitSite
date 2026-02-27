@@ -53,9 +53,9 @@ export default function GuidesPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white pt-24 px-6">
+      <div className="min-h-screen bg-white dark:bg-slate-900 pt-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-sky-900 mb-4">Our Guides</h1>
+          <h1 className="text-4xl font-bold text-sky-900 dark:text-sky-100 mb-4">Our Guides</h1>
           <div className="bg-red-900/30 border border-red-800 text-red-200 p-6 rounded-xl">
             Error loading guides: {error}
           </div>
@@ -65,12 +65,12 @@ export default function GuidesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-slate-900">
       {/* Hero */}
       <section className="relative pt-24 pb-12 px-6 border-b border-summit-800">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-4xl sm:text-5xl font-black text-sky-900 mb-3">
+            <h1 className="text-4xl sm:text-5xl font-black text-sky-900 dark:text-sky-100 mb-3">
               Expert Mountain Guides
             </h1>
             <p className="text-sky-600 text-lg">
@@ -101,10 +101,10 @@ export default function GuidesPage() {
                 key={i}
                 className="bg-gray-900 border border-summit-800 rounded-2xl p-6 animate-pulse"
               >
-                <div className="w-16 h-16 bg-gray-200 rounded-2xl mb-4" />
-                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
-                <div className="h-3 bg-gray-200 rounded w-full mb-4" />
-                <div className="h-2 bg-gray-200 rounded w-1/2" />
+                <div className="w-16 h-16 bg-gray-200 dark:bg-slate-700 rounded-2xl mb-4" />
+                <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-3/4 mb-2" />
+                <div className="h-3 bg-gray-200 dark:bg-slate-700 rounded w-full mb-4" />
+                <div className="h-2 bg-gray-200 dark:bg-slate-700 rounded w-1/2" />
               </div>
             ))}
           </div>
@@ -127,7 +127,7 @@ export default function GuidesPage() {
                 >
                   {/* Avatar Section */}
                   <div className="bg-gradient-to-br from-sky-500 to-summit-700 p-6 flex flex-col items-center justify-center min-h-[140px] relative">
-                    <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center text-3xl font-black text-white shadow-lg">
+                    <div className="w-20 h-20 rounded-2xl bg-white dark:bg-slate-900/20 flex items-center justify-center text-3xl font-black text-white shadow-lg">
                       {guide.display_name.charAt(0)}
                     </div>
                     {guide.is_verified && (
@@ -178,7 +178,7 @@ export default function GuidesPage() {
                         <p className="text-summit-600 text-xs font-semibold mb-2">Specialties</p>
                         <div className="flex flex-wrap gap-1">
                           {guide.specialties.slice(0, 3).map((s: string) => (
-                            <span key={s} className="bg-gray-200 text-sky-600 text-xs px-2 py-1 rounded-full">
+                            <span key={s} className="bg-gray-200 dark:bg-slate-700 text-sky-600 text-xs px-2 py-1 rounded-full">
                               {s.replace(/_/g, ' ')}
                             </span>
                           ))}

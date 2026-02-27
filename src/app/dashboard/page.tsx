@@ -91,7 +91,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-        <p className="text-sky-900 text-lg">Loading your dashboard...</p>
+        <p className="text-sky-900 dark:text-sky-100 text-lg">Loading your dashboard...</p>
       </div>
     );
   }
@@ -114,7 +114,7 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8 pt-20 lg:pt-24">
         <div className="max-w-4xl mx-auto">
-          <p className="text-sky-900">Loading guide...</p>
+          <p className="text-sky-900 dark:text-sky-100">Loading guide...</p>
         </div>
       </div>
     );
@@ -125,7 +125,7 @@ export default function DashboardPage() {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-sky-900 mb-2">{guide.display_name}</h1>
+            <h1 className="text-4xl font-bold text-sky-900 dark:text-sky-100 mb-2">{guide.display_name}</h1>
             <p className="text-sky-700 font-medium">{guide.tagline || 'Guide'}</p>
           </div>
           <div className="flex gap-3">
@@ -154,15 +154,15 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gray-100 border border-sky-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-sky-200 dark:border-slate-700 rounded-lg p-6">
             <p className="text-sky-600 text-sm mb-2">Your Trips</p>
-            <p className="text-3xl font-bold text-sky-900">{trips.length}</p>
+            <p className="text-3xl font-bold text-sky-900 dark:text-sky-100">{trips.length}</p>
           </div>
-          <div className="bg-gray-100 border border-sky-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-sky-200 dark:border-slate-700 rounded-lg p-6">
             <p className="text-sky-600 text-sm mb-2">Email</p>
-            <p className="text-sm text-sky-900">{user?.email}</p>
+            <p className="text-sm text-sky-900 dark:text-sky-100">{user?.email}</p>
           </div>
-          <div className="bg-gray-100 border border-sky-200 rounded-lg p-6">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-sky-200 dark:border-slate-700 rounded-lg p-6">
             <p className="text-sky-600 text-sm mb-2">Quick Links</p>
             <div className="space-y-2">
               <Link href="/dashboard/bookings" className="text-sky-600 hover:text-sky-600 block transition">
@@ -207,10 +207,10 @@ export default function DashboardPage() {
         )}
 
         {/* UGC Settings - For Guides to Set Referral Rates */}
-        <div className="bg-gradient-to-br from-sky-50 to-indigo-50 border border-sky-200 rounded-lg p-6 mb-8">
+        <div className="bg-gradient-to-br from-sky-50 to-indigo-50 border border-sky-200 dark:border-slate-700 rounded-lg p-6 mb-8">
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h2 className="text-xl font-bold text-sky-900 mb-1">⚙️ UGC Settings</h2>
+              <h2 className="text-xl font-bold text-sky-900 dark:text-sky-100 mb-1">⚙️ UGC Settings</h2>
               <p className="text-sky-700 text-sm">Manage referral rates for your trips</p>
             </div>
             <Link
@@ -240,8 +240,8 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="bg-gray-100 border border-sky-200 rounded-lg p-6">
-          <h2 className="text-2xl font-bold text-sky-900 mb-4">Your Trips</h2>
+        <div className="bg-gray-100 dark:bg-slate-800 border border-sky-200 dark:border-slate-700 rounded-lg p-6">
+          <h2 className="text-2xl font-bold text-sky-900 dark:text-sky-100 mb-4">Your Trips</h2>
           {trips.length === 0 ? (
             <p className="text-sky-600 mb-4">No trips yet</p>
           ) : (

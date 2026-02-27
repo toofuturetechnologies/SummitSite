@@ -80,15 +80,15 @@ export default function ReviewForm({
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-end md:items-center justify-center p-4">
-      <div className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">
+        <div className="sticky top-0 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700 p-6 flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
             {reviewType === 'trip' ? 'Review This Trip' : 'Review This Guide'}
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-600 hover:text-gray-900 transition"
+            className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:text-gray-100 transition"
           >
             <X className="w-6 h-6" />
           </button>
@@ -104,7 +104,7 @@ export default function ReviewForm({
 
           {/* Rating */}
           <div>
-            <label className="block text-gray-900 font-semibold mb-3">
+            <label className="block text-gray-900 dark:text-gray-100 font-semibold mb-3">
               Rating
             </label>
             <div className="flex gap-2">
@@ -131,7 +131,7 @@ export default function ReviewForm({
 
           {/* Title */}
           <div>
-            <label className="block text-gray-900 font-semibold mb-2">
+            <label className="block text-gray-900 dark:text-gray-100 font-semibold mb-2">
               Title
             </label>
             <input
@@ -139,14 +139,14 @@ export default function ReviewForm({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g., 'Best experience of my life!'"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 dark:text-gray-100"
               required
             />
           </div>
 
           {/* Review Text */}
           <div>
-            <label className="block text-gray-900 font-semibold mb-2">
+            <label className="block text-gray-900 dark:text-gray-100 font-semibold mb-2">
               Your Review
             </label>
             <textarea
@@ -154,18 +154,18 @@ export default function ReviewForm({
               onChange={(e) => setBody(e.target.value)}
               placeholder="Share your experience... What was great? Any suggestions?"
               rows={4}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900"
+              className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 dark:text-gray-100"
               required
             />
-            <p className="text-gray-600 text-xs mt-1">Minimum 10 characters</p>
+            <p className="text-gray-600 dark:text-gray-400 text-xs mt-1">Minimum 10 characters</p>
           </div>
 
           {/* Social Media Links */}
           <div>
-            <label className="block text-gray-900 font-semibold mb-3">
+            <label className="block text-gray-900 dark:text-gray-100 font-semibold mb-3">
               📱 Share Your Content (Optional)
             </label>
-            <p className="text-gray-600 text-sm mb-3">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
               Link your YouTube, Instagram, or TikTok content from this trip. Help showcase the adventure!
             </p>
             <div className="space-y-2">
@@ -174,21 +174,21 @@ export default function ReviewForm({
                 value={socialLinks.youtube}
                 onChange={(e) => setSocialLinks({ ...socialLinks, youtube: e.target.value })}
                 placeholder="YouTube video URL (optional)"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 text-sm"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 dark:text-gray-100 text-sm"
               />
               <input
                 type="url"
                 value={socialLinks.instagram}
                 onChange={(e) => setSocialLinks({ ...socialLinks, instagram: e.target.value })}
                 placeholder="Instagram post URL (optional)"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 text-sm"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 dark:text-gray-100 text-sm"
               />
               <input
                 type="url"
                 value={socialLinks.tiktok}
                 onChange={(e) => setSocialLinks({ ...socialLinks, tiktok: e.target.value })}
                 placeholder="TikTok video URL (optional)"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 text-sm"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 dark:text-gray-100 text-sm"
               />
             </div>
           </div>
@@ -198,7 +198,7 @@ export default function ReviewForm({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-3 border border-gray-300 text-gray-900 font-semibold rounded-lg hover:bg-gray-50 transition"
+              className="flex-1 px-4 py-3 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-gray-100 font-semibold rounded-lg hover:bg-gray-50 dark:bg-slate-900 transition"
             >
               Cancel
             </button>

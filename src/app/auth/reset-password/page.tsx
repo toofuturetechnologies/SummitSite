@@ -63,12 +63,12 @@ export default function ResetPasswordPage() {
   if (success) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
-        <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md text-center shadow-lg">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Password Reset</h1>
-          <p className="text-gray-600 mb-6">
+        <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-8 w-full max-w-md text-center shadow-lg">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">Password Reset</h1>
+          <p className="text-gray-600 dark:text-gray-400 mb-6">
             Your password has been successfully reset!
           </p>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 dark:text-gray-400 text-sm">
             Redirecting to your dashboard...
           </p>
         </div>
@@ -78,9 +78,9 @@ export default function ResetPasswordPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white border border-gray-200 rounded-lg p-8 w-full max-w-md shadow-lg">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Create New Password</h1>
-        <p className="text-gray-600 mb-6">Enter a new password for your account</p>
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-8 w-full max-w-md shadow-lg">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Create New Password</h1>
+        <p className="text-gray-600 dark:text-gray-400 mb-6">Enter a new password for your account</p>
 
         {error && (
           <div className="bg-red-900/50 text-red-100 p-4 rounded-lg mb-6">
@@ -90,7 +90,7 @@ export default function ResetPasswordPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
               New Password
             </label>
             <input
@@ -98,13 +98,13 @@ export default function ResetPasswordPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="Enter new password"
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 text-sm font-medium mb-2">
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
               Confirm Password
             </label>
             <input
@@ -112,7 +112,7 @@ export default function ResetPasswordPage() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="w-full bg-gray-900 border border-gray-300 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
+              className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
               placeholder="Confirm password"
             />
           </div>

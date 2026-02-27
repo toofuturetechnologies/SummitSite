@@ -60,7 +60,7 @@ function TripCard({ trip }: { trip: any }) {
     <Link href={`/trips/${trip.id}`} className="group block h-full">
       <div className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden hover:border-sky-300 hover:-translate-y-1 transition-all duration-300 h-full shadow-xl hover:shadow-2xl flex flex-col">
         {/* Image */}
-        <div className="relative h-52 overflow-hidden bg-gray-200 shrink-0">
+        <div className="relative h-52 overflow-hidden bg-gray-200 dark:bg-slate-700 shrink-0">
           <img
             src={imgSrc}
             alt={trip.title}
@@ -69,7 +69,7 @@ function TripCard({ trip }: { trip: any }) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-summit-900/60 via-transparent to-transparent" />
           <div className="absolute top-3 left-3">
-            <span className="inline-block bg-white/80 backdrop-blur-sm text-sky-700 text-xs px-3 py-1.5 rounded-lg capitalize font-medium">
+            <span className="inline-block bg-white dark:bg-slate-900/80 backdrop-blur-sm text-sky-700 text-xs px-3 py-1.5 rounded-lg capitalize font-medium">
               {trip.activity?.replace(/_/g, ' ')}
             </span>
           </div>
@@ -206,9 +206,9 @@ function TripsPageInner() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white pt-24 px-6">
+      <div className="min-h-screen bg-white dark:bg-slate-900 pt-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-sky-900 mb-4">Browse Adventures</h1>
+          <h1 className="text-4xl font-bold text-sky-900 dark:text-sky-100 mb-4">Browse Adventures</h1>
           <div className="bg-red-900/30 border border-red-800 text-red-200 p-6 rounded-xl">
             Error loading trips: {error}
           </div>
@@ -218,11 +218,11 @@ function TripsPageInner() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-slate-900">
       {/* Page Header */}
       <section className="pt-24 pb-12 px-6 border-b border-summit-800">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl font-black text-sky-900 mb-3">
+          <h1 className="text-4xl sm:text-5xl font-black text-sky-900 dark:text-sky-100 mb-3">
             Browse All Adventures
           </h1>
           <p className="text-sky-600 text-lg mb-8">
@@ -248,22 +248,22 @@ function TripsPageInner() {
         <div className="mb-8">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-gray-900 border border-summit-800 hover:border-sky-200 text-white rounded-lg transition font-medium text-sm"
+            className="flex items-center gap-2 px-4 py-2.5 bg-gray-900 border border-summit-800 hover:border-sky-200 dark:border-slate-700 text-white rounded-lg transition font-medium text-sm"
           >
             <Filter className="w-4 h-4" />
             {showFilters ? 'Hide Filters' : 'Show Filters'}
           </button>
 
           {showFilters && (
-            <div className="mt-6 bg-sky-50 border border-summit-800 rounded-2xl p-6">
+            <div className="mt-6 bg-sky-50 dark:bg-slate-800 border border-summit-800 rounded-2xl p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {/* Activity */}
                 <div>
-                  <label className="block text-sky-900 text-sm font-semibold mb-3">Activity</label>
+                  <label className="block text-sky-900 dark:text-sky-100 text-sm font-semibold mb-3">Activity</label>
                   <div className="space-y-1 max-h-48 overflow-y-auto">
                     <button
                       onClick={() => setSelectedActivity('')}
-                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === '' ? 'bg-sky-500 text-white' : 'text-sky-900 hover:bg-gray-200'}`}
+                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === '' ? 'bg-sky-500 text-white' : 'text-sky-900 dark:text-sky-100 hover:bg-gray-200 dark:bg-slate-700'}`}
                     >
                       All Activities
                     </button>
@@ -271,7 +271,7 @@ function TripsPageInner() {
                       <button
                         key={act.id}
                         onClick={() => setSelectedActivity(act.id)}
-                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === act.id ? 'bg-sky-500 text-white' : 'text-sky-900 hover:bg-gray-200'}`}
+                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === act.id ? 'bg-sky-500 text-white' : 'text-sky-900 dark:text-sky-100 hover:bg-gray-200 dark:bg-slate-700'}`}
                       >
                         {act.emoji} {act.label}
                       </button>
@@ -281,11 +281,11 @@ function TripsPageInner() {
 
                 {/* Difficulty */}
                 <div>
-                  <label className="block text-sky-900 text-sm font-semibold mb-3">Difficulty</label>
+                  <label className="block text-sky-900 dark:text-sky-100 text-sm font-semibold mb-3">Difficulty</label>
                   <div className="space-y-1">
                     <button
                       onClick={() => setSelectedDifficulty('')}
-                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === '' ? 'bg-sky-500 text-white' : 'text-sky-900 hover:bg-gray-200'}`}
+                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === '' ? 'bg-sky-500 text-white' : 'text-sky-900 dark:text-sky-100 hover:bg-gray-200 dark:bg-slate-700'}`}
                     >
                       All Levels
                     </button>
@@ -293,7 +293,7 @@ function TripsPageInner() {
                       <button
                         key={diff.id}
                         onClick={() => setSelectedDifficulty(diff.id)}
-                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === diff.id ? 'bg-sky-500 text-white' : 'text-sky-900 hover:bg-gray-200'}`}
+                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === diff.id ? 'bg-sky-500 text-white' : 'text-sky-900 dark:text-sky-100 hover:bg-gray-200 dark:bg-slate-700'}`}
                       >
                         {diff.emoji} {diff.label}
                       </button>
@@ -303,7 +303,7 @@ function TripsPageInner() {
 
                 {/* Price */}
                 <div>
-                  <label className="block text-sky-900 text-sm font-semibold mb-3">
+                  <label className="block text-sky-900 dark:text-sky-100 text-sm font-semibold mb-3">
                     Max Price: ${maxPrice.toLocaleString()}
                   </label>
                   <input
@@ -325,7 +325,7 @@ function TripsPageInner() {
                 <div className="flex items-end">
                   <button
                     onClick={clearFilters}
-                    className="w-full px-4 py-2.5 bg-gray-300 hover:bg-gray-400 text-sky-900 rounded-lg transition text-sm font-medium"
+                    className="w-full px-4 py-2.5 bg-gray-300 hover:bg-gray-400 text-sky-900 dark:text-sky-100 rounded-lg transition text-sm font-medium"
                   >
                     Reset All Filters
                   </button>
@@ -351,11 +351,11 @@ function TripsPageInner() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: 9 }).map((_, i) => (
               <div key={i} className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden animate-pulse">
-                <div className="h-52 bg-gray-200" />
+                <div className="h-52 bg-gray-200 dark:bg-slate-700" />
                 <div className="p-5 space-y-3">
-                  <div className="h-4 bg-gray-200 rounded w-2/3" />
-                  <div className="h-3 bg-gray-200 rounded w-full" />
-                  <div className="h-3 bg-gray-200 rounded w-4/5" />
+                  <div className="h-4 bg-gray-200 dark:bg-slate-700 rounded w-2/3" />
+                  <div className="h-3 bg-gray-200 dark:bg-slate-700 rounded w-full" />
+                  <div className="h-3 bg-gray-200 dark:bg-slate-700 rounded w-4/5" />
                 </div>
               </div>
             ))}
@@ -389,7 +389,7 @@ function TripsPageInner() {
 export default function TripsPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-white dark:bg-slate-900 flex items-center justify-center">
         <p className="text-sky-600">Loading trips...</p>
       </div>
     }>

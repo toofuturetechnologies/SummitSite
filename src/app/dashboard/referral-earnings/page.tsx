@@ -120,7 +120,7 @@ export default function ReferralEarningsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center pt-20">
-        <p className="text-gray-900 text-lg">Loading earnings...</p>
+        <p className="text-gray-900 dark:text-gray-100 text-lg">Loading earnings...</p>
       </div>
     );
   }
@@ -141,10 +141,10 @@ export default function ReferralEarningsPage() {
         </Link>
 
         <div className="mb-8">
-          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             🎬 Referral Earnings
           </h1>
-          <p className="text-gray-700">
+          <p className="text-gray-700 dark:text-gray-300">
             Track your earnings from UGC referrals. Users who book trips after seeing your content earn you a commission.
           </p>
         </div>
@@ -159,33 +159,33 @@ export default function ReferralEarningsPage() {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Total Earnings */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-gray-600 text-sm mb-2">Total Earnings</p>
-                <p className="text-3xl font-bold text-gray-900">${totalEarnings.toFixed(2)}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Total Earnings</p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">${totalEarnings.toFixed(2)}</p>
               </div>
               <DollarSign className="w-8 h-8 text-green-600" />
             </div>
           </div>
 
           {/* Pending Earnings */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-gray-600 text-sm mb-2">Pending Payout</p>
-                <p className="text-3xl font-bold text-gray-900">${pendingEarnings.toFixed(2)}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Pending Payout</p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">${pendingEarnings.toFixed(2)}</p>
               </div>
               <Clock className="w-8 h-8 text-yellow-600" />
             </div>
           </div>
 
           {/* Paid Earnings */}
-          <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-gray-600 text-sm mb-2">Paid to Account</p>
-                <p className="text-3xl font-bold text-gray-900">${paidEarnings.toFixed(2)}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Paid to Account</p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">${paidEarnings.toFixed(2)}</p>
               </div>
               <TrendingUp className="w-8 h-8 text-blue-600" />
             </div>
@@ -195,18 +195,18 @@ export default function ReferralEarningsPage() {
         {/* Per-Trip Breakdown */}
         {tripBreakdown.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Earnings by Trip</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Earnings by Trip</h2>
             <div className="space-y-3">
               {tripBreakdown.map((trip) => (
-                <div key={trip.trip_id} className="bg-white border border-gray-200 rounded-lg p-4">
+                <div key={trip.trip_id} className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-4">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-semibold text-gray-900">{trip.trip_title}</h3>
-                      <p className="text-gray-600 text-sm">
+                      <h3 className="font-semibold text-gray-900 dark:text-gray-100">{trip.trip_title}</h3>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm">
                         {trip.referral_count} {trip.referral_count === 1 ? 'referral' : 'referrals'}
                       </p>
                     </div>
-                    <p className="font-bold text-gray-900 text-lg">${trip.total_earnings.toFixed(2)}</p>
+                    <p className="font-bold text-gray-900 dark:text-gray-100 text-lg">${trip.total_earnings.toFixed(2)}</p>
                   </div>
                 </div>
               ))}
@@ -217,22 +217,22 @@ export default function ReferralEarningsPage() {
         {/* Detailed Payout History */}
         {earnings.length > 0 ? (
           <div>
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Payout History</h2>
-            <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Payout History</h2>
+            <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg overflow-hidden">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b border-gray-200">
+                <thead className="bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700">
                   <tr>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Trip</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Amount</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Date</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">Trip</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">Amount</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">Status</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">Date</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {earnings.map((earning) => (
-                    <tr key={earning.id} className="hover:bg-gray-50 transition">
-                      <td className="px-6 py-4 text-sm text-gray-900 font-medium">{earning.trip?.title}</td>
-                      <td className="px-6 py-4 text-sm text-gray-900 font-bold">
+                    <tr key={earning.id} className="hover:bg-gray-50 dark:bg-slate-900 transition">
+                      <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-100 font-medium">{earning.trip?.title}</td>
+                      <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-100 font-bold">
                         ${earning.earnings_amount.toFixed(2)}
                       </td>
                       <td className="px-6 py-4 text-sm">
@@ -242,13 +242,13 @@ export default function ReferralEarningsPage() {
                               ? 'bg-green-100 text-green-800'
                               : earning.status === 'pending'
                                 ? 'bg-yellow-100 text-yellow-800'
-                                : 'bg-gray-100 text-gray-800'
+                                : 'bg-gray-100 dark:bg-slate-800 text-gray-800'
                           }`}
                         >
                           {earning.status.charAt(0).toUpperCase() + earning.status.slice(1)}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-600">
+                      <td className="px-6 py-4 text-sm text-gray-600 dark:text-gray-400">
                         {new Date(earning.created_at).toLocaleDateString()}
                       </td>
                     </tr>
@@ -258,8 +258,8 @@ export default function ReferralEarningsPage() {
             </div>
           </div>
         ) : (
-          <div className="bg-white border border-gray-200 rounded-lg p-8 text-center">
-            <p className="text-gray-600 mb-4">No referral earnings yet.</p>
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-8 text-center">
+            <p className="text-gray-600 dark:text-gray-400 mb-4">No referral earnings yet.</p>
             <Link
               href="/creators/ugc"
               className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition"

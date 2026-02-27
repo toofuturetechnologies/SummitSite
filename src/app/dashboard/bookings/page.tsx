@@ -163,7 +163,7 @@ export default function BookingsPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex pt-20 lg:pt-24 items-center justify-center">
-        <p className="text-gray-900 text-lg">Loading...</p>
+        <p className="text-gray-900 dark:text-gray-100 text-lg">Loading...</p>
       </div>
     );
   }
@@ -188,12 +188,12 @@ export default function BookingsPage() {
         <div className="mb-8">
           <Link
             href="/dashboard"
-            className="text-gray-600 hover:text-blue-600 transition mb-4 inline-block"
+            className="text-gray-600 dark:text-gray-400 hover:text-blue-600 transition mb-4 inline-block"
           >
             ← Back to Dashboard
           </Link>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Bookings</h1>
-          <p className="text-gray-600">Manage your trip bookings and payments</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Bookings</h1>
+          <p className="text-gray-600 dark:text-gray-400">Manage your trip bookings and payments</p>
         </div>
 
         {error && (
@@ -204,20 +204,20 @@ export default function BookingsPage() {
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-4">
-            <p className="text-gray-600 text-sm mb-1">Pending</p>
-            <p className="text-3xl font-bold text-gray-900">{stats.pending}</p>
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-4">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Pending</p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{stats.pending}</p>
           </div>
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-4">
-            <p className="text-gray-600 text-sm mb-1">Confirmed</p>
-            <p className="text-3xl font-bold text-gray-900">{stats.confirmed}</p>
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-4">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Confirmed</p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{stats.confirmed}</p>
           </div>
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-4">
-            <p className="text-gray-600 text-sm mb-1">Completed</p>
-            <p className="text-3xl font-bold text-gray-900">{stats.completed}</p>
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-4">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Completed</p>
+            <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{stats.completed}</p>
           </div>
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-4">
-            <p className="text-gray-600 text-sm mb-1">Total Payout</p>
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-4">
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-1">Total Payout</p>
             <p className="text-3xl font-bold text-green-400">${stats.totalPayout.toFixed(0)}</p>
           </div>
         </div>
@@ -231,7 +231,7 @@ export default function BookingsPage() {
               className={`px-4 py-2 rounded-lg font-medium transition ${
                 filterStatus === status
                   ? 'bg-summit-600 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  : 'bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:bg-slate-700'
               }`}
             >
               {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -241,8 +241,8 @@ export default function BookingsPage() {
 
         {/* Bookings List */}
         {filteredBookings.length === 0 ? (
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-12 text-center">
-            <p className="text-gray-600 text-lg">
+          <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-12 text-center">
+            <p className="text-gray-600 dark:text-gray-400 text-lg">
               {filterStatus === 'all' 
                 ? 'No bookings yet' 
                 : `No ${filterStatus} bookings`}
@@ -253,16 +253,16 @@ export default function BookingsPage() {
             {filteredBookings.map(booking => (
               <div
                 key={booking.id}
-                className="bg-gray-100 border border-gray-200 rounded-lg p-6 hover:bg-gray-200/30 transition"
+                className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-6 hover:bg-gray-200 dark:bg-slate-700/30 transition"
               >
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                   {/* Trip & Date */}
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
                       {booking.trip?.title || 'Trip'}
                     </h3>
                     {booking.start_date && (
-                      <div className="flex items-center gap-2 text-gray-600 text-sm">
+                      <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-sm">
                         <Calendar className="w-4 h-4" />
                         <span>
                           {new Date(booking.start_date).toLocaleDateString()}
@@ -276,8 +276,8 @@ export default function BookingsPage() {
 
                   {/* Participants */}
                   <div>
-                    <p className="text-gray-600 text-sm mb-2">Participants</p>
-                    <div className="flex items-center gap-2 text-gray-900">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Participants</p>
+                    <div className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
                       <Users className="w-4 h-4" />
                       <span className="text-lg font-semibold">{booking.participant_count}</span>
                     </div>
@@ -285,7 +285,7 @@ export default function BookingsPage() {
 
                   {/* Payment */}
                   <div>
-                    <p className="text-gray-600 text-sm mb-2">Your Payout</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Your Payout</p>
                     <div className="flex items-center gap-2 text-green-400">
                       <DollarSign className="w-4 h-4" />
                       <span className="text-lg font-semibold">
@@ -296,7 +296,7 @@ export default function BookingsPage() {
 
                   {/* Status */}
                   <div>
-                    <p className="text-gray-600 text-sm mb-2">Status</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">Status</p>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${STATUS_COLORS[booking.status]}`}>
                       {booking.status.charAt(0).toUpperCase() + booking.status.slice(1)}
                     </span>
@@ -305,7 +305,7 @@ export default function BookingsPage() {
 
                 {/* Actions */}
                 {booking.status === 'pending' && (
-                  <div className="flex gap-2 pt-4 border-t border-gray-200">
+                  <div className="flex gap-2 pt-4 border-t border-gray-200 dark:border-slate-700">
                     <button
                       onClick={() => handleStatusChange(booking.id, 'confirmed')}
                       className="flex-1 bg-green-600 hover:bg-green-500 text-white font-medium py-2 rounded-lg transition"
@@ -322,7 +322,7 @@ export default function BookingsPage() {
                 )}
 
                 {booking.status === 'confirmed' && (
-                  <div className="flex gap-2 pt-4 border-t border-gray-200">
+                  <div className="flex gap-2 pt-4 border-t border-gray-200 dark:border-slate-700">
                     <button
                       onClick={() => handleStatusChange(booking.id, 'completed')}
                       className="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-medium py-2 rounded-lg transition"
@@ -333,7 +333,7 @@ export default function BookingsPage() {
                 )}
 
                 {booking.status === 'completed' && (
-                  <div className="grid grid-cols-2 gap-2 pt-4 border-t border-gray-200">
+                  <div className="grid grid-cols-2 gap-2 pt-4 border-t border-gray-200 dark:border-slate-700">
                     <button
                       onClick={() => {
                         setSelectedBookingForReview(booking.id);

@@ -53,14 +53,14 @@ function BookingConfirmedContent() {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-8 max-w-md text-center">
+    <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-8 max-w-md text-center">
       <div className="flex justify-center mb-6">
         <CheckCircle className="w-16 h-16 text-green-500" />
       </div>
 
-      <h1 className="text-3xl font-bold text-gray-900 mb-4">Booking Confirmed!</h1>
+      <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">Booking Confirmed!</h1>
 
-      <p className="text-gray-700 mb-6">
+      <p className="text-gray-700 dark:text-gray-300 mb-6">
         Your adventure is booked. The guide will confirm your booking shortly, and you&apos;ll receive an email with next steps.
       </p>
 
@@ -68,11 +68,11 @@ function BookingConfirmedContent() {
       {ugcCode && (
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
           <p className="text-blue-900 text-sm font-semibold mb-2">🎬 Your UGC Code</p>
-          <p className="text-gray-600 text-xs mb-3">
+          <p className="text-gray-600 dark:text-gray-400 text-xs mb-3">
             Save this code to post TikTok content and earn referral commissions!
           </p>
-          <div className="bg-white border border-blue-300 rounded p-3 flex items-center justify-between">
-            <code className="text-gray-900 font-mono text-sm font-bold">{ugcCode}</code>
+          <div className="bg-white dark:bg-slate-900 border border-blue-300 rounded p-3 flex items-center justify-between">
+            <code className="text-gray-900 dark:text-gray-100 font-mono text-sm font-bold">{ugcCode}</code>
             <button
               onClick={handleCopy}
               className="ml-2 p-2 hover:bg-blue-100 rounded transition"
@@ -88,9 +88,9 @@ function BookingConfirmedContent() {
         </div>
       )}
 
-      <div className="bg-gray-50 rounded-lg p-4 mb-6">
-        <p className="text-gray-900 text-sm font-semibold mb-2">Next Steps:</p>
-        <ul className="text-gray-700 text-sm space-y-2 text-left">
+      <div className="bg-gray-50 dark:bg-slate-900 rounded-lg p-4 mb-6">
+        <p className="text-gray-900 dark:text-gray-100 text-sm font-semibold mb-2">Next Steps:</p>
+        <ul className="text-gray-700 dark:text-gray-300 text-sm space-y-2 text-left">
           <li>✓ Confirm your email address</li>
           <li>✓ Save your UGC code for later</li>
           <li>✓ Prepare your gear and equipment</li>
@@ -107,14 +107,14 @@ function BookingConfirmedContent() {
         </Link>
         <Link
           href="/"
-          className="block w-full bg-gray-200 hover:bg-gray-300 text-gray-900 font-medium py-3 rounded-lg transition"
+          className="block w-full bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 text-gray-900 dark:text-gray-100 font-medium py-3 rounded-lg transition"
         >
           Back to Home
         </Link>
       </div>
 
       {bookingId && (
-        <p className="text-gray-600 text-xs mt-6">
+        <p className="text-gray-600 dark:text-gray-400 text-xs mt-6">
           Booking ID: {bookingId}
         </p>
       )}
@@ -126,7 +126,7 @@ export default function BookingConfirmedPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-4">
       <Suspense fallback={
-        <div className="text-gray-900 text-lg">Loading...</div>
+        <div className="text-gray-900 dark:text-gray-100 text-lg">Loading...</div>
       }>
         <BookingConfirmedContent />
       </Suspense>
