@@ -212,8 +212,8 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-6 py-16">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Browse by Activity</h2>
-            <p className="text-gray-600 mt-1">Choose your adventure type</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-sky-900">Browse by Activity</h2>
+            <p className="text-sky-700 mt-1">Choose your adventure type</p>
           </div>
         </div>
         <div className="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-3">
@@ -221,12 +221,12 @@ export default function HomePage() {
             <Link
               key={cat.id}
               href={`/trips?activity=${cat.id}`}
-              className="flex flex-col items-center gap-2 p-3 bg-white hover:bg-blue-50 border border-gray-200 hover:border-blue-300 rounded-xl transition-all duration-200 group shadow-sm hover:shadow-md"
+              className="flex flex-col items-center gap-2 p-3 bg-white hover:bg-sky-50 border border-sky-200 hover:border-sky-400 rounded-xl transition-all duration-200 group shadow-sm hover:shadow-md"
             >
               <span className="text-2xl group-hover:scale-110 transition-transform duration-200">
                 {cat.emoji}
               </span>
-              <span className="text-xs text-gray-700 group-hover:text-blue-600 text-center leading-tight font-medium transition-colors">
+              <span className="text-xs text-sky-700 group-hover:text-sky-600 text-center leading-tight font-medium transition-colors">
                 {cat.label}
               </span>
             </Link>
@@ -238,12 +238,12 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="flex items-center justify-between mb-10">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900">Featured Adventures</h2>
-            <p className="text-gray-600 mt-1">Top-rated trips from certified guides</p>
+            <h2 className="text-3xl font-bold text-sky-900">Featured Adventures</h2>
+            <p className="text-sky-700 mt-1">Top-rated trips from certified guides</p>
           </div>
           <Link
             href="/trips"
-            className="hidden sm:flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium text-sm transition"
+            className="hidden sm:flex items-center gap-1 text-sky-600 hover:text-sky-700 font-medium text-sm transition"
           >
             View all {allTrips.length} trips
             <ChevronRight className="w-4 h-4" />
@@ -277,7 +277,7 @@ export default function HomePage() {
         <div className="mt-10 text-center sm:hidden">
           <Link
             href="/trips"
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium"
+            className="inline-flex items-center gap-2 text-sky-600 hover:text-sky-700 font-medium"
           >
             View all {allTrips.length} trips <ChevronRight className="w-4 h-4" />
           </Link>
@@ -285,11 +285,11 @@ export default function HomePage() {
       </section>
 
       {/* ─── POPULAR DESTINATIONS ──────────────────────────────────────────── */}
-      <section className="bg-gray-50 py-20 border-y border-gray-200">
+      <section className="bg-sky-50 py-20 border-y border-sky-200">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Popular Destinations</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold text-sky-900 mb-4">Popular Destinations</h2>
+            <p className="text-lg text-sky-700 max-w-2xl mx-auto">
               Explore world-class adventures across the most sought-after mountain regions
             </p>
           </div>
@@ -304,11 +304,11 @@ export default function HomePage() {
             ].map((dest, i) => (
               <div
                 key={i}
-                className="bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-lg hover:border-blue-300 transition-all group cursor-pointer"
+                className="bg-white border border-sky-200 rounded-2xl p-8 hover:shadow-lg hover:border-sky-400 transition-all group cursor-pointer"
               >
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition">{dest.name}</h3>
-                <p className="text-gray-600 text-sm mb-4">{dest.description}</p>
-                <p className="text-blue-600 text-sm font-semibold">{dest.count}</p>
+                <h3 className="text-xl font-bold text-sky-900 mb-2 group-hover:text-sky-600 transition">{dest.name}</h3>
+                <p className="text-sky-700 text-sm mb-4">{dest.description}</p>
+                <p className="text-sky-600 text-sm font-semibold">{dest.count}</p>
               </div>
             ))}
           </div>
@@ -316,17 +316,17 @@ export default function HomePage() {
       </section>
 
       {/* ─── HOW IT WORKS ─────────────────────────────────────────────────────── */}
-      <section className="bg-white py-20 border-b border-gray-200">
+      <section className="bg-white py-20 border-b border-sky-200">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">How Summit Works</h2>
-            <p className="text-gray-600 max-w-xl mx-auto text-lg">
+            <h2 className="text-3xl sm:text-4xl font-bold text-sky-900 mb-3">How Summit Works</h2>
+            <p className="text-sky-700 max-w-xl mx-auto text-lg">
               Book your dream adventure in minutes — verified guides, secure payments, instant confirmation.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
             {/* Connector line */}
-            <div className="hidden md:block absolute top-10 left-1/3 right-1/3 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+            <div className="hidden md:block absolute top-10 left-1/3 right-1/3 h-px bg-gradient-to-r from-transparent via-sky-200 to-transparent" />
             {[
               {
                 num: '01',
@@ -348,14 +348,14 @@ export default function HomePage() {
               },
             ].map((step) => (
               <div key={step.num} className="relative flex flex-col items-center text-center">
-                <div className="w-20 h-20 bg-blue-50 border border-blue-200 rounded-2xl flex items-center justify-center text-blue-600 mb-6 shadow-sm">
+                <div className="w-20 h-20 bg-sky-50 border border-sky-200 rounded-2xl flex items-center justify-center text-sky-500 mb-6 shadow-sm">
                   {step.icon}
                 </div>
-                <div className="absolute -top-2 -right-2 w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
+                <div className="absolute -top-2 -right-2 w-7 h-7 bg-orange-500 rounded-lg flex items-center justify-center">
                   <span className="text-white text-xs font-bold">{step.num}</span>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3">{step.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed max-w-xs">{step.desc}</p>
+                <h3 className="text-lg font-bold text-sky-900 mb-3">{step.title}</h3>
+                <p className="text-sky-700 text-sm leading-relaxed max-w-xs">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -367,12 +367,12 @@ export default function HomePage() {
         <section className="max-w-7xl mx-auto px-6 py-20">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Meet Our Guides</h2>
-              <p className="text-gray-600">Certified professionals with decades of combined experience</p>
+              <h2 className="text-3xl font-bold text-sky-900 mb-2">Meet Our Guides</h2>
+              <p className="text-sky-700">Certified professionals with decades of combined experience</p>
             </div>
             <Link
               href="/guides"
-              className="hidden sm:flex items-center gap-1 text-blue-600 hover:text-blue-700 font-medium text-sm transition"
+              className="hidden sm:flex items-center gap-1 text-sky-600 hover:text-sky-700 font-medium text-sm transition"
             >
               All guides <ChevronRight className="w-4 h-4" />
             </Link>
@@ -382,30 +382,30 @@ export default function HomePage() {
             {guides.map((guide: any) => (
               <div
                 key={guide.id}
-                className="bg-white border border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-lg transition-all duration-200 group"
+                className="bg-white border border-sky-200 rounded-2xl p-6 hover:border-sky-400 hover:shadow-lg transition-all duration-200 group"
               >
                 {/* Avatar */}
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-2xl font-black text-white mb-4 shadow-lg">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-500 to-sky-600 flex items-center justify-center text-2xl font-black text-white mb-4 shadow-lg">
                   {guide.display_name.charAt(0)}
                 </div>
 
                 <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-gray-900 font-bold text-base leading-tight group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-sky-900 font-bold text-base leading-tight group-hover:text-sky-600 transition-colors">
                     {guide.display_name}
                   </h3>
                   {guide.is_verified && (
-                    <span className="ml-2 shrink-0 text-blue-500" title="Verified Guide">✓</span>
+                    <span className="ml-2 shrink-0 text-sky-500" title="Verified Guide">✓</span>
                   )}
                 </div>
 
-                <p className="text-gray-600 text-xs mb-3 line-clamp-2 leading-relaxed">
+                <p className="text-sky-700 text-xs mb-3 line-clamp-2 leading-relaxed">
                   {guide.tagline}
                 </p>
 
-                <div className="flex items-center gap-1 text-amber-500 text-sm mb-2">
+                <div className="flex items-center gap-1 text-orange-500 text-sm mb-2">
                   <Star className="w-3.5 h-3.5 fill-current" />
                   <span className="font-bold">{guide.rating > 0 ? guide.rating.toFixed(1) : '—'}</span>
-                  <span className="text-gray-500 text-xs">({guide.review_count})</span>
+                  <span className="text-sky-600 text-xs">({guide.review_count})</span>
                 </div>
 
                 {guide.base_location && (
@@ -418,7 +418,7 @@ export default function HomePage() {
                 {guide.specialties?.length > 0 && (
                   <div className="flex flex-wrap gap-1 mt-3">
                     {guide.specialties.slice(0, 2).map((s: string) => (
-                      <span key={s} className="bg-blue-50 text-blue-700 text-xs px-2 py-0.5 rounded-full">
+                      <span key={s} className="bg-sky-50 text-sky-700 text-xs px-2 py-0.5 rounded-full">
                         {s.replace(/_/g, ' ')}
                       </span>
                     ))}
@@ -432,17 +432,17 @@ export default function HomePage() {
 
       {/* ─── FOR GUIDES CTA ──────────────────────────────────────────────────── */}
       <section className="px-6 py-20">
-        <div className="max-w-5xl mx-auto bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-3xl p-10 sm:p-16 text-center relative overflow-hidden">
+        <div className="max-w-5xl mx-auto bg-gradient-to-br from-sky-50 to-sky-100 border border-sky-200 rounded-3xl p-10 sm:p-16 text-center relative overflow-hidden">
           {/* Background decoration */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-200/20 rounded-full -mr-48 -mt-48" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-sky-200/20 rounded-full -mr-48 -mt-48" />
           <div className="relative z-10">
-            <div className="inline-block bg-blue-600 text-white border border-blue-600 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
+            <div className="inline-block bg-sky-500 text-white border border-sky-500 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
               For Mountain Guides
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-sky-900 mb-4">
               Grow Your Guiding Business
             </h2>
-            <p className="text-gray-700 text-lg max-w-2xl mx-auto mb-12">
+            <p className="text-sky-700 text-lg max-w-2xl mx-auto mb-12">
               Join Summit and reach thousands of adventurers looking for expert guidance.
               Zero upfront cost — we only earn when you do.
             </p>
@@ -454,33 +454,33 @@ export default function HomePage() {
               ].map((item) => (
                 <div key={item.title} className="bg-white rounded-xl p-6 shadow-sm">
                   <div className="text-2xl mb-3">{item.icon}</div>
-                  <h3 className="text-gray-900 font-bold mb-2">{item.title}</h3>
-                  <p className="text-gray-600 text-sm">{item.desc}</p>
+                  <h3 className="text-sky-900 font-bold mb-2">{item.title}</h3>
+                  <p className="text-sky-700 text-sm">{item.desc}</p>
                 </div>
               ))}
             </div>
             <Link
               href="/auth/signup"
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-10 py-4 rounded-xl text-lg transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-bold px-10 py-4 rounded-xl text-lg transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
             >
               Start Guiding Free
               <ArrowRight className="w-5 h-5" />
             </Link>
-            <p className="text-gray-700 text-sm mt-6">No credit card · 5-minute setup · Free forever until you earn</p>
+            <p className="text-sky-700 text-sm mt-6">No credit card · 5-minute setup · Free forever until you earn</p>
           </div>
         </div>
       </section>
 
       {/* ─── FOOTER ──────────────────────────────────────────────────────────── */}
-      <footer className="bg-gray-900 border-t border-gray-800 py-16">
+      <footer className="bg-sky-900 border-t border-sky-800 py-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
             <div className="col-span-2">
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-blue-400 text-2xl">⛰️</span>
+                <span className="text-sky-400 text-2xl">⛰️</span>
                 <span className="text-2xl font-black text-white">Summit</span>
               </div>
-              <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
+              <p className="text-sky-300 text-sm leading-relaxed max-w-xs">
                 The adventure marketplace connecting expert mountain guides with passionate adventurers worldwide.
               </p>
             </div>
@@ -493,7 +493,7 @@ export default function HomePage() {
                   { href: '/auth/signup-customer', label: 'Sign Up' },
                 ].map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="text-gray-400 hover:text-white text-sm transition">
+                    <Link href={l.href} className="text-sky-300 hover:text-white text-sm transition">
                       {l.label}
                     </Link>
                   </li>
@@ -509,7 +509,7 @@ export default function HomePage() {
                   { href: '/dashboard', label: 'Dashboard' },
                 ].map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="text-gray-400 hover:text-white text-sm transition">
+                    <Link href={l.href} className="text-sky-300 hover:text-white text-sm transition">
                       {l.label}
                     </Link>
                   </li>
@@ -517,9 +517,9 @@ export default function HomePage() {
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-gray-500 text-sm">© 2026 Summit. All rights reserved.</p>
-            <p className="text-gray-500 text-sm">Secure payments by Stripe · Built for adventurers</p>
+          <div className="border-t border-sky-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="text-sky-400 text-sm">© 2026 Summit. All rights reserved.</p>
+            <p className="text-sky-400 text-sm">Secure payments by Stripe · Built for adventurers</p>
           </div>
         </div>
       </footer>
@@ -532,7 +532,7 @@ function TripCard({ trip, imgSrc }: { trip: any; imgSrc: string }) {
 
   return (
     <Link href={`/trips/${trip.id}`} className="group block">
-      <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:border-blue-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+      <div className="bg-white border border-sky-200 rounded-2xl overflow-hidden hover:border-sky-400 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
         {/* Image */}
         <div className="relative h-52 overflow-hidden">
           <img
@@ -572,16 +572,16 @@ function TripCard({ trip, imgSrc }: { trip: any; imgSrc: string }) {
 
         {/* Content */}
         <div className="p-5">
-          <h3 className="text-gray-900 font-bold text-base mb-1 leading-tight group-hover:text-blue-600 transition-colors line-clamp-2">
+          <h3 className="text-sky-900 font-bold text-base mb-1 leading-tight group-hover:text-sky-600 transition-colors line-clamp-2">
             {trip.title}
           </h3>
 
-          <p className="text-gray-600 text-xs mb-4 line-clamp-2 leading-relaxed">
+          <p className="text-sky-700 text-xs mb-4 line-clamp-2 leading-relaxed">
             {trip.description}
           </p>
 
           {/* Meta row */}
-          <div className="flex items-center gap-4 text-gray-600 text-xs mb-4">
+          <div className="flex items-center gap-4 text-sky-600 text-xs mb-4">
             <div className="flex items-center gap-1">
               <Clock className="w-3.5 h-3.5" />
               {trip.duration_days}d
@@ -597,17 +597,17 @@ function TripCard({ trip, imgSrc }: { trip: any; imgSrc: string }) {
           </div>
 
           {/* Price + Guide */}
-          <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+          <div className="flex items-center justify-between pt-4 border-t border-sky-200">
             <div>
-              <span className="text-xl font-black text-gray-900">
+              <span className="text-xl font-black text-orange-500">
                 ${trip.price_per_person}
               </span>
-              <span className="text-gray-600 text-xs"> /person</span>
+              <span className="text-sky-600 text-xs"> /person</span>
             </div>
             <div className="text-right">
-              <p className="text-gray-600 text-xs">{trip.guides?.display_name}</p>
+              <p className="text-sky-600 text-xs">{trip.guides?.display_name}</p>
               {trip.guides?.rating > 0 && (
-                <div className="flex items-center gap-1 text-amber-500 text-xs justify-end">
+                <div className="flex items-center gap-1 text-orange-500 text-xs justify-end">
                   <Star className="w-3 h-3 fill-current" />
                   {trip.guides.rating.toFixed(1)}
                 </div>
