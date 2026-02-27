@@ -114,7 +114,11 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/trips"
-              className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-bold px-10 py-4 rounded-xl text-lg transition-all duration-200 shadow-2xl shadow-orange-500/40 hover:shadow-orange-500/60 hover:-translate-y-1"
+              className="inline-flex items-center gap-2 text-white font-bold px-10 py-4 rounded-xl text-lg transition-all duration-200 hover:-translate-y-1"
+              style={{
+                backgroundColor: '#F97316',
+                boxShadow: '0 25px 50px -12px rgba(249, 115, 22, 0.4)',
+              }}
             >
               Browse Adventures
               <ArrowRight className="w-5 h-5" />
