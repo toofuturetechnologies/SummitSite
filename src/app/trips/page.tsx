@@ -58,7 +58,7 @@ function TripCard({ trip }: { trip: any }) {
 
   return (
     <Link href={`/trips/${trip.id}`} className="group block h-full">
-      <div className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden hover:border-gray-300 hover:-translate-y-1 transition-all duration-300 h-full shadow-xl hover:shadow-2xl flex flex-col">
+      <div className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden hover:border-sky-300 hover:-translate-y-1 transition-all duration-300 h-full shadow-xl hover:shadow-2xl flex flex-col">
         {/* Image */}
         <div className="relative h-52 overflow-hidden bg-gray-200 shrink-0">
           <img
@@ -69,7 +69,7 @@ function TripCard({ trip }: { trip: any }) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-summit-900/60 via-transparent to-transparent" />
           <div className="absolute top-3 left-3">
-            <span className="inline-block bg-white/80 backdrop-blur-sm text-gray-700 text-xs px-3 py-1.5 rounded-lg capitalize font-medium">
+            <span className="inline-block bg-white/80 backdrop-blur-sm text-sky-700 text-xs px-3 py-1.5 rounded-lg capitalize font-medium">
               {trip.activity?.replace(/_/g, ' ')}
             </span>
           </div>
@@ -89,7 +89,7 @@ function TripCard({ trip }: { trip: any }) {
 
         {/* Content */}
         <div className="p-5 flex flex-col flex-1">
-          <h3 className="text-white font-bold text-base mb-2 leading-tight group-hover:text-blue-300 transition-colors line-clamp-2">
+          <h3 className="text-white font-bold text-base mb-2 leading-tight group-hover:text-sky-300 transition-colors line-clamp-2">
             {trip.title}
           </h3>
           <p className="text-summit-500 text-xs mb-4 line-clamp-2 leading-relaxed flex-1">
@@ -119,7 +119,7 @@ function TripCard({ trip }: { trip: any }) {
               <span className="text-summit-500 text-xs"> /person</span>
             </div>
             <div className="text-right">
-              <p className="text-gray-600 text-xs font-medium">{trip.guides?.display_name}</p>
+              <p className="text-sky-600 text-xs font-medium">{trip.guides?.display_name}</p>
               {trip.guides?.rating > 0 && (
                 <div className="flex items-center gap-1 text-amber-400 text-xs justify-end mt-0.5">
                   <Star className="w-3 h-3 fill-current" />
@@ -208,7 +208,7 @@ function TripsPageInner() {
     return (
       <div className="min-h-screen bg-white pt-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Browse Adventures</h1>
+          <h1 className="text-4xl font-bold text-sky-900 mb-4">Browse Adventures</h1>
           <div className="bg-red-900/30 border border-red-800 text-red-200 p-6 rounded-xl">
             Error loading trips: {error}
           </div>
@@ -222,10 +222,10 @@ function TripsPageInner() {
       {/* Page Header */}
       <section className="pt-24 pb-12 px-6 border-b border-summit-800">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl font-black text-gray-900 mb-3">
+          <h1 className="text-4xl sm:text-5xl font-black text-sky-900 mb-3">
             Browse All Adventures
           </h1>
-          <p className="text-gray-600 text-lg mb-8">
+          <p className="text-sky-600 text-lg mb-8">
             {loading ? '...' : `${trips.length} world-class guided trips across the American West`}
           </p>
 
@@ -248,22 +248,22 @@ function TripsPageInner() {
         <div className="mb-8">
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-gray-900 border border-summit-800 hover:border-gray-200 text-white rounded-lg transition font-medium text-sm"
+            className="flex items-center gap-2 px-4 py-2.5 bg-gray-900 border border-summit-800 hover:border-sky-200 text-white rounded-lg transition font-medium text-sm"
           >
             <Filter className="w-4 h-4" />
             {showFilters ? 'Hide Filters' : 'Show Filters'}
           </button>
 
           {showFilters && (
-            <div className="mt-6 bg-gray-50 border border-summit-800 rounded-2xl p-6">
+            <div className="mt-6 bg-sky-50 border border-summit-800 rounded-2xl p-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {/* Activity */}
                 <div>
-                  <label className="block text-gray-900 text-sm font-semibold mb-3">Activity</label>
+                  <label className="block text-sky-900 text-sm font-semibold mb-3">Activity</label>
                   <div className="space-y-1 max-h-48 overflow-y-auto">
                     <button
                       onClick={() => setSelectedActivity('')}
-                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === '' ? 'bg-blue-500 text-white' : 'text-gray-900 hover:bg-gray-200'}`}
+                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === '' ? 'bg-sky-500 text-white' : 'text-sky-900 hover:bg-gray-200'}`}
                     >
                       All Activities
                     </button>
@@ -271,7 +271,7 @@ function TripsPageInner() {
                       <button
                         key={act.id}
                         onClick={() => setSelectedActivity(act.id)}
-                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === act.id ? 'bg-blue-500 text-white' : 'text-gray-900 hover:bg-gray-200'}`}
+                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedActivity === act.id ? 'bg-sky-500 text-white' : 'text-sky-900 hover:bg-gray-200'}`}
                       >
                         {act.emoji} {act.label}
                       </button>
@@ -281,11 +281,11 @@ function TripsPageInner() {
 
                 {/* Difficulty */}
                 <div>
-                  <label className="block text-gray-900 text-sm font-semibold mb-3">Difficulty</label>
+                  <label className="block text-sky-900 text-sm font-semibold mb-3">Difficulty</label>
                   <div className="space-y-1">
                     <button
                       onClick={() => setSelectedDifficulty('')}
-                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === '' ? 'bg-blue-500 text-white' : 'text-gray-900 hover:bg-gray-200'}`}
+                      className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === '' ? 'bg-sky-500 text-white' : 'text-sky-900 hover:bg-gray-200'}`}
                     >
                       All Levels
                     </button>
@@ -293,7 +293,7 @@ function TripsPageInner() {
                       <button
                         key={diff.id}
                         onClick={() => setSelectedDifficulty(diff.id)}
-                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === diff.id ? 'bg-blue-500 text-white' : 'text-gray-900 hover:bg-gray-200'}`}
+                        className={`block w-full text-left px-3 py-2 rounded-lg text-sm transition ${selectedDifficulty === diff.id ? 'bg-sky-500 text-white' : 'text-sky-900 hover:bg-gray-200'}`}
                       >
                         {diff.emoji} {diff.label}
                       </button>
@@ -303,7 +303,7 @@ function TripsPageInner() {
 
                 {/* Price */}
                 <div>
-                  <label className="block text-gray-900 text-sm font-semibold mb-3">
+                  <label className="block text-sky-900 text-sm font-semibold mb-3">
                     Max Price: ${maxPrice.toLocaleString()}
                   </label>
                   <input
@@ -325,7 +325,7 @@ function TripsPageInner() {
                 <div className="flex items-end">
                   <button
                     onClick={clearFilters}
-                    className="w-full px-4 py-2.5 bg-gray-300 hover:bg-gray-400 text-gray-900 rounded-lg transition text-sm font-medium"
+                    className="w-full px-4 py-2.5 bg-gray-300 hover:bg-gray-400 text-sky-900 rounded-lg transition text-sm font-medium"
                   >
                     Reset All Filters
                   </button>
@@ -337,7 +337,7 @@ function TripsPageInner() {
 
         {/* Results Count */}
         <div className="mb-6">
-          <p className="text-gray-600 text-sm">
+          <p className="text-sky-600 text-sm">
             Showing{' '}
             <span className="text-white font-semibold">{filteredTrips.length}</span>{' '}
             of{' '}
@@ -364,10 +364,10 @@ function TripsPageInner() {
           <div className="bg-gray-900 border border-summit-800 rounded-2xl p-16 text-center">
             <div className="text-5xl mb-4">🏔️</div>
             <p className="text-white text-lg font-semibold mb-2">No trips match your filters</p>
-            <p className="text-gray-600 mb-6">Try adjusting your search or clearing filters</p>
+            <p className="text-sky-600 mb-6">Try adjusting your search or clearing filters</p>
             <button
               onClick={clearFilters}
-              className="inline-block bg-blue-500 hover:bg-blue-400 text-white px-8 py-3 rounded-xl font-semibold transition"
+              className="inline-block bg-sky-500 hover:bg-blue-400 text-white px-8 py-3 rounded-xl font-semibold transition"
             >
               Clear All Filters
             </button>
@@ -390,7 +390,7 @@ export default function TripsPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <p className="text-gray-600">Loading trips...</p>
+        <p className="text-sky-600">Loading trips...</p>
       </div>
     }>
       <TripsPageInner />

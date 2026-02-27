@@ -55,7 +55,7 @@ export default function GuidesPage() {
     return (
       <div className="min-h-screen bg-white pt-24 px-6">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Our Guides</h1>
+          <h1 className="text-4xl font-bold text-sky-900 mb-4">Our Guides</h1>
           <div className="bg-red-900/30 border border-red-800 text-red-200 p-6 rounded-xl">
             Error loading guides: {error}
           </div>
@@ -70,10 +70,10 @@ export default function GuidesPage() {
       <section className="relative pt-24 pb-12 px-6 border-b border-summit-800">
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
-            <h1 className="text-4xl sm:text-5xl font-black text-gray-900 mb-3">
+            <h1 className="text-4xl sm:text-5xl font-black text-sky-900 mb-3">
               Expert Mountain Guides
             </h1>
-            <p className="text-gray-600 text-lg">
+            <p className="text-sky-600 text-lg">
               AMGA & IFMGA certified professionals with decades of experience
             </p>
           </div>
@@ -112,21 +112,21 @@ export default function GuidesPage() {
           <div className="bg-gray-900 border border-summit-800 rounded-2xl p-16 text-center">
             <div className="text-4xl mb-4">🏔️</div>
             <p className="text-white text-lg font-semibold mb-2">No guides found</p>
-            <p className="text-gray-600">Try a different search</p>
+            <p className="text-sky-600">Try a different search</p>
           </div>
         ) : (
           <div>
-            <p className="text-gray-600 text-sm mb-8">
+            <p className="text-sky-600 text-sm mb-8">
               Found <span className="text-white font-semibold">{filteredGuides.length}</span> guide{filteredGuides.length !== 1 ? 's' : ''}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {filteredGuides.map((guide: any) => (
                 <div
                   key={guide.id}
-                  className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden hover:border-gray-300 transition-all duration-300 group"
+                  className="bg-gray-900 border border-summit-800 rounded-2xl overflow-hidden hover:border-sky-300 transition-all duration-300 group"
                 >
                   {/* Avatar Section */}
-                  <div className="bg-gradient-to-br from-blue-500 to-summit-700 p-6 flex flex-col items-center justify-center min-h-[140px] relative">
+                  <div className="bg-gradient-to-br from-sky-500 to-summit-700 p-6 flex flex-col items-center justify-center min-h-[140px] relative">
                     <div className="w-20 h-20 rounded-2xl bg-white/20 flex items-center justify-center text-3xl font-black text-white shadow-lg">
                       {guide.display_name.charAt(0)}
                     </div>
@@ -139,7 +139,7 @@ export default function GuidesPage() {
 
                   {/* Content */}
                   <div className="p-5">
-                    <h3 className="text-white font-bold text-base leading-tight group-hover:text-blue-300 transition-colors">
+                    <h3 className="text-white font-bold text-base leading-tight group-hover:text-sky-300 transition-colors">
                       {guide.display_name}
                     </h3>
 
@@ -178,7 +178,7 @@ export default function GuidesPage() {
                         <p className="text-summit-600 text-xs font-semibold mb-2">Specialties</p>
                         <div className="flex flex-wrap gap-1">
                           {guide.specialties.slice(0, 3).map((s: string) => (
-                            <span key={s} className="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded-full">
+                            <span key={s} className="bg-gray-200 text-sky-600 text-xs px-2 py-1 rounded-full">
                               {s.replace(/_/g, ' ')}
                             </span>
                           ))}
@@ -196,7 +196,7 @@ export default function GuidesPage() {
                     {/* View trips button */}
                     <Link
                       href={`/trips?guide=${guide.id}`}
-                      className="block w-full text-center bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 hover:text-blue-200 text-xs py-2 rounded-lg transition font-semibold border border-blue-500/30"
+                      className="block w-full text-center bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 hover:text-sky-200 text-xs py-2 rounded-lg transition font-semibold border border-blue-500/30"
                     >
                       View Trips
                     </Link>

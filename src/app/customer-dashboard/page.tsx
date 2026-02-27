@@ -118,11 +118,11 @@ export default function CustomerDashboard() {
       case 'pending':
         return 'bg-yellow-900/50 text-yellow-200 border-yellow-700';
       case 'completed':
-        return 'bg-blue-900/50 text-blue-200 border-blue-700';
+        return 'bg-blue-900/50 text-sky-200 border-blue-700';
       case 'cancelled':
         return 'bg-red-900/50 text-red-200 border-red-700';
       default:
-        return 'bg-gray-200 text-gray-600';
+        return 'bg-gray-200 text-sky-600';
     }
   };
 
@@ -135,12 +135,12 @@ export default function CustomerDashboard() {
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center p-6">
-        <div className="bg-white border border-gray-200 rounded-lg p-8 max-w-md text-center shadow-lg">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Sign In Required</h1>
-          <p className="text-gray-600 mb-6">Please sign in to view your dashboard</p>
+        <div className="bg-white border border-sky-200 rounded-lg p-8 max-w-md text-center shadow-lg">
+          <h1 className="text-2xl font-bold text-sky-900 mb-4">Sign In Required</h1>
+          <p className="text-sky-600 mb-6">Please sign in to view your dashboard</p>
           <Link
             href="/auth/login"
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition font-semibold"
+            className="inline-block bg-sky-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition font-semibold"
           >
             Sign In
           </Link>
@@ -152,7 +152,7 @@ export default function CustomerDashboard() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-        <Loader className="w-8 h-8 text-blue-600 animate-spin" />
+        <Loader className="w-8 h-8 text-sky-600 animate-spin" />
       </div>
     );
   }
@@ -162,10 +162,10 @@ export default function CustomerDashboard() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-6 lg:mb-8">
-          <h1 className="text-2xl lg:text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl lg:text-4xl font-bold text-sky-900 mb-2">
             Welcome back, {user?.user_metadata?.full_name?.split(' ')[0]}!
           </h1>
-          <p className="text-sm lg:text-base text-gray-600">
+          <p className="text-sm lg:text-base text-sky-600">
             {upcomingTrips.length} upcoming trip{upcomingTrips.length !== 1 ? 's' : ''} • {chats.length} active chat{chats.length !== 1 ? 's' : ''}
           </p>
         </div>
@@ -173,36 +173,36 @@ export default function CustomerDashboard() {
         {/* Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 mb-8">
           {/* Recent Chats */}
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 lg:p-6">
+          <div className="bg-gray-100 border border-sky-200 rounded-lg p-4 lg:p-6">
             <div className="flex items-center justify-between mb-4 gap-2">
-              <h2 className="text-base lg:text-lg font-semibold text-gray-900 flex items-center gap-2 min-w-0">
+              <h2 className="text-base lg:text-lg font-semibold text-sky-900 flex items-center gap-2 min-w-0">
                 <MessageSquare className="w-4 lg:w-5 h-4 lg:h-5 flex-shrink-0" />
                 <span className="truncate">Chats</span>
               </h2>
               {chats.length > 0 && (
-                <Link href="/dashboard/messages" className="text-blue-600 hover:text-blue-700 text-xs lg:text-sm whitespace-nowrap flex-shrink-0 font-medium">
+                <Link href="/dashboard/messages" className="text-sky-600 hover:text-sky-700 text-xs lg:text-sm whitespace-nowrap flex-shrink-0 font-medium">
                   View all
                 </Link>
               )}
             </div>
 
             {chats.length === 0 ? (
-              <p className="text-gray-600 text-sm">No active chats yet</p>
+              <p className="text-sky-600 text-sm">No active chats yet</p>
             ) : (
               <div className="space-y-2 lg:space-y-3">
                 {chats.map((chat) => (
                   <Link
                     key={chat.otherUserId}
                     href="/dashboard/messages"
-                    className="block p-3 bg-white hover:bg-blue-50 rounded-lg transition border border-gray-300 hover:border-blue-300"
+                    className="block p-3 bg-white hover:bg-sky-50 rounded-lg transition border border-sky-300 hover:border-sky-300"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-900 text-sm lg:text-base truncate">{chat.otherUserName}</p>
-                        <p className="text-gray-600 text-xs lg:text-sm truncate mt-1">{chat.lastMessage}</p>
+                        <p className="font-semibold text-sky-900 text-sm lg:text-base truncate">{chat.otherUserName}</p>
+                        <p className="text-sky-600 text-xs lg:text-sm truncate mt-1">{chat.lastMessage}</p>
                       </div>
                       {chat.unreadCount > 0 && (
-                        <span className="bg-blue-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0">
+                        <span className="bg-sky-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0">
                           {chat.unreadCount}
                         </span>
                       )}
@@ -214,23 +214,23 @@ export default function CustomerDashboard() {
           </div>
 
           {/* Upcoming Trips */}
-          <div className="lg:col-span-2 bg-gray-100 border border-gray-200 rounded-lg p-4 lg:p-6">
+          <div className="lg:col-span-2 bg-gray-100 border border-sky-200 rounded-lg p-4 lg:p-6">
             <div className="flex items-center justify-between mb-4 gap-2">
-              <h2 className="text-base lg:text-lg font-semibold text-gray-900 flex items-center gap-2 min-w-0">
+              <h2 className="text-base lg:text-lg font-semibold text-sky-900 flex items-center gap-2 min-w-0">
                 <Calendar className="w-4 lg:w-5 h-4 lg:h-5 flex-shrink-0" />
                 <span className="truncate">Upcoming</span>
               </h2>
-              <Link href="/trips" className="text-blue-600 hover:text-blue-700 text-xs lg:text-sm whitespace-nowrap flex-shrink-0 font-medium">
+              <Link href="/trips" className="text-sky-600 hover:text-sky-700 text-xs lg:text-sm whitespace-nowrap flex-shrink-0 font-medium">
                 Browse more
               </Link>
             </div>
 
             {upcomingTrips.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-gray-600 mb-4">No upcoming trips</p>
+                <p className="text-sky-600 mb-4">No upcoming trips</p>
                 <Link
                   href="/trips"
-                  className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition"
+                  className="inline-block bg-sky-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm transition"
                 >
                   Book a trip
                 </Link>
@@ -243,12 +243,12 @@ export default function CustomerDashboard() {
                     <Link
                       key={booking.id}
                       href={`/trips/${booking.trip_id}`}
-                      className="block p-4 bg-white hover:bg-blue-50 rounded-lg transition border border-gray-300 hover:border-blue-300"
+                      className="block p-4 bg-white hover:bg-sky-50 rounded-lg transition border border-sky-300 hover:border-sky-300"
                     >
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex-1">
-                          <h3 className="font-semibold text-gray-900">{booking.trip.title}</h3>
-                          <p className="text-gray-600 text-sm flex items-center gap-1 mt-1">
+                          <h3 className="font-semibold text-sky-900">{booking.trip.title}</h3>
+                          <p className="text-sky-600 text-sm flex items-center gap-1 mt-1">
                             <MapPin className="w-4 h-4" />
                             {booking.trip.region}, {booking.trip.country}
                           </p>
@@ -258,10 +258,10 @@ export default function CustomerDashboard() {
                         </span>
                       </div>
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-600">
+                        <span className="text-sky-600">
                           with {booking.guide.display_name}
                         </span>
-                        <span className="text-gray-600 flex items-center gap-1">
+                        <span className="text-sky-600 flex items-center gap-1">
                           <Clock className="w-4 h-4" />
                           {days} day{days !== 1 ? 's' : ''} away
                         </span>
@@ -272,7 +272,7 @@ export default function CustomerDashboard() {
                 {upcomingTrips.length > 3 && (
                   <Link
                     href="#trips"
-                    className="block p-3 text-center text-gray-700 hover:text-blue-600 border border-gray-300 hover:border-blue-300 rounded-lg transition font-medium"
+                    className="block p-3 text-center text-sky-700 hover:text-sky-600 border border-sky-300 hover:border-sky-300 rounded-lg transition font-medium"
                   >
                     View {upcomingTrips.length - 3} more trip{upcomingTrips.length - 3 !== 1 ? 's' : ''}
                   </Link>
@@ -286,8 +286,8 @@ export default function CustomerDashboard() {
         <div className="mb-8 bg-gradient-to-br from-amber-50 to-orange-50 border border-orange-200 rounded-lg p-4 lg:p-6">
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h2 className="text-lg lg:text-xl font-bold text-gray-900 mb-1">🎬 Referral Earnings</h2>
-              <p className="text-gray-700 text-sm">From your UGC content</p>
+              <h2 className="text-lg lg:text-xl font-bold text-sky-900 mb-1">🎬 Referral Earnings</h2>
+              <p className="text-sky-700 text-sm">From your UGC content</p>
             </div>
             <Link
               href="/dashboard/referral-earnings"
@@ -300,26 +300,26 @@ export default function CustomerDashboard() {
           {referralEarnings.referralCount > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4">
               <div>
-                <p className="text-gray-600 text-xs mb-1">Total Earned</p>
+                <p className="text-sky-600 text-xs mb-1">Total Earned</p>
                 <p className="text-xl lg:text-2xl font-bold text-green-600">${referralEarnings.totalEarnings.toFixed(2)}</p>
               </div>
               <div>
-                <p className="text-gray-600 text-xs mb-1">Pending</p>
+                <p className="text-sky-600 text-xs mb-1">Pending</p>
                 <p className="text-xl lg:text-2xl font-bold text-orange-600">${referralEarnings.pendingEarnings.toFixed(2)}</p>
               </div>
               <div>
-                <p className="text-gray-600 text-xs mb-1">Paid</p>
+                <p className="text-sky-600 text-xs mb-1">Paid</p>
                 <p className="text-xl lg:text-2xl font-bold text-green-500">${referralEarnings.paidEarnings.toFixed(2)}</p>
               </div>
               <div>
-                <p className="text-gray-600 text-xs mb-1">Referrals</p>
-                <p className="text-xl lg:text-2xl font-bold text-gray-900">{referralEarnings.referralCount}</p>
+                <p className="text-sky-600 text-xs mb-1">Referrals</p>
+                <p className="text-xl lg:text-2xl font-bold text-sky-900">{referralEarnings.referralCount}</p>
               </div>
             </div>
           ) : (
             <div className="text-center py-6">
-              <p className="text-gray-700 mb-4">No referral earnings yet</p>
-              <p className="text-gray-600 text-sm mb-4">
+              <p className="text-sky-700 mb-4">No referral earnings yet</p>
+              <p className="text-sky-600 text-sm mb-4">
                 Post TikTok content from your past trips and earn commissions when people book through your referral!
               </p>
               <Link
@@ -334,29 +334,29 @@ export default function CustomerDashboard() {
 
         {/* Past Trips */}
         {pastTrips.length > 0 && (
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 lg:p-6">
-            <h2 className="text-base lg:text-lg font-semibold text-gray-900 mb-4">Past Trips</h2>
+          <div className="bg-gray-100 border border-sky-200 rounded-lg p-4 lg:p-6">
+            <h2 className="text-base lg:text-lg font-semibold text-sky-900 mb-4">Past Trips</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4">
               {pastTrips.map((booking) => (
                 <div
                   key={booking.id}
-                  className="p-4 bg-white hover:bg-gray-50 rounded-lg transition border border-gray-300"
+                  className="p-4 bg-white hover:bg-sky-50 rounded-lg transition border border-sky-300"
                 >
                   <Link
                     href={`/trips/${booking.trip_id}`}
-                    className="block hover:text-blue-600"
+                    className="block hover:text-sky-600"
                   >
-                    <h3 className="font-semibold text-gray-900 mb-2">{booking.trip.title}</h3>
-                    <p className="text-gray-600 text-sm mb-2">
+                    <h3 className="font-semibold text-sky-900 mb-2">{booking.trip.title}</h3>
+                    <p className="text-sky-600 text-sm mb-2">
                       {new Date(booking.tripDate.start_date).toLocaleDateString()}
                     </p>
-                    <p className="text-gray-600 text-sm">{booking.guide.display_name}</p>
+                    <p className="text-sky-600 text-sm">{booking.guide.display_name}</p>
                   </Link>
                   
                   {booking.status === 'completed' && (
                     <Link
                       href={`/bookings/review?booking=${booking.id}`}
-                      className="block mt-3 w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 rounded-lg transition text-center"
+                      className="block mt-3 w-full bg-sky-600 hover:bg-blue-700 text-white text-sm font-medium py-2 rounded-lg transition text-center"
                     >
                       Leave a Review
                     </Link>

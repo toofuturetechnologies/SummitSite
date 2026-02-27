@@ -91,7 +91,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 flex items-center justify-center">
-        <p className="text-gray-900 text-lg">Loading your dashboard...</p>
+        <p className="text-sky-900 text-lg">Loading your dashboard...</p>
       </div>
     );
   }
@@ -114,7 +114,7 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 p-8 pt-20 lg:pt-24">
         <div className="max-w-4xl mx-auto">
-          <p className="text-gray-900">Loading guide...</p>
+          <p className="text-sky-900">Loading guide...</p>
         </div>
       </div>
     );
@@ -125,8 +125,8 @@ export default function DashboardPage() {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">{guide.display_name}</h1>
-            <p className="text-gray-700 font-medium">{guide.tagline || 'Guide'}</p>
+            <h1 className="text-4xl font-bold text-sky-900 mb-2">{guide.display_name}</h1>
+            <p className="text-sky-700 font-medium">{guide.tagline || 'Guide'}</p>
           </div>
           <div className="flex gap-3">
             <Link
@@ -154,27 +154,27 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 text-sm mb-2">Your Trips</p>
-            <p className="text-3xl font-bold text-gray-900">{trips.length}</p>
+          <div className="bg-gray-100 border border-sky-200 rounded-lg p-6">
+            <p className="text-sky-600 text-sm mb-2">Your Trips</p>
+            <p className="text-3xl font-bold text-sky-900">{trips.length}</p>
           </div>
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 text-sm mb-2">Email</p>
-            <p className="text-sm text-gray-900">{user?.email}</p>
+          <div className="bg-gray-100 border border-sky-200 rounded-lg p-6">
+            <p className="text-sky-600 text-sm mb-2">Email</p>
+            <p className="text-sm text-sky-900">{user?.email}</p>
           </div>
-          <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-600 text-sm mb-2">Quick Links</p>
+          <div className="bg-gray-100 border border-sky-200 rounded-lg p-6">
+            <p className="text-sky-600 text-sm mb-2">Quick Links</p>
             <div className="space-y-2">
-              <Link href="/dashboard/bookings" className="text-gray-600 hover:text-blue-600 block transition">
+              <Link href="/dashboard/bookings" className="text-sky-600 hover:text-sky-600 block transition">
                 View Bookings →
               </Link>
-              <Link href="/dashboard/guide-reviews" className="text-gray-600 hover:text-blue-600 block transition">
+              <Link href="/dashboard/guide-reviews" className="text-sky-600 hover:text-sky-600 block transition">
                 Customer Reviews →
               </Link>
-              <Link href="/dashboard/messages" className="text-gray-600 hover:text-blue-600 block transition">
+              <Link href="/dashboard/messages" className="text-sky-600 hover:text-sky-600 block transition">
                 Messages →
               </Link>
-              <Link href="/dashboard/earnings" className="text-gray-600 hover:text-blue-600 block transition">
+              <Link href="/dashboard/earnings" className="text-sky-600 hover:text-sky-600 block transition">
                 Earnings →
               </Link>
             </div>
@@ -185,12 +185,12 @@ export default function DashboardPage() {
         {!guide?.stripe_account_id && (
           <div className="bg-blue-900/50 border border-blue-700 rounded-lg p-6 mb-8">
             <h2 className="text-xl font-bold text-white mb-2">💰 Ready to Get Paid?</h2>
-            <p className="text-blue-200 mb-4">
+            <p className="text-sky-200 mb-4">
               Connect your bank account to receive automatic payouts from bookings. You'll get 88% of each booking price.
             </p>
             <Link
               href="/dashboard/stripe-connect"
-              className="inline-block bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition font-medium"
+              className="inline-block bg-sky-600 hover:bg-sky-500 text-white px-6 py-2 rounded-lg transition font-medium"
             >
               Set Up Payouts →
             </Link>
@@ -207,25 +207,25 @@ export default function DashboardPage() {
         )}
 
         {/* UGC Settings - For Guides to Set Referral Rates */}
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6 mb-8">
+        <div className="bg-gradient-to-br from-sky-50 to-indigo-50 border border-sky-200 rounded-lg p-6 mb-8">
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h2 className="text-xl font-bold text-gray-900 mb-1">⚙️ UGC Settings</h2>
-              <p className="text-gray-700 text-sm">Manage referral rates for your trips</p>
+              <h2 className="text-xl font-bold text-sky-900 mb-1">⚙️ UGC Settings</h2>
+              <p className="text-sky-700 text-sm">Manage referral rates for your trips</p>
             </div>
             <Link
               href="/dashboard/ugc"
-              className="text-blue-600 hover:text-blue-700 font-medium text-sm underline"
+              className="text-sky-600 hover:text-sky-700 font-medium text-sm underline"
             >
               Configure →
             </Link>
           </div>
 
           <div className="space-y-3">
-            <p className="text-gray-700 text-sm leading-relaxed">
+            <p className="text-sky-700 text-sm leading-relaxed">
               Set custom referral commission rates (0-2%) for each of your trips. Higher rates attract more creators and drive bookings!
             </p>
-            <div className="bg-blue-100 rounded p-3">
+            <div className="bg-sky-100 rounded p-3">
               <p className="text-blue-900 text-xs font-medium">💡 Pro Tip</p>
               <p className="text-blue-800 text-xs mt-1">
                 Set 1-2% commission to incentivize quality content. Most trips use 1.5%.
@@ -233,21 +233,21 @@ export default function DashboardPage() {
             </div>
             <Link
               href="/dashboard/ugc"
-              className="inline-block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition text-center"
+              className="inline-block w-full bg-sky-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition text-center"
             >
               Set Rates Per Trip
             </Link>
           </div>
         </div>
 
-        <div className="bg-gray-100 border border-gray-200 rounded-lg p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Your Trips</h2>
+        <div className="bg-gray-100 border border-sky-200 rounded-lg p-6">
+          <h2 className="text-2xl font-bold text-sky-900 mb-4">Your Trips</h2>
           {trips.length === 0 ? (
-            <p className="text-gray-600 mb-4">No trips yet</p>
+            <p className="text-sky-600 mb-4">No trips yet</p>
           ) : (
             <ul className="space-y-2">
               {trips.map((trip) => (
-                <li key={trip.id} className="text-gray-600">
+                <li key={trip.id} className="text-sky-600">
                   • {trip.title}
                 </li>
               ))}
