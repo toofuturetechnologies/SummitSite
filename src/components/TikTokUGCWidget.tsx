@@ -82,11 +82,11 @@ export default function TikTokUGCWidget({ tripId }: { tripId: string }) {
 
   if (loading) {
     return (
-      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-2xl p-8 shadow-sm animate-pulse">
-        <div className="h-8 bg-gray-200 dark:bg-slate-700 rounded w-48 mb-6" />
+      <div className="bg-white dark:bg-slate-900 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 dark:border-slate-700 rounded-2xl p-8 shadow-sm animate-pulse">
+        <div className="h-8 bg-gray-200 dark:bg-slate-700 dark:bg-slate-700 rounded w-48 mb-6" />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-gray-200 dark:bg-slate-700 rounded-lg h-96" />
+            <div key={i} className="bg-gray-200 dark:bg-slate-700 dark:bg-slate-700 rounded-lg h-96" />
           ))}
         </div>
       </div>
@@ -96,11 +96,11 @@ export default function TikTokUGCWidget({ tripId }: { tripId: string }) {
   if (videos.length === 0) return null;
 
   return (
-    <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-2xl p-8 shadow-sm">
+    <div className="bg-white dark:bg-slate-900 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 dark:border-slate-700 rounded-2xl p-8 shadow-sm">
       {/* Header */}
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">What Adventurers Say</h2>
-        <p className="text-gray-600 dark:text-gray-400">Real experiences from real travelers on TikTok</p>
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 mb-2">What Adventurers Say</h2>
+        <p className="text-gray-600 dark:text-gray-400 dark:text-gray-400">Real experiences from real travelers on TikTok</p>
       </div>
 
       {/* Video Grid */}
@@ -123,7 +123,7 @@ export default function TikTokUGCWidget({ tripId }: { tripId: string }) {
             </div>
 
             {/* Creator Info Card */}
-            <div className="mt-4 w-full bg-gradient-to-br from-gray-50 to-white rounded-lg p-4 border border-gray-200 dark:border-slate-700">
+            <div className="mt-4 w-full bg-gradient-to-br from-gray-50 to-white rounded-lg p-4 border border-gray-200 dark:border-slate-700 dark:border-slate-700">
               <a
                 href={`https://www.tiktok.com/@${video.creator_handle}`}
                 target="_blank"
@@ -135,27 +135,27 @@ export default function TikTokUGCWidget({ tripId }: { tripId: string }) {
                   {video.creator_name[0]?.toUpperCase()}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="font-bold text-gray-900 dark:text-gray-100 text-sm group-hover:text-blue-600 transition">
+                  <p className="font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 text-sm group-hover:text-blue-600 transition">
                     {video.creator_name}
                   </p>
-                  <p className="text-gray-600 dark:text-gray-400 text-xs">@{video.creator_handle}</p>
+                  <p className="text-gray-600 dark:text-gray-400 dark:text-gray-400 text-xs">@{video.creator_handle}</p>
                 </div>
               </a>
 
               {/* Follower Count */}
               {video.creator_followers > 0 && (
-                <p className="text-gray-600 dark:text-gray-400 text-xs ml-13">
+                <p className="text-gray-600 dark:text-gray-400 dark:text-gray-400 text-xs ml-13">
                   {(video.creator_followers / 1000).toFixed(0)}k followers
                 </p>
               )}
 
               {/* Engagement Stats (optional) */}
               {(video.engagement_views || video.engagement_likes) && (
-                <div className="flex gap-3 mt-3 pt-3 border-t border-gray-200 dark:border-slate-700 text-xs">
+                <div className="flex gap-3 mt-3 pt-3 border-t border-gray-200 dark:border-slate-700 dark:border-slate-700 text-xs">
                   {video.engagement_views && (
                     <div className="flex items-center gap-1">
                       <span className="text-blue-500">👁</span>
-                      <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      <span className="text-gray-700 dark:text-gray-300 dark:text-gray-300 font-medium">
                         {(video.engagement_views / 1000).toFixed(1)}k views
                       </span>
                     </div>
@@ -163,7 +163,7 @@ export default function TikTokUGCWidget({ tripId }: { tripId: string }) {
                   {video.engagement_likes && (
                     <div className="flex items-center gap-1">
                       <span className="text-red-500">❤</span>
-                      <span className="text-gray-700 dark:text-gray-300 font-medium">
+                      <span className="text-gray-700 dark:text-gray-300 dark:text-gray-300 font-medium">
                         {(video.engagement_likes / 1000).toFixed(1)}k likes
                       </span>
                     </div>
@@ -177,8 +177,8 @@ export default function TikTokUGCWidget({ tripId }: { tripId: string }) {
 
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-blue-50 to-pink-50 rounded-xl p-8 text-center border border-blue-200">
-        <p className="text-gray-900 dark:text-gray-100 font-semibold mb-4">Want to be featured?</p>
-        <p className="text-gray-600 dark:text-gray-400 text-sm mb-6">
+        <p className="text-gray-900 dark:text-gray-100 dark:text-gray-100 font-semibold mb-4">Want to be featured?</p>
+        <p className="text-gray-600 dark:text-gray-400 dark:text-gray-400 text-sm mb-6">
           Share your adventure on TikTok, tag us @SummitAdventures and use #SummitAdventures
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -193,7 +193,7 @@ export default function TikTokUGCWidget({ tripId }: { tripId: string }) {
           </a>
           <a
             href="mailto:creators@summitadventures.com"
-            className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-gray-100 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 dark:bg-slate-900 transition"
+            className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 dark:border-slate-600 text-gray-900 dark:text-gray-100 dark:text-gray-100 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 dark:bg-slate-900 dark:bg-slate-900 transition"
           >
             <span>💌</span>
             Creator Inquiry

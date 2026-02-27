@@ -102,25 +102,25 @@ export default function ReviewsSection({ tripId, guideId }: { tripId: string; gu
   };
 
   if (loading) {
-    return <div className="text-gray-600 dark:text-gray-400">Loading reviews...</div>;
+    return <div className="text-gray-600 dark:text-gray-400 dark:text-gray-400">Loading reviews...</div>;
   }
 
   if (reviews.length === 0) {
     return (
-      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Reviews</h2>
-        <p className="text-gray-600 dark:text-gray-400">No reviews yet. Be the first to review this trip!</p>
+      <div className="bg-white dark:bg-slate-900 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 dark:border-slate-700 rounded-lg p-6 shadow-sm">
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 dark:text-gray-100 mb-4">Reviews</h2>
+        <p className="text-gray-600 dark:text-gray-400 dark:text-gray-400">No reviews yet. Be the first to review this trip!</p>
       </div>
     );
   }
 
   return (
-    <div id="reviews" className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-6 shadow-sm scroll-mt-20">
-      <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">Reviews ({reviews.length})</h2>
+    <div id="reviews" className="bg-white dark:bg-slate-900 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 dark:border-slate-700 rounded-lg p-6 shadow-sm scroll-mt-20">
+      <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 dark:text-gray-100 mb-6">Reviews ({reviews.length})</h2>
 
       <div className="space-y-6">
         {reviews.map((review) => (
-          <div key={review.id} className="border-b border-gray-200 dark:border-slate-700 pb-6 last:border-b-0">
+          <div key={review.id} className="border-b border-gray-200 dark:border-slate-700 dark:border-slate-700 pb-6 last:border-b-0">
             {/* Review Header */}
             <div className="flex items-start justify-between mb-2">
               <div>
@@ -137,28 +137,28 @@ export default function ReviewsSection({ tripId, guideId }: { tripId: string; gu
                       />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-700 dark:text-gray-300 font-medium">
+                  <span className="text-sm text-gray-700 dark:text-gray-300 dark:text-gray-300 font-medium">
                     {new Date(review.created_at).toLocaleDateString()}
                   </span>
                 </div>
-                <h3 className="font-bold text-gray-900 dark:text-gray-100 text-base">
+                <h3 className="font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 text-base">
                   {review.title}
                 </h3>
-                <p className="text-gray-700 dark:text-gray-300 text-sm">
+                <p className="text-gray-700 dark:text-gray-300 dark:text-gray-300 text-sm">
                   by {review.profiles?.full_name}
                 </p>
               </div>
             </div>
 
             {/* Review Body */}
-            <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed">{review.body}</p>
+            <p className="text-gray-700 dark:text-gray-300 dark:text-gray-300 mb-4 leading-relaxed">{review.body}</p>
 
             {/* Guide Response */}
             {review.guide_response && (
               <div className="bg-blue-50 rounded-lg p-4 mb-4 border-l-4 border-blue-500">
                 <p className="text-sm font-bold text-blue-900 mb-2">Guide's Response</p>
                 <p className="text-gray-800 text-sm mb-2 leading-relaxed">{review.guide_response}</p>
-                <p className="text-gray-700 dark:text-gray-300 text-xs">
+                <p className="text-gray-700 dark:text-gray-300 dark:text-gray-300 text-xs">
                   {review.guide_responded_at &&
                     new Date(review.guide_responded_at).toLocaleDateString()}
                 </p>
@@ -173,7 +173,7 @@ export default function ReviewsSection({ tripId, guideId }: { tripId: string; gu
                   onChange={(e) => setResponseText(e.target.value)}
                   placeholder="Write your response..."
                   rows={3}
-                  className="w-full bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-gray-100 px-3 py-2 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
+                  className="w-full bg-white dark:bg-slate-900 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 dark:border-slate-600 text-gray-900 dark:text-gray-100 dark:text-gray-100 px-3 py-2 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
                 />
                 <div className="flex gap-2">
                   <button
@@ -188,7 +188,7 @@ export default function ReviewsSection({ tripId, guideId }: { tripId: string; gu
                       setRespondingId(null);
                       setResponseText('');
                     }}
-                    className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-gray-100 px-4 py-2 text-sm font-medium transition"
+                    className="text-gray-700 dark:text-gray-300 dark:text-gray-300 hover:text-gray-900 dark:text-gray-100 dark:text-gray-100 px-4 py-2 text-sm font-medium transition"
                   >
                     Cancel
                   </button>

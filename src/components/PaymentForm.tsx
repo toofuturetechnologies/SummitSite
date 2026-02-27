@@ -64,12 +64,12 @@ export function PaymentForm({
   if (!clientSecret) {
     return (
       <div className="space-y-4">
-        <div className="bg-gray-50 dark:bg-slate-900 rounded-lg p-4">
+        <div className="bg-gray-50 dark:bg-slate-900 dark:bg-slate-900 rounded-lg p-4">
           <div className="flex justify-between mb-2">
-            <span className="text-gray-600 dark:text-gray-400">Total Amount:</span>
+            <span className="text-gray-600 dark:text-gray-400 dark:text-gray-400">Total Amount:</span>
             <span className="text-white font-semibold">${amount.toFixed(2)}</span>
           </div>
-          <p className="text-gray-600 dark:text-gray-400 text-sm">
+          <p className="text-gray-600 dark:text-gray-400 dark:text-gray-400 text-sm">
             Secure payment powered by Stripe
           </p>
         </div>
