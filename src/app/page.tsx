@@ -90,13 +90,13 @@ export default function HomePage() {
             backgroundImage: `url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920&q=85&fit=crop')`,
           }}
         />
-        {/* Sophisticated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/45 to-white" />
+        {/* Sophisticated gradient overlay - Service Landing Page theme */}
+        <div className="absolute inset-0 bg-gradient-to-b from-sky-900/50 via-sky-900/40 to-sky-50" />
 
         {/* Hero content */}
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center pt-24 pb-32">
-          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md border border-white/30 text-white px-4 py-2 rounded-full text-sm font-medium mb-8">
-            <span className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
+          <div className="inline-flex items-center gap-2 bg-sky-500/20 backdrop-blur-md border border-sky-400/50 text-sky-900 px-4 py-2 rounded-full text-sm font-medium mb-8">
+            <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
             105 Expert Guides · 84+ Adventures · World-Class Experience
           </div>
 
@@ -114,14 +114,14 @@ export default function HomePage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/trips"
-              className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold px-10 py-4 rounded-xl text-lg transition-all duration-200 shadow-2xl shadow-blue-500/40 hover:shadow-blue-500/60 hover:-translate-y-1"
+              className="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-bold px-10 py-4 rounded-xl text-lg transition-all duration-200 shadow-2xl shadow-orange-500/40 hover:shadow-orange-500/60 hover:-translate-y-1"
             >
               Browse Adventures
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
               href="/guides"
-              className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm hover:bg-white/30 border border-white/40 text-white font-semibold px-10 py-4 rounded-xl text-lg transition-all duration-200"
+              className="inline-flex items-center gap-2 bg-sky-500/20 backdrop-blur-sm hover:bg-sky-500/30 border border-sky-300 text-sky-900 font-semibold px-10 py-4 rounded-xl text-lg transition-all duration-200"
             >
               Meet Guides
             </Link>
@@ -154,7 +154,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── STATS BAR ─────────────────────────────────────────────────────────── */}
-      <section className="bg-white border-b border-gray-200">
+      <section className="bg-sky-50 border-b border-sky-200">
         <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
           {[
             { value: '105', label: 'Expert Guides', sub: 'Verified professionals' },
@@ -163,20 +163,20 @@ export default function HomePage() {
             { value: '88%', label: 'Fair Pricing', sub: 'Guides earn more' },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
-              <p className="text-3xl sm:text-4xl font-black text-blue-600">{stat.value}</p>
-              <p className="text-gray-800 text-sm font-semibold mt-1">{stat.label}</p>
-              <p className="text-gray-600 text-xs mt-1">{stat.sub}</p>
+              <p className="text-3xl sm:text-4xl font-black text-sky-500">{stat.value}</p>
+              <p className="text-sky-900 text-sm font-semibold mt-1">{stat.label}</p>
+              <p className="text-sky-700 text-xs mt-1">{stat.sub}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ─── WHY CHOOSE SUMMIT ──────────────────────────────────────────────── */}
-      <section className="bg-gradient-to-br from-gray-50 to-white py-20">
+      <section className="bg-gradient-to-br from-sky-50 to-white py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-14">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Why Choose Summit</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-bold text-sky-900 mb-4">Why Choose Summit</h2>
+            <p className="text-lg text-sky-700 max-w-2xl mx-auto">
               We connect you with the world's best mountain guides. Verified expertise, transparent pricing, and unforgettable experiences.
             </p>
           </div>
@@ -198,10 +198,10 @@ export default function HomePage() {
                 desc: 'From alpine climbing to backcountry skiing. Explore curated experiences across the globe.',
               },
             ].map((item, i) => (
-              <div key={i} className="bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-lg transition-shadow">
-                <div className="text-3xl font-bold text-blue-600 mb-4">{item.icon}</div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3">{item.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{item.desc}</p>
+              <div key={i} className="bg-white border border-sky-200 rounded-2xl p-8 hover:shadow-lg hover:border-sky-300 transition-all">
+                <div className="text-3xl font-bold text-sky-500 mb-4">{item.icon}</div>
+                <h3 className="text-lg font-bold text-sky-900 mb-3">{item.title}</h3>
+                <p className="text-sky-700 leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>

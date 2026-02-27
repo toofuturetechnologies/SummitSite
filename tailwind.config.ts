@@ -44,19 +44,19 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        // Summit brand colors - Modern White Theme
+        // Summit brand colors - Service Landing Page Design System
         summit: {
-          50: '#fafafa',
-          100: '#f5f5f5',
-          200: '#eeeeee',
-          300: '#e0e0e0',
-          400: '#bdbdbd',
-          500: '#9e9e9e',
-          600: '#757575',
-          700: '#616161',
-          800: '#424242',
-          900: '#212121',
-          950: '#121212',
+          50: '#f0f9ff',      // Light background
+          100: '#e0f2fe',     // Very light
+          200: '#bae6fd',     // Border color
+          300: '#7dd3fc',     // Light accent
+          400: '#38bdf8',     // Secondary color
+          500: '#0ea5e9',     // Primary color (Sky Blue)
+          600: '#0284c7',     // Darker primary
+          700: '#0369a1',     // Even darker
+          800: '#075985',     // Dark
+          900: '#0c4a6e',     // Text color
+          950: '#082f49',     // Darkest
         },
         // Activity type colors
         activity: {
