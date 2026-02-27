@@ -155,7 +155,7 @@ export default function MessagesPage() {
                 <p className="text-sm mt-2">Messages with guides or customers will appear here</p>
               </div>
             ) : (
-              <div className="divide-y divide-gray-200">
+              <div className="divide-y divide-gray-200 dark:divide-slate-700">
                 {conversations.map((conv) => (
                   <button
                     key={conv.otherUserId}
@@ -163,7 +163,7 @@ export default function MessagesPage() {
                     className={`w-full p-4 text-left transition ${
                       selectedConversation === conv.otherUserId
                         ? 'bg-blue-50 border-l-4 border-blue-600'
-                        : 'hover:bg-gray-50 dark:bg-slate-900'
+                        : 'hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-900'
                     }`}
                   >
                     <div className="flex items-center gap-3 mb-2">

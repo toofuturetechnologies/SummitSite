@@ -193,7 +193,7 @@ export default function TikTokUGCWidget({ tripId }: { tripId: string }) {
           </a>
           <a
             href="mailto:creators@summitadventures.com"
-            className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 dark:border-slate-600 text-gray-900 dark:text-gray-100 dark:text-gray-100 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 dark:bg-slate-900 dark:bg-slate-900 transition"
+            className="inline-flex items-center justify-center gap-2 bg-white dark:bg-slate-900 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 dark:border-slate-600 text-gray-900 dark:text-gray-100 dark:text-gray-100 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-900 dark:bg-slate-900 transition"
           >
             <span>💌</span>
             Creator Inquiry

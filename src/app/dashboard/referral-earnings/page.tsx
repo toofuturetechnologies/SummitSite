@@ -228,9 +228,9 @@ export default function ReferralEarningsPage() {
                     <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">Date</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-200 dark:divide-slate-700">
                   {earnings.map((earning) => (
-                    <tr key={earning.id} className="hover:bg-gray-50 dark:bg-slate-900 transition">
+                    <tr key={earning.id} className="hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-900 transition">
                       <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-100 font-medium">{earning.trip?.title}</td>
                       <td className="px-6 py-4 text-sm text-gray-900 dark:text-gray-100 font-bold">
                         ${earning.earnings_amount.toFixed(2)}

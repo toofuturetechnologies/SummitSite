@@ -196,7 +196,7 @@ export default function UGCReferralSettingsPage() {
               >
                 <button
                   onClick={() => toggleTrip(trip.id)}
-                  className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:bg-slate-900 transition"
+                  className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-900 transition"
                 >
                   <div className="text-left">
                     <h3 className="font-semibold text-gray-900 dark:text-gray-100">{trip.title}</h3>

@@ -198,7 +198,7 @@ export default function ReviewForm({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-3 border border-gray-300 dark:border-slate-600 dark:border-slate-600 text-gray-900 dark:text-gray-100 dark:text-gray-100 font-semibold rounded-lg hover:bg-gray-50 dark:bg-slate-900 dark:bg-slate-900 transition"
+              className="flex-1 px-4 py-3 border border-gray-300 dark:border-slate-600 dark:border-slate-600 text-gray-900 dark:text-gray-100 dark:text-gray-100 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-900 dark:bg-slate-900 transition"
             >
               Cancel
             </button>

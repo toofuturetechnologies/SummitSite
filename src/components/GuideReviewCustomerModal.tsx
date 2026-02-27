@@ -267,7 +267,7 @@ export default function GuideReviewCustomerModal({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-slate-600 dark:border-slate-600 text-gray-900 dark:text-gray-100 dark:text-gray-100 rounded-lg hover:bg-gray-50 dark:bg-slate-900 dark:bg-slate-900 transition font-medium"
+                  className="flex-1 px-4 py-2 border border-gray-300 dark:border-slate-600 dark:border-slate-600 text-gray-900 dark:text-gray-100 dark:text-gray-100 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-900 dark:bg-slate-900 transition font-medium"
                 >
                   Cancel
                 </button>

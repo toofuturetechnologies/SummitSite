@@ -204,7 +204,7 @@ export default function EarningsPage() {
                 </thead>
                 <tbody>
                   {paidBookings.map((booking) => (
-                    <tr key={booking.id} className="border-b border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:bg-slate-900 transition">
+                    <tr key={booking.id} className="border-b border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-900 transition">
                       <td className="py-4 px-4 text-gray-900 dark:text-gray-100 font-medium">{booking.trips.title}</td>
                       <td className="py-4 px-4 text-gray-700 dark:text-gray-300">
                         {new Date(booking.created_at).toLocaleDateString()}
@@ -251,7 +251,7 @@ export default function EarningsPage() {
                 </thead>
                 <tbody>
                   {refundedBookings.map((booking) => (
-                    <tr key={booking.id} className="border-b border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:bg-slate-900 transition">
+                    <tr key={booking.id} className="border-b border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-900 transition">
                       <td className="py-4 px-4 text-gray-900 dark:text-gray-100 font-medium">{booking.trips.title}</td>
                       <td className="py-4 px-4 text-gray-700 dark:text-gray-300">
                         {new Date(booking.created_at).toLocaleDateString()}
