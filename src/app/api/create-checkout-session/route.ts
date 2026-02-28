@@ -2,6 +2,14 @@ export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import {
+  parseRequestJson,
+  validateRequired,
+  validateContentType,
+  handleError,
+  parseNumber,
+  ApiError,
+} from '@/lib/api-utils';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2023-10-16',
@@ -14,6 +22,7 @@ const DOMAIN =
 
 export async function POST(request: NextRequest) {
   try {
+    validateContentType(request);
     const {
       amount,
       tripId,
@@ -23,21 +32,35 @@ export async function POST(request: NextRequest) {
       tripDateId,
       participantCount,
       referralUserId,
-    } = await request.json();
+    } = await parseRequestJson(request);
 
-    if (!amount || !tripId) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
-    }
+    validateRequired(
+      { amount, tripId },
+      ['amount', 'tripId']
+    );
+
+    // Validate amount is a positive number
+    const validAmount = parseNumber(amount, 'amount', { min: 0.01 });
+    const validParticipants = participantCount
+      ? parseNumber(participantCount, 'participantCount', { min: 1 })
+      : 1;
 
     // Calculate fees (in cents for Stripe)
     // Commission: 12% of amount + $1 hosting fee
-    const commissionInCents = Math.round(amount * 100 * 0.12 + 100); // 12% + $1 in cents
-    const guidePayoutInCents = Math.round(amount * 100) - commissionInCents;
+    const amountInCents = Math.round(validAmount * 100);
+    const commissionInCents = Math.round(validAmount * 100 * 0.12 + 100); // 12% + $1 in cents
+    const guidePayoutInCents = amountInCents - commissionInCents;
     const guidePayout = guidePayoutInCents; // Keep in cents for metadata
     const commission = commissionInCents; // Keep in cents for metadata
+
+    if (guidePayoutInCents <= 0) {
+      throw new ApiError(
+        'Amount too small after commission and fees',
+        400,
+        'AMOUNT_TOO_SMALL',
+        { minAmount: 1.01 }
+      );
+    }
 
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
@@ -47,10 +70,10 @@ export async function POST(request: NextRequest) {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: tripName,
-              description: `Adventure with ${guideName}`,
+              name: tripName || `Trip ${tripId}`,
+              description: `Adventure${guideName ? ` with ${guideName}` : ''}`,
             },
-            unit_amount: Math.round(amount * 100),
+            unit_amount: amountInCents,
           },
           quantity: 1,
         },
@@ -60,12 +83,12 @@ export async function POST(request: NextRequest) {
       cancel_url: `${DOMAIN}/trips/${tripId}`,
       metadata: {
         tripId,
-        userId,
-        tripDateId,
-        participantCount: participantCount?.toString() || '1',
+        userId: userId || '',
+        tripDateId: tripDateId || '',
+        participantCount: validParticipants.toString(),
         commission: commission.toString(),
         guidePayout: guidePayout.toString(),
-        referralUserId: referralUserId || '', // Add referral user ID
+        referralUserId: referralUserId || '',
       },
     });
 
@@ -74,10 +97,6 @@ export async function POST(request: NextRequest) {
       sessionId: session.id,
     });
   } catch (error) {
-    console.error('Error creating checkout session:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal server error' },
-      { status: 500 }
-    );
+    return handleError(error);
   }
 }

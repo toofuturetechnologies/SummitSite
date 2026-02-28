@@ -2,6 +2,14 @@ export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import {
+  parseRequestJson,
+  validateRequired,
+  validateContentType,
+  handleError,
+  parseNumber,
+  validateUUID,
+} from '@/lib/api-utils';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2023-10-16',
@@ -9,6 +17,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 
 export async function POST(request: NextRequest) {
   try {
+    validateContentType(request);
     const {
       amount,
       tripId,
@@ -18,26 +27,28 @@ export async function POST(request: NextRequest) {
       userId,
       tripDateId,
       participantCount,
-    } = await request.json();
+    } = await parseRequestJson(request);
 
-    if (!amount || !tripId || !bookingId) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
-    }
+    validateRequired(
+      { amount, tripId, bookingId },
+      ['amount', 'tripId', 'bookingId']
+    );
+
+    validateUUID(tripId, 'tripId');
+    validateUUID(bookingId, 'bookingId');
+    const validAmount = parseNumber(amount, 'amount', { min: 0.01 });
 
     // Create payment intent with metadata
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: Math.round(amount * 100), // Convert to cents
+      amount: Math.round(validAmount * 100), // Convert to cents
       currency: 'usd',
-      description: `Booking for ${tripName} with ${guideName}`,
+      description: `Booking for ${tripName || 'trip'} with ${guideName || 'guide'}`,
       metadata: {
         tripId,
         bookingId,
-        userId,
-        tripDateId,
-        participantCount: participantCount?.toString() || '1',
+        userId: userId || '',
+        tripDateId: tripDateId || '',
+        participantCount: participantCount ? parseNumber(participantCount, 'participantCount', { min: 1 }).toString() : '1',
       },
     });
 
@@ -46,10 +57,6 @@ export async function POST(request: NextRequest) {
       publishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     });
   } catch (error) {
-    console.error('Error creating payment intent:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal server error' },
-      { status: 500 }
-    );
+    return handleError(error);
   }
 }

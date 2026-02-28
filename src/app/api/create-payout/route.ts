@@ -3,6 +3,13 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+import {
+  parseRequestJson,
+  validateRequired,
+  validateContentType,
+  handleError,
+  validateUUID,
+} from '@/lib/api-utils';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2023-10-16',
@@ -15,14 +22,11 @@ const supabase = createClient(
 
 export async function POST(request: NextRequest) {
   try {
-    const { bookingId } = await request.json();
+    validateContentType(request);
+    const { bookingId } = await parseRequestJson(request);
 
-    if (!bookingId) {
-      return NextResponse.json(
-        { error: 'Missing bookingId' },
-        { status: 400 }
-      );
-    }
+    validateRequired({ bookingId }, ['bookingId']);
+    validateUUID(bookingId, 'bookingId');
 
     // Get booking details
     const { data: booking, error: bookingError } = await supabase
@@ -88,10 +92,6 @@ export async function POST(request: NextRequest) {
       amount: booking.guide_payout,
     });
   } catch (error) {
-    console.error('❌ Payout creation error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to create payout' },
-      { status: 500 }
-    );
+    return handleError(error);
   }
 }

@@ -1,11 +1,34 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase';
+import {
+  parseRequestJson,
+  validateRequired,
+  validateContentType,
+  handleError,
+  validateUUID,
+  parseNumber,
+  sanitizeString,
+} from '@/lib/api-utils';
 
 const supabase = createClient();
 
 export async function POST(request: NextRequest) {
   try {
-    const { bookingId, rating, comment, behaviorNotes, professionalismRating } = await request.json();
+    validateContentType(request);
+    const { bookingId, rating, comment, behaviorNotes, professionalismRating } = await parseRequestJson(request);
+
+    validateRequired({ bookingId, rating }, ['bookingId', 'rating']);
+    validateUUID(bookingId, 'bookingId');
+    
+    // Validate ratings
+    const validRating = parseNumber(rating, 'rating', { min: 1, max: 5 });
+    const validProfRating = professionalismRating
+      ? parseNumber(professionalismRating, 'professionalismRating', { min: 1, max: 5 })
+      : 5;
+    
+    // Sanitize string fields
+    const validComment = comment ? sanitizeString(comment, 500, 'comment') : '';
+    const validBehaviorNotes = behaviorNotes ? sanitizeString(behaviorNotes, 500, 'behaviorNotes') : '';
 
     // Get authenticated user
     const { data: authData, error: authError } = await supabase.auth.getUser();
@@ -60,16 +83,16 @@ export async function POST(request: NextRequest) {
       const { error: updateError } = await supabase
         .from('guide_reviews_of_customers')
         .update({
-          rating,
-          comment,
-          behavior_notes: behaviorNotes,
-          professionalism_rating: professionalismRating,
+          rating: validRating,
+          comment: validComment,
+          behavior_notes: validBehaviorNotes,
+          professionalism_rating: validProfRating,
           updated_at: new Date().toISOString(),
         })
         .eq('booking_id', bookingId);
 
       if (updateError) {
-        return NextResponse.json({ error: 'Failed to update review' }, { status: 500 });
+        throw new Error('Failed to update review');
       }
 
       return NextResponse.json({
@@ -86,16 +109,15 @@ export async function POST(request: NextRequest) {
         guide_id: guide.id,
         customer_id: booking.user_id, // The customer being reviewed
         trip_id: booking.trip_id,
-        rating,
-        comment,
-        behavior_notes: behaviorNotes,
-        professionalism_rating: professionalismRating,
+        rating: validRating,
+        comment: validComment,
+        behavior_notes: validBehaviorNotes,
+        professionalism_rating: validProfRating,
       })
       .select();
 
     if (insertError) {
-      console.error('Error creating review:', insertError);
-      return NextResponse.json({ error: 'Failed to create review' }, { status: 500 });
+      throw new Error('Failed to create review');
     }
 
     return NextResponse.json({
@@ -104,7 +126,6 @@ export async function POST(request: NextRequest) {
       review: reviewData?.[0],
     });
   } catch (err) {
-    console.error('Error:', err);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return handleError(err);
   }
 }

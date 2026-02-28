@@ -9,6 +9,15 @@ export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import {
+  parseRequestJson,
+  validateRequired,
+  validateContentType,
+  handleError,
+  validateUUID,
+  validateUrl,
+  sanitizeString,
+} from '@/lib/api-utils';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL || '',
@@ -17,21 +26,26 @@ const supabase = createClient(
 
 export async function POST(request: NextRequest) {
   try {
+    validateContentType(request);
     const {
       trip_id,
       tiktok_url,
       tiktok_video_id,
       ugc_code,
       booking_id,
-    } = await request.json();
+    } = await parseRequestJson(request);
 
     // Validate required fields
-    if (!trip_id || !tiktok_url || !tiktok_video_id || !ugc_code) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
-    }
+    validateRequired(
+      { trip_id, tiktok_url, tiktok_video_id, ugc_code },
+      ['trip_id', 'tiktok_url', 'tiktok_video_id', 'ugc_code']
+    );
+
+    // Validate formats
+    validateUUID(trip_id, 'trip_id');
+    validateUrl(tiktok_url, 'tiktok_url');
+    sanitizeString(tiktok_video_id, 50, 'tiktok_video_id');
+    sanitizeString(ugc_code, 50, 'ugc_code');
 
     // Get current user
     const { data: { user }, error: authError } = await supabase.auth.getUser();
@@ -133,10 +147,6 @@ export async function POST(request: NextRequest) {
       message: 'UGC submitted successfully. The guide will review your content soon.',
     });
   } catch (error) {
-    console.error('Error submitting UGC:', error);
-    return NextResponse.json(
-      { error: 'Failed to submit UGC' },
-      { status: 500 }
-    );
+    return handleError(error);
   }
 }

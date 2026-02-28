@@ -3,6 +3,15 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+import {
+  parseRequestJson,
+  validateRequired,
+  validateContentType,
+  handleError,
+  validateUUID,
+  validateEmail,
+  sanitizeString,
+} from '@/lib/api-utils';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2023-10-16',
@@ -20,14 +29,17 @@ const DOMAIN =
 
 export async function POST(request: NextRequest) {
   try {
-    const { guideId, guideName, userEmail } = await request.json();
+    validateContentType(request);
+    const { guideId, guideName, userEmail } = await parseRequestJson(request);
 
-    if (!guideId || !guideName || !userEmail) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
-    }
+    validateRequired(
+      { guideId, guideName, userEmail },
+      ['guideId', 'guideName', 'userEmail']
+    );
+
+    validateUUID(guideId, 'guideId');
+    sanitizeString(guideName, 100, 'guideName');
+    validateEmail(userEmail);
 
     console.log('🔗 Creating Stripe Connect account for guide:', guideId);
 
@@ -104,10 +116,6 @@ export async function POST(request: NextRequest) {
       accountId: account.id,
     });
   } catch (error) {
-    console.error('❌ Stripe Connect error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to create Stripe account' },
-      { status: 500 }
-    );
+    return handleError(error);
   }
 }

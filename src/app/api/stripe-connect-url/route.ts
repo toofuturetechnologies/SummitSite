@@ -3,6 +3,13 @@ export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
+import {
+  parseRequestJson,
+  validateRequired,
+  validateContentType,
+  handleError,
+  validateUUID,
+} from '@/lib/api-utils';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
   apiVersion: '2023-10-16',
@@ -15,14 +22,16 @@ const supabase = createClient(
 
 export async function POST(request: NextRequest) {
   try {
-    const { guideId, userId } = await request.json();
+    validateContentType(request);
+    const { guideId, userId } = await parseRequestJson(request);
 
-    if (!guideId || !userId) {
-      return NextResponse.json(
-        { error: 'Missing guideId or userId' },
-        { status: 400 }
-      );
-    }
+    validateRequired(
+      { guideId, userId },
+      ['guideId', 'userId']
+    );
+
+    validateUUID(guideId, 'guideId');
+    validateUUID(userId, 'userId');
 
     // Get current user from auth
     const authHeader = request.headers.get('authorization');
@@ -68,10 +77,6 @@ export async function POST(request: NextRequest) {
       accountId: account.id,
     });
   } catch (error) {
-    console.error('Error creating Stripe Connect account:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to create account' },
-      { status: 500 }
-    );
+    return handleError(error);
   }
 }

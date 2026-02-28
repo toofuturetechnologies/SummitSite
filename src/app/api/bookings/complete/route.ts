@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase';
 import Stripe from 'stripe';
+import {
+  parseRequestJson,
+  validateRequired,
+  validateContentType,
+  handleError,
+  validateUUID,
+} from '@/lib/api-utils';
 
 const supabase = createClient();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
@@ -9,11 +16,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
 
 export async function POST(request: NextRequest) {
   try {
-    const { bookingId } = await request.json();
+    validateContentType(request);
+    const { bookingId } = await parseRequestJson(request);
 
-    if (!bookingId) {
-      return NextResponse.json({ error: 'bookingId required' }, { status: 400 });
-    }
+    validateRequired({ bookingId }, ['bookingId']);
+    validateUUID(bookingId, 'bookingId');
 
     // Get authenticated user
     const { data: authData, error: authError } = await supabase.auth.getUser();
@@ -85,7 +92,6 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (err) {
-    console.error('Error:', err);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return handleError(err);
   }
 }
