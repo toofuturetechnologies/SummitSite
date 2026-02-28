@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase';
 import { Star, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
+import { TikTokReviewEmbed } from './TikTokReviewEmbed';
 
 const supabase = createClient();
 
@@ -12,6 +13,8 @@ interface Review {
   rating: number;
   title: string;
   body: string;
+  tiktok_url?: string;
+  video_id?: string;
   guide_response?: string;
   guide_responded_at?: string;
   created_at: string;
@@ -152,6 +155,19 @@ export default function ReviewsSection({ tripId, guideId }: { tripId: string; gu
 
             {/* Review Body */}
             <p className="text-gray-700 dark:text-gray-300 dark:text-gray-300 mb-4 leading-relaxed">{review.body}</p>
+
+            {/* TikTok Video Embed */}
+            {review.video_id && (
+              <div className="mb-6 bg-gray-50 dark:bg-slate-800 rounded-lg p-4 border border-gray-200 dark:border-slate-700">
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">
+                  📱 Video from adventure:
+                </p>
+                <TikTokReviewEmbed
+                  videoId={review.video_id}
+                  tiktokUrl={review.tiktok_url}
+                />
+              </div>
+            )}
 
             {/* Guide Response */}
             {review.guide_response && (

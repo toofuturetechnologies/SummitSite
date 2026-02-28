@@ -4,6 +4,8 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase';
 import Link from 'next/link';
+import { ReviewFormWithTikTok } from '@/components/ReviewFormWithTikTok';
+import { extractTikTokVideoId } from '@/lib/tiktok-utils';
 
 const supabase = createClient();
 
@@ -19,12 +21,6 @@ function LeaveReviewPageInner() {
   const [trip, setTrip] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-
-  const [formData, setFormData] = useState({
-    rating: 5,
-    title: '',
-    comment: '',
-  });
 
   useEffect(() => {
     const loadData = async () => {
@@ -90,30 +86,36 @@ function LeaveReviewPageInner() {
     loadData();
   }, [bookingId, router]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (formData: {
+    rating: number;
+    title: string;
+    comment: string;
+    tiktokUrl?: string;
+    videoId?: string;
+  }) => {
     setSubmitting(true);
+    setError(null);
 
     try {
-      if (!formData.rating) {
-        throw new Error('Please select a rating');
+      // Extract video ID if TikTok URL provided
+      let videoId = formData.videoId;
+      if (formData.tiktokUrl && !videoId) {
+        videoId = extractTikTokVideoId(formData.tiktokUrl) || undefined;
       }
 
-      if (!formData.title.trim()) {
-        throw new Error('Please enter a review title');
-      }
-
-      // Insert review
+      // Insert review with TikTok fields
       const { error: reviewError } = await (supabase as any)
         .from('reviews')
         .insert({
           booking_id: bookingId,
           trip_id: trip.id,
           guide_id: booking.guide_id,
-          customer_id: user.id,
+          reviewer_id: user.id,
           rating: formData.rating,
           title: formData.title,
-          comment: formData.comment,
+          body: formData.comment,
+          tiktok_url: formData.tiktokUrl || null,
+          video_id: videoId || null,
         });
 
       if (reviewError) {
@@ -173,74 +175,16 @@ function LeaveReviewPageInner() {
           ← Back to Bookings
         </Link>
 
-        <div className="bg-gray-100 dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-lg p-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Leave a Review</h1>
+        <div className="bg-gray-50 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-lg p-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Leave a Review</h1>
           <p className="text-gray-600 dark:text-gray-400 mb-8">Tell us about your experience on <strong>{trip?.title}</strong></p>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Rating */}
-            <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-3">How was your experience? ⭐</label>
-              <div className="flex gap-2">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <button
-                    key={star}
-                    type="button"
-                    onClick={() => setFormData({ ...formData, rating: star })}
-                    className={`text-3xl transition ${
-                      formData.rating >= star ? 'text-yellow-400' : 'text-summit-700 hover:text-yellow-400'
-                    }`}
-                  >
-                    ★
-                  </button>
-                ))}
-              </div>
-              <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">{formData.rating} star{formData.rating !== 1 ? 's' : ''}</p>
-            </div>
-
-            {/* Title */}
-            <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">Review Title</label>
-              <input
-                type="text"
-                placeholder="e.g., 'Amazing experience!' or 'Good but could be better'"
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                maxLength={100}
-                className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none"
-              />
-              <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">{formData.title.length}/100</p>
-            </div>
-
-            {/* Comment */}
-            <div>
-              <label className="block text-gray-700 dark:text-gray-300 font-medium mb-2">Your Review (Optional)</label>
-              <textarea
-                placeholder="Tell other adventurers what you liked about this trip..."
-                value={formData.comment}
-                onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
-                maxLength={500}
-                rows={5}
-                className="w-full bg-gray-900 border border-gray-300 dark:border-slate-600 text-white px-4 py-2 rounded-lg focus:border-summit-500 focus:outline-none resize-none"
-              />
-              <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">{formData.comment.length}/500</p>
-            </div>
-
-            {/* Submit */}
-            <button
-              type="submit"
-              disabled={submitting || !formData.rating || !formData.title}
-              className="w-full bg-summit-600 hover:bg-summit-500 disabled:opacity-50 text-white font-bold py-3 rounded-lg transition"
-            >
-              {submitting ? '📤 Submitting...' : '✅ Submit Review'}
-            </button>
-          </form>
-
-          <div className="mt-8 bg-gray-50 dark:bg-slate-900 p-4 rounded-lg">
-            <p className="text-gray-600 dark:text-gray-400 text-sm">
-              💡 <strong>Help other adventurers:</strong> Be honest and specific about your experience. Reviews help improve the platform for everyone!
-            </p>
-          </div>
+          <ReviewFormWithTikTok
+            tripTitle={trip?.title || ''}
+            onSubmit={handleSubmit}
+            isSubmitting={submitting}
+            error={error}
+          />
         </div>
       </div>
     </div>
