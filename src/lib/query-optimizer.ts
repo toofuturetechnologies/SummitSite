@@ -114,7 +114,7 @@ export async function batchFetchGuides(
  * Cursor-based pagination for large datasets
  * More efficient than offset-based for large tables
  */
-export async function getCursorPaginated<T>(
+export async function getCursorPaginated<T extends { id: string }>(
   supabase: ReturnType<typeof createClient>,
   table: string,
   cursor?: string,
@@ -134,7 +134,7 @@ export async function getCursorPaginated<T>(
 
   const items = (data || []).slice(0, pageSize) as T[];
   const hasMore = (data || []).length > pageSize;
-  const nextCursor = hasMore ? items[items.length - 1]['id'] : null;
+  const nextCursor = hasMore ? items[items.length - 1].id : null;
 
   return {
     items,
