@@ -162,13 +162,12 @@ export function OptimizedBackgroundImage({
 }
 
 /**
- * ResponsiveImage - Multi-source with srcSet
- * Serves different image sizes based on device
+ * ResponsiveImage - Responsive sizing with Next.js Image
+ * Automatically generates srcSet and serves responsive sizes
  */
 export function ResponsiveImage({
   src: baseSrc,
   alt,
-  srcSet,
   sizes,
   priority = false,
   className = '',
@@ -176,7 +175,6 @@ export function ResponsiveImage({
 }: {
   src: string;
   alt: string;
-  srcSet?: string;
   sizes?: string;
   priority?: boolean;
   className?: string;
@@ -190,7 +188,6 @@ export function ResponsiveImage({
         src={baseSrc}
         alt={alt}
         fill
-        srcSet={srcSet}
         sizes={
           sizes ||
           '(max-width: 640px) 100vw, (max-width: 1024px) 75vw, 50vw'
