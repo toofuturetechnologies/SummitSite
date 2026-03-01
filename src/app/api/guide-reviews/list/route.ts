@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase';
+import { getCacheHeaders, CACHE_DURATIONS, CACHE_TAGS } from '@/lib/cache';
 
 const supabase = createClient();
 
@@ -51,12 +52,17 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Failed to fetch reviews' }, { status: 500 });
     }
 
-    return NextResponse.json({
-      reviews: reviews || [],
-      total: count || 0,
-      limit,
-      offset,
-    });
+    return NextResponse.json(
+      {
+        reviews: reviews || [],
+        total: count || 0,
+        limit,
+        offset,
+      },
+      {
+        headers: getCacheHeaders(CACHE_DURATIONS.MEDIUM, [CACHE_TAGS.REVIEWS]),
+      }
+    );
   } catch (err) {
     console.error('Error:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
