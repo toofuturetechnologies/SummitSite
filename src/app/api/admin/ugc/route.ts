@@ -123,13 +123,17 @@ export async function GET(request: NextRequest) {
     })) || [];
 
     // Log activity
-    await supabase.rpc('log_admin_activity', {
-      p_admin_id: adminId,
-      p_action: 'ugc_listed',
-      p_target_type: 'ugc',
-      p_target_id: adminId,
-      p_details: { page, limit, status, total: count },
-    }).catch(e => console.warn('Failed to log activity:', e));
+    try {
+      await supabase.rpc('log_admin_activity', {
+        p_admin_id: adminId,
+        p_action: 'ugc_listed',
+        p_target_type: 'ugc',
+        p_target_id: adminId,
+        p_details: { page, limit, status, total: count },
+      });
+    } catch (e) {
+      console.warn('Failed to log activity:', e);
+    }
 
     return NextResponse.json({
       videos: formattedVideos,
