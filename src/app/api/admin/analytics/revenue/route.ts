@@ -69,15 +69,15 @@ export async function GET(request: NextRequest) {
     }
 
     // Calculate metrics
-    const totalRevenue = bookings?.reduce((sum, b) => sum + (b.amount || 0), 0) || 0;
-    const totalCommission = bookings?.reduce((sum, b) => sum + (b.commission_amount || 0), 0) || 0;
+    const totalRevenue = bookings?.reduce((sum: number, b: any) => sum + (b.amount || 0), 0) || 0;
+    const totalCommission = bookings?.reduce((sum: number, b: any) => sum + (b.commission_amount || 0), 0) || 0;
     const guidePayouts = totalRevenue - totalCommission;
-    const completedBookings = bookings?.filter(b => b.payment_status === 'completed').length || 0;
+    const completedBookings = bookings?.filter((b: any) => b.payment_status === 'completed').length || 0;
     const avgBookingValue = completedBookings > 0 ? totalRevenue / completedBookings : 0;
 
     // Group by date for chart
     const chartData: Record<string, any> = {};
-    bookings?.forEach(b => {
+    bookings?.forEach((b: any) => {
       const date = new Date(b.created_at).toLocaleDateString();
       if (!chartData[date]) {
         chartData[date] = { date, revenue: 0, commission: 0, payouts: 0 };
