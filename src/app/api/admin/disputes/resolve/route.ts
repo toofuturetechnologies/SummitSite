@@ -91,14 +91,18 @@ export async function POST(request: NextRequest) {
     }
 
     // Log activity
-    await supabase.rpc('log_admin_activity', {
-      p_admin_id: adminId,
-      p_action: 'dispute_resolved',
-      p_target_type: 'dispute',
-      p_target_id: dispute_id,
-      p_details: { resolution, refund_amount: finalRefundAmount },
-      p_notes: notes || null,
-    }).catch(e => console.warn('Failed to log activity:', e));
+    try {
+      await supabase.rpc('log_admin_activity', {
+        p_admin_id: adminId,
+        p_action: 'dispute_resolved',
+        p_target_type: 'dispute',
+        p_target_id: dispute_id,
+        p_details: { resolution, refund_amount: finalRefundAmount },
+        p_notes: notes || null,
+      });
+    } catch (e) {
+      console.warn('Failed to log activity:', e);
+    }
 
     // TODO: If approved, create refund transaction
     // TODO: Send notification to both parties
