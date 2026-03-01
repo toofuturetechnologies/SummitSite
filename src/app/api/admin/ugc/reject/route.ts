@@ -76,14 +76,18 @@ export async function POST(request: NextRequest) {
     }
 
     // Log activity
-    await supabase.rpc('log_admin_activity', {
-      p_admin_id: adminId,
-      p_action: 'ugc_rejected',
-      p_target_type: 'ugc',
-      p_target_id: video_id,
-      p_details: { reason, trip_id: video.trip_id, creator_id: video.creator_user_id },
-      p_notes: notes || null,
-    }).catch(e => console.warn('Failed to log activity:', e));
+    try {
+      await supabase.rpc('log_admin_activity', {
+        p_admin_id: adminId,
+        p_action: 'ugc_rejected',
+        p_target_type: 'ugc',
+        p_target_id: video_id,
+        p_details: { reason, trip_id: video.trip_id, creator_id: video.creator_user_id },
+        p_notes: notes || null,
+      });
+    } catch (e) {
+      console.warn('Failed to log activity:', e);
+    }
 
     // TODO: Send notification to creator with reason
     // await sendNotification(video.creator_user_id, `Your video was rejected: ${reason}`);

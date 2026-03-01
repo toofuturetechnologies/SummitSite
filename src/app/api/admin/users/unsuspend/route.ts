@@ -86,14 +86,18 @@ export async function POST(request: NextRequest) {
     }
 
     // Log activity
-    await supabase.rpc('log_admin_activity', {
-      p_admin_id: adminId,
-      p_action: 'user_unsuspended',
-      p_target_type: 'user',
-      p_target_id: user_id,
-      p_details: null,
-      p_notes: notes || null,
-    }).catch(e => console.warn('Failed to log activity:', e));
+    try {
+      await supabase.rpc('log_admin_activity', {
+        p_admin_id: adminId,
+        p_action: 'user_unsuspended',
+        p_target_type: 'user',
+        p_target_id: user_id,
+        p_details: null,
+        p_notes: notes || null,
+      });
+    } catch (e) {
+      console.warn('Failed to log activity:', e);
+    }
 
     return NextResponse.json({
       success: true,
