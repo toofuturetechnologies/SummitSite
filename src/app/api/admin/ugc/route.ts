@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
     const totalPages = count ? Math.ceil(count / limit) : 0;
 
     // Get report counts for each video
-    const videoIds = videos?.map(v => v.id) || [];
+    const videoIds = videos?.map((v: any) => v.id) || [];
     let reportCounts: Record<string, number> = {};
 
     if (videoIds.length > 0) {
@@ -103,13 +103,13 @@ export async function GET(request: NextRequest) {
         .in('ugc_id', videoIds)
         .eq('status', 'pending');
 
-      reports?.forEach(r => {
+      reports?.forEach((r: any) => {
         reportCounts[r.ugc_id] = (reportCounts[r.ugc_id] || 0) + 1;
       });
     }
 
     // Format response
-    const formattedVideos = videos?.map(v => ({
+    const formattedVideos = videos?.map((v: any) => ({
       id: v.id,
       trip_id: v.trip_id,
       trip_title: v.trips?.title || 'Unknown',

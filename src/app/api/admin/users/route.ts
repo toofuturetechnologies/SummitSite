@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
         .eq('status', 'active')
         .not('expires_at', 'lt', new Date().toISOString());
       
-      suspended_ids = suspensions?.map(s => s.user_id) || [];
+      suspended_ids = suspensions?.map((s: any) => s.user_id) || [];
       
       if (suspended_ids.length === 0) {
         return NextResponse.json({
@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
         .eq('status', 'active')
         .not('expires_at', 'lt', new Date().toISOString());
       
-      suspended_ids = suspensions?.map(s => s.user_id) || [];
+      suspended_ids = suspensions?.map((s: any) => s.user_id) || [];
       
       if (suspended_ids.length > 0) {
         query = query.not('id', 'in', `(${suspended_ids.join(',')})`);

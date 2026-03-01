@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
     const totalPages = count ? Math.ceil(count / limit) : 0;
 
     // Format response
-    const formatted = reports?.map(r => ({
+    const formatted = reports?.map((r: any) => ({
       id: r.id,
       ugc_id: r.ugc_id,
       trip_id: r.trip_id,
