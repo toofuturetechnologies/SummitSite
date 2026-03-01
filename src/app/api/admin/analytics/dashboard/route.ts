@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
       .select('commission_amount')
       .gte('created_at', startOfMonth.toISOString());
 
-    const monthlyRevenue = monthlyBookings?.reduce((sum: number, b) => sum + (b.commission_amount || 0), 0) || 0;
+    const monthlyRevenue = monthlyBookings?.reduce((sum: number, b: any) => sum + (b.commission_amount || 0), 0) || 0;
 
     // Get pending disputes
     const { count: pendingDisputes } = await supabase
