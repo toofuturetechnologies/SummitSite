@@ -9,7 +9,6 @@
  */
 
 import { revalidateTag } from 'next/cache';
-import type { NextResponse } from 'next';
 
 // Cache duration constants (in seconds)
 export const CACHE_DURATIONS = {
