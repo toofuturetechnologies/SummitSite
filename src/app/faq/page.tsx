@@ -106,7 +106,7 @@ const FAQ_ITEMS: FAQItem[] = [
   },
 ];
 
-const CATEGORIES = ['All', ...new Set(FAQ_ITEMS.map(item => item.category))];
+const CATEGORIES = ['All', ...Array.from(new Set(FAQ_ITEMS.map(item => item.category)))];
 
 function FAQContent() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
