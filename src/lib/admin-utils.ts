@@ -42,12 +42,12 @@ export async function bulkSuspendUsers(
 
   for (const userId of userIds) {
     try {
-      const { error } = await supabase.rpc('suspend_user', {
+      const { error } = await supabase.rpc('suspend_user' as any, {
         p_user_id: userId,
         p_reason: reason,
         p_suspended_by: adminId,
         p_expires_at: expiresAt || null,
-      });
+      } as any);
 
       if (error) throw error;
       processed++;
@@ -80,11 +80,11 @@ export async function bulkUnsuspendUsers(
 
   for (const userId of userIds) {
     try {
-      const { error } = await supabase.rpc('lift_suspension', {
+      const { error } = await supabase.rpc('lift_suspension' as any, {
         p_user_id: userId,
         p_lifted_by: adminId,
         p_notes: 'Bulk unsuspension',
-      });
+      } as any);
 
       if (error) throw error;
       processed++;
@@ -125,13 +125,13 @@ export async function bulkApproveUGC(
       if (error) throw error;
 
       // Log activity
-      await supabase.rpc('log_admin_activity', {
+      await supabase.rpc('log_admin_activity' as any, {
         p_admin_id: adminId,
         p_action: 'ugc_approved',
         p_target_type: 'ugc',
         p_target_id: videoId,
         p_details: { bulk_operation: true },
-      }).catch(console.warn);
+      } as any).catch(console.warn);
 
       processed++;
     } catch (err) {
@@ -176,7 +176,7 @@ export async function bulkRejectUGC(
       if (error) throw error;
 
       // Log activity
-      await supabase.rpc('log_admin_activity', {
+      await supabase.rpc('log_admin_activity' as any, {
         p_admin_id: adminId,
         p_action: 'ugc_rejected',
         p_target_type: 'ugc',
@@ -210,10 +210,10 @@ export async function generateAdminReport(
   endDate: string
 ): Promise<AdminReport | null> {
   try {
-    const { data, error } = await supabase.rpc('get_admin_report', {
+    const { data, error } = await supabase.rpc('get_admin_report' as any, {
       p_start_date: startDate,
       p_end_date: endDate,
-    });
+    } as any);
 
     if (error) throw error;
     return data as AdminReport;
