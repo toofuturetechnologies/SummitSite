@@ -379,7 +379,7 @@ export async function getRevenueBreakdown(
 
     if (error) throw error;
 
-    const totalRevenue = bookings?.reduce((sum, b) => sum + (b.amount || 0), 0) || 0;
+    const totalRevenue = bookings?.reduce((sum: number, b: any) => sum + (b.amount || 0), 0) || 0;
     const platformCommission = totalRevenue * 0.12; // 12%
     const hostingFees = (bookings?.length || 0) * 1; // $1 per booking
     const guidePayouts = totalRevenue - platformCommission - hostingFees;
