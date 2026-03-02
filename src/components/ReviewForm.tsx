@@ -1,37 +1,39 @@
+/**
+ * Review Form Component
+ * Allows customers to submit reviews for completed trips
+ */
+
 'use client';
 
 import { useState } from 'react';
-import { X, Star } from 'lucide-react';
-import { createClient } from '@/lib/supabase';
-
-const supabase = createClient();
+import { Star, Loader } from 'lucide-react';
 
 interface ReviewFormProps {
-  tripId: string;
+  bookingId: string;
   guideId: string;
-  reviewType: 'trip' | 'guide';
-  onClose: () => void;
-  onSuccess: () => void;
+  guideName: string;
+  tripTitle: string;
+  customerId: string;
+  onSuccess?: () => void;
+  onCancel?: () => void;
 }
 
 export default function ReviewForm({
-  tripId,
+  bookingId,
   guideId,
-  reviewType,
-  onClose,
+  guideName,
+  tripTitle,
+  customerId,
   onSuccess,
+  onCancel,
 }: ReviewFormProps) {
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
   const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [socialLinks, setSocialLinks] = useState({
-    youtube: '',
-    instagram: '',
-    tiktok: '',
-  });
+  const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,38 +41,29 @@ export default function ReviewForm({
     setLoading(true);
 
     try {
-      const { data: authData } = await supabase.auth.getUser();
-      if (!authData.user) {
-        throw new Error('You must be logged in to leave a review');
-      }
-
-      // Get or create profile for this user
-      const { data: profileData } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('user_id', authData.user.id)
-        .single();
-
-      const profileId = profileData?.id || authData.user.id;
-
-      // Create review with social media links
-      const { error: reviewError } = await supabase.from('reviews').insert({
-        trip_id: tripId,
-        guide_id: guideId,
-        reviewer_id: profileId,
-        rating,
-        title,
-        body,
-        review_type: reviewType,
-        youtube_url: socialLinks.youtube || null,
-        instagram_url: socialLinks.instagram || null,
-        tiktok_url: socialLinks.tiktok || null,
+      const res = await fetch('/api/reviews/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          bookingId,
+          guideId,
+          customerId,
+          rating,
+          title,
+          content,
+        }),
       });
 
-      if (reviewError) throw reviewError;
+      const data = await res.json();
 
-      onSuccess();
-      onClose();
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to submit review');
+      }
+
+      setSuccess(true);
+      setTimeout(() => {
+        onSuccess?.();
+      }, 1000);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to submit review');
     } finally {
@@ -78,140 +71,143 @@ export default function ReviewForm({
     }
   };
 
-  return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-end md:items-center justify-center p-4">
-      <div className="bg-white dark:bg-slate-900 dark:bg-slate-900 rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl">
-        {/* Header */}
-        <div className="sticky top-0 bg-white dark:bg-slate-900 dark:bg-slate-900 border-b border-gray-200 dark:border-slate-700 dark:border-slate-700 p-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100">
-            {reviewType === 'trip' ? 'Review This Trip' : 'Review This Guide'}
-          </h2>
-          <button
-            onClick={onClose}
-            className="text-gray-600 dark:text-gray-400 dark:text-gray-400 hover:text-gray-900 dark:text-gray-100 dark:text-gray-100 transition"
-          >
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-              <p className="text-red-800 text-sm">{error}</p>
-            </div>
-          )}
-
-          {/* Rating */}
-          <div>
-            <label className="block text-gray-900 dark:text-gray-100 dark:text-gray-100 font-semibold mb-3">
-              Rating
-            </label>
-            <div className="flex gap-2">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  key={star}
-                  type="button"
-                  onClick={() => setRating(star)}
-                  onMouseEnter={() => setHoverRating(star)}
-                  onMouseLeave={() => setHoverRating(0)}
-                  className="transition"
-                >
-                  <Star
-                    className={`w-8 h-8 ${
-                      (hoverRating || rating) >= star
-                        ? 'fill-amber-500 text-amber-500'
-                        : 'text-gray-300'
-                    }`}
-                  />
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Title */}
-          <div>
-            <label className="block text-gray-900 dark:text-gray-100 dark:text-gray-100 font-semibold mb-2">
-              Title
-            </label>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g., 'Best experience of my life!'"
-              className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 dark:text-gray-100 dark:text-gray-100"
-              required
-            />
-          </div>
-
-          {/* Review Text */}
-          <div>
-            <label className="block text-gray-900 dark:text-gray-100 dark:text-gray-100 font-semibold mb-2">
-              Your Review
-            </label>
-            <textarea
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              placeholder="Share your experience... What was great? Any suggestions?"
-              rows={4}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 dark:text-gray-100 dark:text-gray-100"
-              required
-            />
-            <p className="text-gray-600 dark:text-gray-400 dark:text-gray-400 text-xs mt-1">Minimum 10 characters</p>
-          </div>
-
-          {/* Social Media Links */}
-          <div>
-            <label className="block text-gray-900 dark:text-gray-100 dark:text-gray-100 font-semibold mb-3">
-              📱 Share Your Content (Optional)
-            </label>
-            <p className="text-gray-600 dark:text-gray-400 dark:text-gray-400 text-sm mb-3">
-              Link your YouTube, Instagram, or TikTok content from this trip. Help showcase the adventure!
-            </p>
-            <div className="space-y-2">
-              <input
-                type="url"
-                value={socialLinks.youtube}
-                onChange={(e) => setSocialLinks({ ...socialLinks, youtube: e.target.value })}
-                placeholder="YouTube video URL (optional)"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 dark:text-gray-100 dark:text-gray-100 text-sm"
-              />
-              <input
-                type="url"
-                value={socialLinks.instagram}
-                onChange={(e) => setSocialLinks({ ...socialLinks, instagram: e.target.value })}
-                placeholder="Instagram post URL (optional)"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 dark:text-gray-100 dark:text-gray-100 text-sm"
-              />
-              <input
-                type="url"
-                value={socialLinks.tiktok}
-                onChange={(e) => setSocialLinks({ ...socialLinks, tiktok: e.target.value })}
-                placeholder="TikTok video URL (optional)"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-slate-600 dark:border-slate-600 rounded-lg focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-900 dark:text-gray-100 dark:text-gray-100 text-sm"
-              />
-            </div>
-          </div>
-
-          {/* Submit Button */}
-          <div className="flex gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 px-4 py-3 border border-gray-300 dark:border-slate-600 dark:border-slate-600 text-gray-900 dark:text-gray-100 dark:text-gray-100 font-semibold rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 dark:bg-slate-900 dark:bg-slate-900 transition"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={loading || !title.trim() || !body.trim() || body.trim().length < 10}
-              className="flex-1 px-4 py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold rounded-lg transition"
-            >
-              {loading ? 'Submitting...' : 'Post Review'}
-            </button>
-          </div>
-        </form>
+  if (success) {
+    return (
+      <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6 text-center">
+        <div className="text-4xl mb-3">✨</div>
+        <h3 className="font-semibold text-green-900 dark:text-green-100 mb-2">
+          Thank you for your review!
+        </h3>
+        <p className="text-sm text-green-700 dark:text-green-300">
+          Your feedback helps {guideName} improve their trips.
+        </p>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-slate-800 rounded-lg border border-sky-200 dark:border-slate-700 p-6">
+      {/* Header */}
+      <div>
+        <h2 className="text-2xl font-bold text-sky-900 dark:text-sky-100 mb-1">
+          Review Your Trip
+        </h2>
+        <p className="text-sky-600 dark:text-sky-400">
+          How was your experience with {guideName}?
+        </p>
+      </div>
+
+      {error && (
+        <div className="bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 p-4 rounded-lg text-sm">
+          {error}
+        </div>
+      )}
+
+      {/* Rating */}
+      <div>
+        <label className="block text-sm font-medium text-sky-900 dark:text-sky-100 mb-3">
+          Rating
+        </label>
+        <div className="flex gap-3">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              type="button"
+              onMouseEnter={() => setHoverRating(star)}
+              onMouseLeave={() => setHoverRating(0)}
+              onClick={() => setRating(star)}
+              className="transition-transform hover:scale-110"
+            >
+              <Star
+                className={`h-8 w-8 ${
+                  star <= (hoverRating || rating)
+                    ? 'fill-amber-400 text-amber-400'
+                    : 'text-gray-300 dark:text-gray-600'
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+        <p className="text-sm text-sky-600 dark:text-sky-400 mt-2">
+          {rating === 5 && "Excellent! I'd recommend this trip."}
+          {rating === 4 && "Great experience, minor issues."}
+          {rating === 3 && "Good trip, room for improvement."}
+          {rating === 2 && "Below expectations."}
+          {rating === 1 && "Poor experience."}
+        </p>
+      </div>
+
+      {/* Title */}
+      <div>
+        <label className="block text-sm font-medium text-sky-900 dark:text-sky-100 mb-2">
+          Review Title
+        </label>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="e.g., Amazing mountain adventure!"
+          maxLength={100}
+          required
+          className="w-full px-4 py-2 bg-sky-50 dark:bg-slate-700 border border-sky-200 dark:border-slate-600 rounded-lg text-sky-900 dark:text-sky-100 placeholder-sky-600 dark:placeholder-sky-400 focus:outline-none focus:border-sky-400"
+        />
+        <p className="text-xs text-sky-600 dark:text-sky-400 mt-1">
+          {title.length}/100 characters
+        </p>
+      </div>
+
+      {/* Content */}
+      <div>
+        <label className="block text-sm font-medium text-sky-900 dark:text-sky-100 mb-2">
+          Your Review
+        </label>
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="Tell other adventurers about your experience... What was the highlight? Any tips for future guests?"
+          rows={6}
+          maxLength={2000}
+          required
+          className="w-full px-4 py-2 bg-sky-50 dark:bg-slate-700 border border-sky-200 dark:border-slate-600 rounded-lg text-sky-900 dark:text-sky-100 placeholder-sky-600 dark:placeholder-sky-400 focus:outline-none focus:border-sky-400"
+        />
+        <p className="text-xs text-sky-600 dark:text-sky-400 mt-1">
+          {content.length}/2000 characters
+        </p>
+      </div>
+
+      {/* Actions */}
+      <div className="flex gap-3 pt-4">
+        <button
+          type="submit"
+          disabled={loading || !title.trim() || !content.trim()}
+          className="flex-1 px-4 py-2 bg-sky-500 hover:bg-sky-600 disabled:opacity-50 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+        >
+          {loading && <Loader className="h-4 w-4 animate-spin" />}
+          {loading ? 'Submitting...' : 'Submit Review'}
+        </button>
+        {onCancel && (
+          <button
+            type="button"
+            onClick={onCancel}
+            className="px-4 py-2 bg-sky-100 dark:bg-slate-700 text-sky-700 dark:text-sky-300 font-medium rounded-lg hover:bg-sky-200 dark:hover:bg-slate-600 transition-colors"
+          >
+            Cancel
+          </button>
+        )}
+      </div>
+
+      {/* Tips */}
+      <div className="bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-800 rounded-lg p-4">
+        <p className="text-xs font-medium text-sky-900 dark:text-sky-100 mb-2">
+          💡 Tips for a helpful review:
+        </p>
+        <ul className="text-xs text-sky-700 dark:text-sky-300 space-y-1">
+          <li>• Be specific about what you enjoyed</li>
+          <li>• Mention the guide's professionalism and knowledge</li>
+          <li>• Share any constructive feedback</li>
+          <li>• Would you book again? Let others know!</li>
+        </ul>
+      </div>
+    </form>
   );
 }

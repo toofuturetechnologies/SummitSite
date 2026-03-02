@@ -1,230 +1,223 @@
+/**
+ * Reviews Section Component
+ * Displays reviews and ratings for a guide
+ */
+
 'use client';
 
-import { useEffect, useState } from 'react';
-import { createClient } from '@/lib/supabase';
-import { Star, MessageCircle } from 'lucide-react';
-import Link from 'next/link';
-import { TikTokReviewEmbed } from './TikTokReviewEmbed';
-
-const supabase = createClient();
+import { useState, useEffect } from 'react';
+import { Star, Loader } from 'lucide-react';
 
 interface Review {
   id: string;
   rating: number;
   title: string;
-  body: string;
-  tiktok_url?: string;
-  video_id?: string;
-  guide_response?: string;
-  guide_responded_at?: string;
+  content: string;
   created_at: string;
-  profiles: { full_name: string };
+  reviewer?: {
+    id: string;
+    name: string;
+    avatar_url?: string;
+  };
+  verified_booking: boolean;
 }
 
-export default function ReviewsSection({ tripId, guideId }: { tripId: string; guideId: string }) {
+interface ReviewStats {
+  average_rating: number;
+  total_reviews: number;
+  rating_distribution: Record<number, number>;
+}
+
+interface ReviewsSectionProps {
+  guideId: string;
+  guideName?: string;
+  limit?: number;
+  compact?: boolean;
+}
+
+export default function ReviewsSection({
+  guideId,
+  guideName = 'This guide',
+  limit = 10,
+  compact = false,
+}: ReviewsSectionProps) {
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [stats, setStats] = useState<ReviewStats | null>(null);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
-  const [isGuide, setIsGuide] = useState(false);
-  const [respondingId, setRespondingId] = useState<string | null>(null);
-  const [responseText, setResponseText] = useState('');
-  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        // Get current user
-        const { data: { user: authUser } } = await supabase.auth.getUser();
-        if (authUser) {
-          setUser(authUser);
+    loadReviews();
+  }, [guideId]);
 
-          // Check if user is the guide
-          const { data: guide } = await supabase
-            .from('guides')
-            .select('id')
-            .eq('user_id', authUser.id)
-            .single();
-
-          if (guide?.id === guideId) {
-            setIsGuide(true);
-          }
-        }
-
-        // Fetch reviews
-        const { data: reviewsData, error } = await supabase
-          .from('reviews')
-          .select('*, profiles!reviews_reviewer_id_fkey(full_name)')
-          .eq('trip_id', tripId)
-          .order('created_at', { ascending: false });
-
-        if (!error && reviewsData) {
-          setReviews(reviewsData as any[]);
-        }
-      } catch (err) {
-        console.error('Error loading reviews:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, [tripId, guideId]);
-
-  const handleSubmitResponse = async (reviewId: string) => {
-    if (!responseText.trim() || !isGuide) return;
-
+  const loadReviews = async () => {
     try {
-      setSubmitting(true);
-      const { error } = await supabase
-        .from('reviews')
-        .update({
-          guide_response: responseText,
-          guide_responded_at: new Date().toISOString(),
-        })
-        .eq('id', reviewId);
-
-      if (!error) {
-        // Reload reviews
-        const { data: updatedReviews } = await supabase
-          .from('reviews')
-          .select('*, profiles!reviews_reviewer_id_fkey(full_name)')
-          .eq('trip_id', tripId)
-          .order('created_at', { ascending: false });
-
-        if (updatedReviews) {
-          setReviews(updatedReviews as any[]);
-        }
-        setRespondingId(null);
-        setResponseText('');
-      }
+      setLoading(true);
+      const res = await fetch(`/api/reviews/guide/${guideId}?limit=100`);
+      
+      if (!res.ok) throw new Error('Failed to load reviews');
+      
+      const data = await res.json();
+      setReviews(data.reviews);
+      setStats(data.stats);
     } catch (err) {
-      console.error('Error submitting response:', err);
+      setError(err instanceof Error ? err.message : 'Failed to load reviews');
     } finally {
-      setSubmitting(false);
+      setLoading(false);
     }
   };
 
   if (loading) {
-    return <div className="text-gray-600 dark:text-gray-400 dark:text-gray-400">Loading reviews...</div>;
-  }
-
-  if (reviews.length === 0) {
     return (
-      <div className="bg-white dark:bg-slate-900 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 dark:border-slate-700 rounded-lg p-6 shadow-sm">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 dark:text-gray-100 mb-4">Reviews</h2>
-        <p className="text-gray-600 dark:text-gray-400 dark:text-gray-400">No reviews yet. Be the first to review this trip!</p>
+      <div className="flex items-center justify-center py-12">
+        <Loader className="h-8 w-8 animate-spin text-sky-500" />
       </div>
     );
   }
 
-  return (
-    <div id="reviews" className="bg-white dark:bg-slate-900 dark:bg-slate-900 border border-gray-200 dark:border-slate-700 dark:border-slate-700 rounded-lg p-6 shadow-sm scroll-mt-20">
-      <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 dark:text-gray-100 mb-6">Reviews ({reviews.length})</h2>
+  if (error) {
+    return (
+      <div className="bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-200 p-4 rounded-lg">
+        {error}
+      </div>
+    );
+  }
 
-      <div className="space-y-6">
-        {reviews.map((review) => (
-          <div key={review.id} className="border-b border-gray-200 dark:border-slate-700 dark:border-slate-700 pb-6 last:border-b-0">
-            {/* Review Header */}
-            <div className="flex items-start justify-between mb-2">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
+  if (!stats || stats.total_reviews === 0) {
+    return (
+      <div className="text-center py-8 text-gray-600 dark:text-gray-400">
+        <p>No reviews yet. Be the first to review this guide!</p>
+      </div>
+    );
+  }
+
+  const displayedReviews = showAll ? reviews : reviews.slice(0, limit);
+
+  return (
+    <div className="space-y-6">
+      {/* Rating Summary */}
+      {!compact && (
+        <div className="bg-white dark:bg-slate-800 rounded-lg border border-sky-200 dark:border-slate-700 p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Average Rating */}
+            <div>
+              <div className="flex items-center gap-4 mb-4">
+                <div className="text-5xl font-bold text-amber-400">
+                  {stats.average_rating.toFixed(1)}
+                </div>
+                <div>
+                  <div className="flex gap-1 mb-2">
+                    {[1, 2, 3, 4, 5].map((star) => (
                       <Star
-                        key={i}
-                        className={`w-4 h-4 ${
-                          i < review.rating
-                            ? 'fill-amber-500 text-amber-500'
-                            : 'text-gray-300'
+                        key={star}
+                        className={`h-5 w-5 ${
+                          star <= Math.round(stats.average_rating)
+                            ? 'fill-amber-400 text-amber-400'
+                            : 'text-gray-300 dark:text-gray-600'
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-700 dark:text-gray-300 dark:text-gray-300 font-medium">
-                    {new Date(review.created_at).toLocaleDateString()}
-                  </span>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    Based on {stats.total_reviews} review{stats.total_reviews !== 1 ? 's' : ''}
+                  </p>
                 </div>
-                <h3 className="font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 text-base">
-                  {review.title}
-                </h3>
-                <p className="text-gray-700 dark:text-gray-300 dark:text-gray-300 text-sm">
-                  by {review.profiles?.full_name}
-                </p>
               </div>
             </div>
 
-            {/* Review Body */}
-            <p className="text-gray-700 dark:text-gray-300 dark:text-gray-300 mb-4 leading-relaxed">{review.body}</p>
+            {/* Rating Distribution */}
+            <div className="space-y-2">
+              {[5, 4, 3, 2, 1].map((rating) => {
+                const count = stats.rating_distribution[rating as keyof typeof stats.rating_distribution] || 0;
+                const percentage = stats.total_reviews > 0 ? (count / stats.total_reviews) * 100 : 0;
+                
+                return (
+                  <div key={rating} className="flex items-center gap-3">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300 w-12">
+                      {rating} ⭐
+                    </span>
+                    <div className="flex-1 bg-gray-200 dark:bg-slate-700 rounded-full h-2">
+                      <div
+                        className="bg-amber-400 h-2 rounded-full transition-all"
+                        style={{ width: `${percentage}%` }}
+                      />
+                    </div>
+                    <span className="text-sm text-gray-600 dark:text-gray-400 w-8 text-right">
+                      {count}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
-            {/* TikTok Video Embed */}
-            {review.video_id && (
-              <div className="mb-6 bg-gray-50 dark:bg-slate-800 rounded-lg p-4 border border-gray-200 dark:border-slate-700">
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">
-                  📱 Video from adventure:
-                </p>
-                <TikTokReviewEmbed
-                  videoId={review.video_id}
-                  tiktokUrl={review.tiktok_url}
-                />
-              </div>
-            )}
-
-            {/* Guide Response */}
-            {review.guide_response && (
-              <div className="bg-blue-50 rounded-lg p-4 mb-4 border-l-4 border-blue-500">
-                <p className="text-sm font-bold text-blue-900 mb-2">Guide's Response</p>
-                <p className="text-gray-800 text-sm mb-2 leading-relaxed">{review.guide_response}</p>
-                <p className="text-gray-700 dark:text-gray-300 dark:text-gray-300 text-xs">
-                  {review.guide_responded_at &&
-                    new Date(review.guide_responded_at).toLocaleDateString()}
-                </p>
-              </div>
-            )}
-
-            {/* Guide Response Form */}
-            {isGuide && !review.guide_response && respondingId === review.id && (
-              <div className="bg-blue-50 rounded-lg p-4 space-y-3">
-                <textarea
-                  value={responseText}
-                  onChange={(e) => setResponseText(e.target.value)}
-                  placeholder="Write your response..."
-                  rows={3}
-                  className="w-full bg-white dark:bg-slate-900 dark:bg-slate-900 border border-gray-300 dark:border-slate-600 dark:border-slate-600 text-gray-900 dark:text-gray-100 dark:text-gray-100 px-3 py-2 rounded-lg focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
-                />
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => handleSubmitResponse(review.id)}
-                    disabled={!responseText.trim() || submitting}
-                    className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg transition text-sm font-medium"
-                  >
-                    {submitting ? 'Submitting...' : 'Submit Response'}
-                  </button>
-                  <button
-                    onClick={() => {
-                      setRespondingId(null);
-                      setResponseText('');
-                    }}
-                    className="text-gray-700 dark:text-gray-300 dark:text-gray-300 hover:text-gray-900 dark:text-gray-100 dark:text-gray-100 px-4 py-2 text-sm font-medium transition"
-                  >
-                    Cancel
-                  </button>
+      {/* Individual Reviews */}
+      <div className="space-y-4">
+        {displayedReviews.map((review) => (
+          <div
+            key={review.id}
+            className="bg-white dark:bg-slate-800 rounded-lg border border-sky-200 dark:border-slate-700 p-6"
+          >
+            {/* Review Header */}
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex-1">
+                <h4 className="font-semibold text-sky-900 dark:text-sky-100">
+                  {review.title}
+                </h4>
+                <div className="flex items-center gap-3 mt-2">
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        className={`h-4 w-4 ${
+                          star <= review.rating
+                            ? 'fill-amber-400 text-amber-400'
+                            : 'text-gray-300 dark:text-gray-600'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-xs text-amber-600 dark:text-amber-400 font-medium">
+                    {review.rating}.0
+                  </span>
                 </div>
               </div>
-            )}
+              {review.verified_booking && (
+                <span className="text-xs bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 px-2 py-1 rounded">
+                  ✓ Verified
+                </span>
+              )}
+            </div>
 
-            {/* Guide Response Button */}
-            {isGuide && !review.guide_response && respondingId !== review.id && (
-              <button
-                onClick={() => setRespondingId(review.id)}
-                className="text-blue-600 hover:text-blue-700 text-sm flex items-center gap-1 font-medium transition"
-              >
-                <MessageCircle className="w-4 h-4" />
-                Respond to Review
-              </button>
-            )}
+            {/* Review Content */}
+            <p className="text-gray-700 dark:text-gray-300 mb-3 text-sm">
+              {review.content}
+            </p>
+
+            {/* Review Footer */}
+            <div className="flex items-center justify-between text-xs text-gray-600 dark:text-gray-400">
+              <span>
+                {review.reviewer?.name || 'Anonymous'} • {new Date(review.created_at).toLocaleDateString()}
+              </span>
+            </div>
           </div>
         ))}
       </div>
+
+      {/* Show More Button */}
+      {reviews.length > limit && !showAll && (
+        <div className="text-center">
+          <button
+            onClick={() => setShowAll(true)}
+            className="px-6 py-2 bg-sky-100 dark:bg-sky-900/20 text-sky-700 dark:text-sky-300 font-medium rounded-lg hover:bg-sky-200 dark:hover:bg-sky-900/30 transition-colors"
+          >
+            Show all {stats.total_reviews} reviews
+          </button>
+        </div>
+      )}
     </div>
   );
 }
