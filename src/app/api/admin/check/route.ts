@@ -48,18 +48,20 @@ export async function GET(request: NextRequest) {
     }
 
     let userId: string;
+    let userEmail: string;
     let payload: any;
     try {
       payload = JSON.parse(
         Buffer.from(parts[1], 'base64url').toString('utf-8')
       );
       userId = payload.sub;
-      console.log('[ADMIN-CHECK] Decoded JWT, userId:', userId, 'email:', payload.email);
+      userEmail = payload.email;
+      console.log('[ADMIN-CHECK] Decoded JWT, userId:', userId, 'email:', userEmail);
 
-      if (!userId) {
-        console.log('[ADMIN-CHECK] ERROR: No sub in JWT payload');
+      if (!userId || !userEmail) {
+        console.log('[ADMIN-CHECK] ERROR: Missing sub or email in JWT payload');
         return NextResponse.json(
-          { error: 'No user in token', isAdmin: false, debug: { payload: Object.keys(payload) } },
+          { error: 'No user data in token', isAdmin: false, debug: { payload: Object.keys(payload) } },
           { status: 401 }
         );
       }
@@ -71,13 +73,13 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    console.log('[ADMIN-CHECK] Querying profiles table for user:', userId);
+    console.log('[ADMIN-CHECK] Querying profiles table for email:', userEmail);
 
-    // Query with admin client using SERVICE_ROLE_KEY
+    // Query by email (more reliable than user ID in case of mismatch)
     const { data: profile, error: profileError } = await supabaseAdmin
       .from('profiles')
       .select('id, name, email, admin_role, admin_since')
-      .eq('id', userId)
+      .eq('email', userEmail)
       .single();
 
     console.log('[ADMIN-CHECK] Profile query result:', { profile, error: profileError });
@@ -109,14 +111,10 @@ export async function GET(request: NextRequest) {
       isAdmin,
       role: profile.admin_role || 'user',
       user_id: userId,
+      profile_id: profile.id,
       name: profile.name,
       email: profile.email,
       admin_since: profile.admin_since,
-      debug: { 
-        profile_id: profile.id,
-        jwt_sub: userId,
-        match: profile.id === userId
-      }
     });
   } catch (error) {
     console.error('[ADMIN-CHECK] UNEXPECTED ERROR:', error);
