@@ -3,9 +3,13 @@
  * Executes all test cases from ADMIN-PANEL-PHASE-6-TESTING.md
  * 
  * Usage: npx ts-node scripts/run-admin-tests.ts
+ * 
+ * NOTE: This script is only run manually for testing.
+ * It is NOT part of the build process.
  */
 
-import fetch from 'node-fetch';
+// Use native fetch (Node 18+)
+// No import needed - fetch is globally available
 
 interface TestResult {
   name: string;
@@ -60,7 +64,7 @@ async function apiCall(
       ...(AUTH_TOKEN && { Authorization: `Bearer ${AUTH_TOKEN}` }),
     },
     body: body ? JSON.stringify(body) : undefined,
-  } as any);
+  });
 
   if (!response.ok) {
     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -77,14 +81,14 @@ async function testAuthentication() {
   await test('Admin access gate - non-admin gets 403', async () => {
     const res = await fetch(`${ADMIN_URL}/admin`, {
       headers: { 'Cookie': 'token=invalid' },
-    } as any);
+    });
     // Should redirect or return 403
   });
 
   await test('Admin dashboard loads', async () => {
     const res = await fetch(`${API_URL}/admin/check`, {
       headers: { Authorization: `Bearer ${AUTH_TOKEN}` },
-    } as any);
+    });
     const data = await res.json();
     await assert(data.isAdmin, 'Should be admin');
   });
@@ -211,7 +215,8 @@ async function testErrorHandling() {
   await test('401 without auth token', async () => {
     try {
       const response = await fetch(`${API_URL}/admin/users`);
-      await assert(response.status === 401, 'Should return 401');
+      const status = response.status;
+      await assert(status === 401, `Should return 401, got ${status}`);
     } catch (error) {
       // Expected
     }
