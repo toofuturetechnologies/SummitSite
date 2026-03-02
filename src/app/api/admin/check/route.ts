@@ -78,11 +78,20 @@ export async function GET(request: NextRequest) {
     // Query by email (more reliable than user ID in case of mismatch)
     const { data: profile, error: profileError } = await supabaseAdmin
       .from('profiles')
-      .select('id, name, email, admin_role, admin_since')
+      .select('*')
       .eq('email', userEmail)
       .single();
 
-    console.log('[ADMIN-CHECK] Profile query result:', { profile, error: profileError });
+    console.log('[ADMIN-CHECK] Profile query result:');
+    console.log('  - error:', profileError?.message);
+    console.log('  - profile exists:', !!profile);
+    if (profile) {
+      console.log('  - profile.id:', profile.id);
+      console.log('  - profile.email:', profile.email);
+      console.log('  - profile.admin_role:', profile.admin_role);
+      console.log('  - admin_role type:', typeof profile.admin_role);
+      console.log('  - admin_role !== null:', profile.admin_role !== null);
+    }
 
     if (profileError) {
       console.error('[ADMIN-CHECK] ERROR: Profile query failed:', profileError.message);
@@ -90,22 +99,22 @@ export async function GET(request: NextRequest) {
         { 
           error: `Profile query failed: ${profileError.message}`, 
           isAdmin: false,
-          debug: { userId, error: profileError.message }
+          debug: { userEmail, error: profileError.message }
         },
         { status: 404 }
       );
     }
 
     if (!profile) {
-      console.log('[ADMIN-CHECK] ERROR: No profile found for userId:', userId);
+      console.log('[ADMIN-CHECK] ERROR: No profile found for email:', userEmail);
       return NextResponse.json(
-        { error: 'Profile not found', isAdmin: false, debug: { userId } },
+        { error: 'Profile not found', isAdmin: false, debug: { userEmail } },
         { status: 404 }
       );
     }
 
     const isAdmin = profile.admin_role !== null;
-    console.log('[ADMIN-CHECK] SUCCESS! isAdmin:', isAdmin, 'admin_role:', profile.admin_role, 'email:', profile.email);
+    console.log('[ADMIN-CHECK] FINAL RESULT: isAdmin =', isAdmin, '(admin_role =', profile.admin_role + ')');
 
     return NextResponse.json({
       isAdmin,

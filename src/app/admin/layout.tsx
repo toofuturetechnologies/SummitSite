@@ -42,39 +42,43 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         const { data: { session }, error: sessionError } = await supabase.auth.getSession();
         
         if (sessionError || !session) {
-          console.log('❌ Admin layout: No session found');
+          console.log('❌ Admin layout: No session found, error:', sessionError?.message);
           router.push('/auth/login?returnTo=/admin');
           return;
         }
 
-        console.log('✅ Admin layout: Session found, calling admin check API...');
+        console.log('✅ Admin layout: Session found, user email:', session.user?.email);
         const accessToken = session.access_token;
 
         // Call admin check with Authorization header
+        console.log('🔐 Admin layout: Calling /api/admin/check with Bearer token...');
         const res = await fetch('/api/admin/check', {
           headers: {
             'Authorization': `Bearer ${accessToken}`,
           },
         });
         
-        if (!res.ok) {
-          console.log('❌ Admin layout: Admin check failed:', res.status);
-          router.push('/');
-          return;
-        }
-
+        console.log('🔐 Admin layout: Response status:', res.status, 'ok:', res.ok);
         const data = await res.json();
-        console.log('✅ Admin layout: Admin check passed, isAdmin:', data.isAdmin);
+        console.log('🔐 Admin layout: Response data:', data);
         
-        if (!data.isAdmin) {
-          console.log('❌ Admin layout: User is not admin');
+        if (!res.ok) {
+          console.log('❌ Admin layout: Admin check failed, isAdmin:', data.isAdmin);
           router.push('/');
           return;
         }
 
+        if (!data.isAdmin) {
+          console.log('❌ Admin layout: User is not admin, admin_role must be null');
+          console.log('Admin check response:', JSON.stringify(data, null, 2));
+          router.push('/');
+          return;
+        }
+
+        console.log('✅ Admin layout: User IS admin! Setting admin data...');
         setAdminData(data);
       } catch (error) {
-        console.error('❌ Admin check failed:', error);
+        console.error('❌ Admin check failed with exception:', error);
         router.push('/');
       } finally {
         setLoading(false);
