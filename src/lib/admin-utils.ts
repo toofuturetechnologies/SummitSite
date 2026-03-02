@@ -297,7 +297,7 @@ export async function getDisputeStats(supabase: ReturnType<typeof createClient>)
     const { data: byStatus, error: statusError } = await supabase
       .from('disputes')
       .select('status')
-      .then(res => ({
+      .then((res: any) => ({
         data: res.data?.reduce((acc: any, d: any) => {
           acc[d.status] = (acc[d.status] || 0) + 1;
           return acc;
@@ -310,7 +310,7 @@ export async function getDisputeStats(supabase: ReturnType<typeof createClient>)
     const { data: byResolution, error: resError } = await supabase
       .from('disputes')
       .select('resolution')
-      .then(res => ({
+      .then((res: any) => ({
         data: res.data?.reduce((acc: any, d: any) => {
           acc[d.resolution || 'pending'] = (acc[d.resolution || 'pending'] || 0) + 1;
           return acc;
@@ -339,7 +339,7 @@ export async function getReportStats(supabase: ReturnType<typeof createClient>) 
     const { data, error } = await supabase
       .from('content_reports')
       .select('status, reason')
-      .then(res => {
+      .then((res: any) => {
         const byStatus: Record<string, number> = {};
         const byReason: Record<string, number> = {};
 
