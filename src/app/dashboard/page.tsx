@@ -54,13 +54,24 @@ export default function DashboardPage() {
 
         // Check if user is admin
         console.log('🔐 Dashboard: Checking admin status...');
-        const adminCheckRes = await fetch('/api/admin/check');
-        const adminData = await adminCheckRes.json();
-        
-        if (adminData.isAdmin) {
-          console.log('✅ Dashboard: User is admin, redirecting to admin panel');
-          router.push('/admin');
-          return;
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session?.access_token) {
+          console.log('🔐 Dashboard: Got access token, calling admin check...');
+          const adminCheckRes = await fetch('/api/admin/check', {
+            headers: {
+              'Authorization': `Bearer ${session.access_token}`,
+            },
+          });
+          const adminData = await adminCheckRes.json();
+          console.log('🔐 Dashboard: Admin check response:', adminData);
+          
+          if (adminData.isAdmin) {
+            console.log('✅ Dashboard: User is admin, redirecting to admin panel');
+            router.push('/admin');
+            return;
+          }
+        } else {
+          console.log('⚠️ Dashboard: No access token available');
         }
 
         // Get guide
