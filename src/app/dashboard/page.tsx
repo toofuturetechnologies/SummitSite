@@ -52,6 +52,17 @@ export default function DashboardPage() {
         console.log('✅ Dashboard: User found:', user.id);
         setUser(user);
 
+        // Check if user is admin
+        console.log('🔐 Dashboard: Checking admin status...');
+        const adminCheckRes = await fetch('/api/admin/check');
+        const adminData = await adminCheckRes.json();
+        
+        if (adminData.isAdmin) {
+          console.log('✅ Dashboard: User is admin, redirecting to admin panel');
+          router.push('/admin');
+          return;
+        }
+
         // Get guide
         console.log('📋 Dashboard: Fetching guide...');
         const { data: guideData, error: guideError } = await (supabase as any)
@@ -61,7 +72,7 @@ export default function DashboardPage() {
           .single();
 
         if (guideError || !guideData) {
-          console.log('ℹ️ Dashboard: Not a guide, redirecting to trips');
+          console.log('ℹ️ Dashboard: Not a guide or admin, redirecting to trips');
           router.push('/trips');
           return;
         }
