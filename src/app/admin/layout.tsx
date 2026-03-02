@@ -7,6 +7,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { createClient } from '@/lib/supabase';
 import Link from 'next/link';
 import {
   BarChart3,
@@ -25,6 +26,8 @@ interface AdminData {
   name: string;
 }
 
+const supabase = createClient();
+
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
   const [adminData, setAdminData] = useState<AdminData | null>(null);
@@ -34,23 +37,44 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const checkAdmin = async () => {
       try {
-        const res = await fetch('/api/admin/check');
+        // Get current session with access token
+        console.log('🔐 Admin layout: Getting session...');
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        
+        if (sessionError || !session) {
+          console.log('❌ Admin layout: No session found');
+          router.push('/auth/login?returnTo=/admin');
+          return;
+        }
+
+        console.log('✅ Admin layout: Session found, calling admin check API...');
+        const accessToken = session.access_token;
+
+        // Call admin check with Authorization header
+        const res = await fetch('/api/admin/check', {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        });
         
         if (!res.ok) {
+          console.log('❌ Admin layout: Admin check failed:', res.status);
           router.push('/');
           return;
         }
 
         const data = await res.json();
+        console.log('✅ Admin layout: Admin check passed, isAdmin:', data.isAdmin);
         
         if (!data.isAdmin) {
+          console.log('❌ Admin layout: User is not admin');
           router.push('/');
           return;
         }
 
         setAdminData(data);
       } catch (error) {
-        console.error('Admin check failed:', error);
+        console.error('❌ Admin check failed:', error);
         router.push('/');
       } finally {
         setLoading(false);

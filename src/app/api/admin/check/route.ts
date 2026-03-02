@@ -3,90 +3,82 @@
  * GET /api/admin/check
  * 
  * Verifies if current user is an admin and returns admin role
- * Uses session from cookies (not SERVICE_ROLE_KEY)
+ * Reads Authorization header with Bearer token
  */
 
 export const dynamic = 'force-dynamic';
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { createClient } from '@supabase/supabase-js';
 import { handleError, ApiError } from '@/lib/api-utils';
+
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+  process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+);
 
 export async function GET(request: NextRequest) {
   try {
-    // Create server client with cookies from request
-    let response = NextResponse.next({
-      request: {
-        headers: request.headers,
-      },
-    });
+    // Get JWT from Authorization header
+    const authHeader = request.headers.get('authorization');
+    if (!authHeader?.startsWith('Bearer ')) {
+      console.log('Admin check: No Authorization header');
+      throw new ApiError('Unauthorized - no auth header', 401, 'NOT_AUTHENTICATED');
+    }
 
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
-      {
-        cookies: {
-          get(name: string) {
-            return request.cookies.get(name)?.value;
-          },
-          set(name: string, value: string, options: CookieOptions) {
-            request.cookies.set({ name, value, ...options });
-            response = NextResponse.next({
-              request: { headers: request.headers },
-            });
-            response.cookies.set({ name, value, ...options });
-          },
-          remove(name: string, options: CookieOptions) {
-            request.cookies.set({ name, value: '', ...options });
-            response = NextResponse.next({
-              request: { headers: request.headers },
-            });
-            response.cookies.set({ name, value: '', ...options });
-          },
-        },
-      }
-    );
-
-    // Get authenticated user from session
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const token = authHeader.substring(7);
     
-    if (authError || !user) {
-      console.log('Admin check: No authenticated user');
-      throw new ApiError('Unauthorized', 401, 'NOT_AUTHENTICATED');
+    // Parse JWT manually (without external library)
+    // JWT format: header.payload.signature
+    const parts = token.split('.');
+    if (parts.length !== 3) {
+      console.log('Admin check: Invalid JWT format');
+      throw new ApiError('Unauthorized - invalid token', 401, 'INVALID_TOKEN');
     }
 
-    console.log('Admin check: User found:', user.id, user.email);
+    try {
+      // Decode the payload (it's base64url encoded)
+      const payload = JSON.parse(
+        Buffer.from(parts[1], 'base64url').toString('utf-8')
+      );
+      const userId = payload.sub;
 
-    // Check if user has admin role
-    const { data: profile, error: profileError } = await supabase
-      .from('profiles')
-      .select('id, name, email, admin_role, admin_since')
-      .eq('id', user.id)
-      .single();
+      if (!userId) {
+        console.log('Admin check: No user id in JWT');
+        throw new ApiError('Unauthorized - no user in token', 401, 'NO_USER_IN_TOKEN');
+      }
 
-    if (profileError) {
-      console.log('Admin check: Profile error:', profileError);
-      throw new ApiError('Profile not found', 404, 'PROFILE_NOT_FOUND');
+      console.log('Admin check: Extracted userId from JWT:', userId);
+
+      // Query user profile with admin role
+      const { data: profile, error: profileError } = await supabaseAdmin
+        .from('profiles')
+        .select('id, name, email, admin_role, admin_since')
+        .eq('id', userId)
+        .single();
+
+      if (profileError || !profile) {
+        console.log('Admin check: Profile not found for user:', userId, profileError);
+        throw new ApiError('Profile not found', 404, 'PROFILE_NOT_FOUND');
+      }
+
+      console.log('Admin check: Profile found, admin_role:', profile.admin_role, 'email:', profile.email);
+
+      const isAdmin = profile.admin_role !== null;
+      const role = profile.admin_role || 'user';
+
+      return NextResponse.json({
+        isAdmin,
+        role,
+        user_id: userId,
+        name: profile.name,
+        email: profile.email,
+        admin_since: profile.admin_since,
+      });
+    } catch (decodeError) {
+      console.error('Admin check: Failed to decode JWT:', decodeError);
+      throw new ApiError('Unauthorized - invalid token', 401, 'DECODE_ERROR');
     }
-
-    if (!profile) {
-      console.log('Admin check: No profile found for user:', user.id);
-      throw new ApiError('Profile not found', 404, 'PROFILE_NOT_FOUND');
-    }
-
-    console.log('Admin check: Profile found, admin_role:', profile.admin_role);
-
-    const isAdmin = profile.admin_role !== null;
-    const role = profile.admin_role || 'user';
-
-    return NextResponse.json({
-      isAdmin,
-      role,
-      user_id: user.id,
-      name: profile.name,
-      email: profile.email,
-      admin_since: profile.admin_since,
-    });
   } catch (error) {
     console.error('Admin check error:', error);
     return handleError(error);
