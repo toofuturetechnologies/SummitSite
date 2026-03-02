@@ -124,14 +124,18 @@ export async function bulkApproveUGC(
 
       if (error) throw error;
 
-      // Log activity
-      await supabase.rpc('log_admin_activity' as any, {
-        p_admin_id: adminId,
-        p_action: 'ugc_approved',
-        p_target_type: 'ugc',
-        p_target_id: videoId,
-        p_details: { bulk_operation: true },
-      } as any).catch(console.warn);
+      // Log activity (optional, ignore errors)
+      try {
+        await supabase.rpc('log_admin_activity' as any, {
+          p_admin_id: adminId,
+          p_action: 'ugc_approved',
+          p_target_type: 'ugc',
+          p_target_id: videoId,
+          p_details: { bulk_operation: true },
+        } as any);
+      } catch {
+        // Silently ignore logging errors
+      }
 
       processed++;
     } catch (err) {
@@ -175,14 +179,18 @@ export async function bulkRejectUGC(
 
       if (error) throw error;
 
-      // Log activity
-      await supabase.rpc('log_admin_activity' as any, {
-        p_admin_id: adminId,
-        p_action: 'ugc_rejected',
-        p_target_type: 'ugc',
-        p_target_id: videoId,
-        p_details: { reason, bulk_operation: true },
-      }).catch(console.warn);
+      // Log activity (optional, ignore errors)
+      try {
+        await supabase.rpc('log_admin_activity' as any, {
+          p_admin_id: adminId,
+          p_action: 'ugc_rejected',
+          p_target_type: 'ugc',
+          p_target_id: videoId,
+          p_details: { reason, bulk_operation: true },
+        } as any);
+      } catch {
+        // Silently ignore logging errors
+      }
 
       processed++;
     } catch (err) {
