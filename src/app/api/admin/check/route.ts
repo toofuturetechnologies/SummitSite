@@ -25,7 +25,11 @@ export async function GET(request: NextRequest) {
     if (!authHeader?.startsWith('Bearer ')) {
       console.log('[ADMIN-CHECK] ERROR: No valid Authorization header');
       return NextResponse.json(
-        { error: 'Unauthorized - no auth header', isAdmin: false },
+        { 
+          error: 'Unauthorized - no auth header', 
+          isAdmin: false,
+          debug: { authHeader: authHeader ? 'present but invalid' : 'missing' }
+        },
         { status: 401 }
       );
     }
@@ -38,30 +42,31 @@ export async function GET(request: NextRequest) {
     if (parts.length !== 3) {
       console.log('[ADMIN-CHECK] ERROR: Invalid JWT format (expected 3 parts, got', parts.length + ')');
       return NextResponse.json(
-        { error: 'Invalid token format', isAdmin: false },
+        { error: 'Invalid token format', isAdmin: false, debug: { parts: parts.length } },
         { status: 401 }
       );
     }
 
     let userId: string;
+    let payload: any;
     try {
-      const payload = JSON.parse(
+      payload = JSON.parse(
         Buffer.from(parts[1], 'base64url').toString('utf-8')
       );
       userId = payload.sub;
-      console.log('[ADMIN-CHECK] Decoded JWT, userId:', userId);
+      console.log('[ADMIN-CHECK] Decoded JWT, userId:', userId, 'email:', payload.email);
 
       if (!userId) {
         console.log('[ADMIN-CHECK] ERROR: No sub in JWT payload');
         return NextResponse.json(
-          { error: 'No user in token', isAdmin: false },
+          { error: 'No user in token', isAdmin: false, debug: { payload: Object.keys(payload) } },
           { status: 401 }
         );
       }
     } catch (decodeError) {
       console.error('[ADMIN-CHECK] ERROR: Failed to decode JWT:', decodeError);
       return NextResponse.json(
-        { error: 'Invalid token', isAdmin: false },
+        { error: 'Invalid token', isAdmin: false, debug: { decodeError: String(decodeError) } },
         { status: 401 }
       );
     }
@@ -80,7 +85,11 @@ export async function GET(request: NextRequest) {
     if (profileError) {
       console.error('[ADMIN-CHECK] ERROR: Profile query failed:', profileError.message);
       return NextResponse.json(
-        { error: `Profile query failed: ${profileError.message}`, isAdmin: false },
+        { 
+          error: `Profile query failed: ${profileError.message}`, 
+          isAdmin: false,
+          debug: { userId, error: profileError.message }
+        },
         { status: 404 }
       );
     }
@@ -88,7 +97,7 @@ export async function GET(request: NextRequest) {
     if (!profile) {
       console.log('[ADMIN-CHECK] ERROR: No profile found for userId:', userId);
       return NextResponse.json(
-        { error: 'Profile not found', isAdmin: false },
+        { error: 'Profile not found', isAdmin: false, debug: { userId } },
         { status: 404 }
       );
     }
@@ -103,11 +112,16 @@ export async function GET(request: NextRequest) {
       name: profile.name,
       email: profile.email,
       admin_since: profile.admin_since,
+      debug: { 
+        profile_id: profile.id,
+        jwt_sub: userId,
+        match: profile.id === userId
+      }
     });
   } catch (error) {
     console.error('[ADMIN-CHECK] UNEXPECTED ERROR:', error);
     return NextResponse.json(
-      { error: 'Server error', isAdmin: false },
+      { error: 'Server error', isAdmin: false, debug: { error: String(error) } },
       { status: 500 }
     );
   }
