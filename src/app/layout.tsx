@@ -1,9 +1,19 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
+import PWAInstaller from '@/components/PWAInstaller'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: 'cover',
+  themeColor: '#0ea5e9',
+}
 
 export const metadata: Metadata = {
   title: {
@@ -25,6 +35,17 @@ export const metadata: Metadata = {
     'ice climbing',
   ],
   authors: [{ name: 'Summit' }],
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Summit',
+  },
+  formatDetection: {
+    telephone: true,
+    email: true,
+    address: true,
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -73,6 +94,7 @@ export default function RootLayout({
         <main>
           {children}
         </main>
+        <PWAInstaller />
       </body>
     </html>
   )
