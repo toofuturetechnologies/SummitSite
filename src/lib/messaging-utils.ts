@@ -115,7 +115,7 @@ export function buildConversationSummary(
     user_name: userName,
     last_message: getMessagePreview(lastMessage?.content || 'No messages yet'),
     last_message_at: lastMessage?.created_at || new Date().toISOString(),
-    unread_count,
+    unread_count: unreadCount,
     is_guide: isGuide,
   };
 }

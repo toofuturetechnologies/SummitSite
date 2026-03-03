@@ -9,13 +9,16 @@ import { useState } from 'react';
 import { Star, Loader } from 'lucide-react';
 
 interface ReviewFormProps {
-  bookingId: string;
+  bookingId?: string;
   guideId: string;
-  guideName: string;
-  tripTitle: string;
-  customerId: string;
+  guideName?: string;
+  tripTitle?: string;
+  customerId?: string;
   onSuccess?: () => void;
   onCancel?: () => void;
+  tripId?: string;
+  reviewType?: 'trip' | 'guide';
+  onClose?: () => void;
 }
 
 export default function ReviewForm({
@@ -26,6 +29,9 @@ export default function ReviewForm({
   customerId,
   onSuccess,
   onCancel,
+  tripId,
+  reviewType,
+  onClose,
 }: ReviewFormProps) {
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);

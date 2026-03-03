@@ -33,12 +33,12 @@ export async function GET(request: NextRequest) {
     }
 
     // Calculate revenue metrics
-    const totalGMV = bookings?.reduce((sum, b) => sum + (b.total_amount || 0), 0) || 0;
-    const totalCommission = bookings?.reduce((sum, b) => sum + (b.commission_amount || 0), 0) || 0;
-    const totalHostingFees = bookings?.filter(b => b.status === 'completed').length || 0; // $1 per completed trip
-    const totalRefunds = bookings?.reduce((sum, b) => sum + (b.refund_amount || 0), 0) || 0;
+    const totalGMV = bookings?.reduce((sum: number, b: any) => sum + (b.total_amount || 0), 0) || 0;
+    const totalCommission = bookings?.reduce((sum: number, b: any) => sum + (b.commission_amount || 0), 0) || 0;
+    const totalHostingFees = bookings?.filter((b: any) => b.status === 'completed').length || 0; // $1 per completed trip
+    const totalRefunds = bookings?.reduce((sum: number, b: any) => sum + (b.refund_amount || 0), 0) || 0;
     const totalBookings = bookings?.length || 0;
-    const completedBookings = bookings?.filter(b => b.status === 'completed').length || 0;
+    const completedBookings = bookings?.filter((b: any) => b.status === 'completed').length || 0;
 
     // Revenue breakdown
     const guidePayouts = totalGMV - totalCommission - totalHostingFees;
@@ -47,15 +47,15 @@ export async function GET(request: NextRequest) {
 
     // Booking stats by status
     const statusBreakdown = {
-      pending: bookings?.filter(b => b.status === 'pending').length || 0,
-      confirmed: bookings?.filter(b => b.status === 'confirmed').length || 0,
+      pending: bookings?.filter((b: any) => b.status === 'pending').length || 0,
+      confirmed: bookings?.filter((b: any) => b.status === 'confirmed').length || 0,
       completed: completedBookings,
-      cancelled: bookings?.filter(b => b.status === 'cancelled').length || 0,
+      cancelled: bookings?.filter((b: any) => b.status === 'cancelled').length || 0,
     };
 
     // Top guides
     const guideRevenue: Record<string, number> = {};
-    bookings?.forEach((b) => {
+    bookings?.forEach((b: any) => {
       guideRevenue[b.guide_id] = (guideRevenue[b.guide_id] || 0) + b.total_amount;
     });
 
@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
 
     // Daily revenue trend
     const dailyRevenue: Record<string, number> = {};
-    bookings?.forEach((b) => {
+    bookings?.forEach((b: any) => {
       const date = new Date(b.created_at).toLocaleDateString();
       dailyRevenue[date] = (dailyRevenue[date] || 0) + (b.commission_amount || 0);
     });

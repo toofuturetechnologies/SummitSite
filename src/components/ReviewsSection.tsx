@@ -33,6 +33,7 @@ interface ReviewsSectionProps {
   guideName?: string;
   limit?: number;
   compact?: boolean;
+  tripId?: string;
 }
 
 export default function ReviewsSection({
